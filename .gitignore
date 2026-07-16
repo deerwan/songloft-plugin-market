@@ -25,3 +25,9 @@ public/plugins.generated.json
 public/icons/
 
 # public/favicon.svg 为官方品牌图标（非生成物），纳入版本控制
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example

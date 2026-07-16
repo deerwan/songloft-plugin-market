@@ -10,14 +10,17 @@
     "dev": "vite",
     "build": "npm run build:data && vue-tsc --noEmit && vite build",
     "build:web": "vue-tsc --noEmit && vite build",
-    "preview": "vite preview"
+    "preview": "npm run build && wrangler dev",
+    "deploy": "npm run build && wrangler deploy"
   },
   "devDependencies": {
+    "@cloudflare/vite-plugin": "^1.45.0",
     "@types/node": "^22.10.5",
     "@vitejs/plugin-vue": "^5.2.1",
     "typescript": "^5.7.3",
     "vite": "^6.0.7",
-    "vue-tsc": "^2.2.0"
+    "vue-tsc": "^2.2.0",
+    "wrangler": "^4.111.0"
   },
   "dependencies": {
     "fflate": "^0.8.3",
