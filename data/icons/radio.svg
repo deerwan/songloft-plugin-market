@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <!-- 圆形浅色容器：对齐默认插件图标的圆底样式 -->
+  <circle cx="128" cy="128" r="128" fill="#E3EEFF"/>
+
+  <!-- 天线 -->
+  <line x1="100" y1="60" x2="148" y2="100" stroke="#3B6FE0" stroke-width="8" stroke-linecap="round"/>
+
+  <!-- 收音机主体 -->
+  <rect x="64" y="100" width="128" height="96" rx="16" ry="16" fill="#3B6FE0"/>
+
+  <!-- 调谐旋钮 -->
+  <circle cx="160" cy="140" r="16" fill="#E3EEFF"/>
+  <circle cx="160" cy="140" r="6" fill="#3B6FE0"/>
+
+  <!-- 音量旋钮 -->
+  <circle cx="160" cy="176" r="10" fill="#E3EEFF"/>
+  <circle cx="160" cy="176" r="4" fill="#3B6FE0"/>
+
+  <!-- 扬声器格栅线条（镂空） -->
+  <rect x="80" y="120" width="52" height="6" rx="3" fill="#E3EEFF"/>
+  <rect x="80" y="136" width="52" height="6" rx="3" fill="#E3EEFF"/>
+  <rect x="80" y="152" width="52" height="6" rx="3" fill="#E3EEFF"/>
+  <rect x="80" y="168" width="52" height="6" rx="3" fill="#E3EEFF"/>
+</svg>

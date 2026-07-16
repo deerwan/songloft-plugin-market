@@ -1,0 +1,27 @@
+node_modules/
+dist/
+*.log
+.DS_Store
+.vite/
+
+# 环境变量（含密钥，不入库）
+.env
+.env.local
+.env.*.local
+
+# IDE / 编辑器
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# TypeScript 增量编译缓存
+*.tsbuildinfo
+
+# 前端构建时从 data/ 复制的运行时数据（生成物，不入库）
+public/plugins.generated.json
+# 前端运行时图标副本（生成物，规范图标提交在 data/icons/）
+public/icons/
+
+# public/favicon.svg 为官方品牌图标（非生成物），纳入版本控制

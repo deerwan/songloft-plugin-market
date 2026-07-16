@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <!-- 圆形浅色容器：对齐默认插件图标的圆底样式 -->
+  <circle cx="128" cy="128" r="128" fill="#E3EEFF"/>
+
+  <!-- 声波发射源（圆形核心） -->
+  <circle cx="104" cy="128" r="20" fill="#3B6FE0"/>
+
+  <!-- 声波弧线（三层，从内到外） -->
+  <path d="M124 96 A48 48 0 0 1 124 160" stroke="#3B6FE0" stroke-width="12" stroke-linecap="round" fill="none"/>
+  <path d="M140 72 A72 72 0 0 1 140 184" stroke="#3B6FE0" stroke-width="12" stroke-linecap="round" fill="none"/>
+  <path d="M156 52 A96 96 0 0 1 156 204" stroke="#3B6FE0" stroke-width="12" stroke-linecap="round" fill="none"/>
+</svg>

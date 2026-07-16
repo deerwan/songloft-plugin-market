@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <!-- 圆形浅色容器：对齐默认插件图标的圆底样式 -->
+  <circle cx="128" cy="128" r="128" fill="#E3EEFF"/>
+
+  <!-- 文件夹主体 -->
+  <path d="M56 88 L56 196 C56 202 61 207 67 207 L189 207 C195 207 200 202 200 196 L200 104 C200 98 195 93 189 93 L136 93 L124 76 C122 73 118 71 114 71 L67 71 C61 71 56 76 56 82 Z" fill="#3B6FE0"/>
+
+  <!-- 云朵形状（镂空，表示WebDAV远程存储） -->
+  <ellipse cx="132" cy="156" rx="32" ry="22" fill="#E3EEFF"/>
+  <circle cx="112" cy="150" r="16" fill="#E3EEFF"/>
+  <circle cx="148" cy="148" r="14" fill="#E3EEFF"/>
+</svg>

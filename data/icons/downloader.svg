@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <!-- 圆形浅色容器：对齐默认插件图标的圆底样式 -->
+  <circle cx="128" cy="128" r="128" fill="#E3EEFF"/>
+
+  <!-- 底部托盘：外框 -->
+  <rect x="64" y="152" width="128" height="48" rx="12" fill="#3B6FE0"/>
+  <!-- 底部托盘：镂空形成U形开口 -->
+  <rect x="80" y="152" width="96" height="28" rx="6" fill="#E3EEFF"/>
+
+  <!-- 下载箭头：竖杆 -->
+  <rect x="114" y="56" width="28" height="72" rx="6" fill="#3B6FE0"/>
+  <!-- 下载箭头：三角形箭头 -->
+  <polygon points="128,168 88,120 168,120" fill="#3B6FE0"/>
+</svg>

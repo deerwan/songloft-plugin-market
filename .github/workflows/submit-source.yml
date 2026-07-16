@@ -1,0 +1,117 @@
+name: Submit Source
+
+# 维护者在提交 Issue 上打 `approved` 标签后触发：
+#   1. 解析 Issue 正文里的源地址
+#   2. 用 `npm run test:source` 校验（复用现有构建管线的 dry-run）
+#   3. 校验通过 → 追加进 data/sources.json 并开 PR；失败 → 在 Issue 留言报错
+#
+# 需要仓库 Secrets: PAT_TOKEN（含 contents:write + pull-requests:write）
+
+on:
+  issues:
+    types: [labeled]
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  submit-source:
+    # 仅在「打 approved 标签」且「Issue 带 source-submit 标签」时执行
+    if: >-
+      github.event.label.name == 'approved' &&
+      contains(fromJSON('["' + join(github.event.issue.labels.*.name, '","') + '"]'), 'source-submit')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      # 解析 + 校验（失败不阻断 job，下一步据 output 留言）
+      - name: Parse & validate source
+        id: validate
+        env:
+          BODY: ${{ github.event.issue.body }}
+        run: |
+          printf '%s' "$BODY" > /tmp/issue_body.txt
+          URL=$(node scripts/parse_submission.mjs /tmp/issue_body.txt) || {
+            echo "valid=false" >> "$GITHUB_OUTPUT"
+            echo "error_msg=无法从 Issue 解析出源地址（URL），请检查是否填写了合法的 http(s) 链接。" >> "$GITHUB_OUTPUT"
+            exit 0
+          }
+          echo "url=$URL" >> "$GITHUB_OUTPUT"
+          echo "正在校验源：$URL"
+          if npm run test:source -- "$URL"; then
+            echo "valid=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "valid=false" >> "$GITHUB_OUTPUT"
+            echo "error_msg=源校验未通过：无法解析到任何插件。请确认 URL 是公开可访问的 registry.json / plugin.json。" >> "$GITHUB_OUTPUT"
+          fi
+
+      # 校验失败：留言并移除 approved，便于修正后重新打标
+      - name: Comment failure
+        if: steps.validate.outputs.valid != 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const msg = `${{ steps.validate.outputs.error_msg }}` || '源校验未通过。'
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `❌ ${msg}\n\n请修正后重新提交；或移除 \`approved\` 标签后重新打标以重试。`,
+            })
+            await github.rest.issues.removeLabel({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              name: 'approved',
+            }).catch(() => {})
+
+      # 校验通过：追加进 sources.json
+      - name: Append source to sources.json
+        if: steps.validate.outputs.valid == 'true'
+        id: append
+        env:
+          URL: ${{ steps.validate.outputs.url }}
+        run: |
+          node -e "
+            const fs = require('fs');
+            const path = 'data/sources.json';
+            const cfg = JSON.parse(fs.readFileSync(path, 'utf8'));
+            const exists = cfg.sources.some(s => (typeof s === 'string' ? s : s.url) === process.env.URL);
+            if (exists) { console.log('源已存在，跳过追加'); process.exit(0); }
+            const m = process.env.URL.match(/github\.com\/([^\/]+)\/([^\/]+)/i);
+            const name = m ? m[2].replace(/\.git$/i, '') : '自定义源';
+            const id = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+            cfg.sources.push({ id, url: process.env.URL, name });
+            fs.writeFileSync(path, JSON.stringify(cfg, null, 2) + '\n');
+            console.log('已追加源：' + process.env.URL);
+          "
+
+      # 校验通过：开 PR
+      - name: Open PR
+        if: steps.validate.outputs.valid == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.PAT_TOKEN }}
+          commit-message: "feat(source): 收录新插件源 ${{ steps.validate.outputs.url }}"
+          branch: source/${{ github.event.issue.number }}
+          delete-branch: true
+          title: "收录插件源：${{ steps.validate.outputs.url }}"
+          body: |
+            由 #${{ github.event.issue.number }} 提交，审核通过（approved）后自动创建。
+
+            源地址：${{ steps.validate.outputs.url }}
+
+            合并后下次构建自动收录该源下的所有插件。
+          labels: source-submit

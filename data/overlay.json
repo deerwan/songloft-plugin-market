@@ -1,0 +1,9 @@
+{
+  "note": "人工策展覆盖层，按 entryPath 匹配。此处字段优先级高于自动探测结果，用于修正 logo、补充分类标签、标记精选、或手动标注闭源插件。示例：",
+  "overrides": {
+    "example-basic": {
+      "tags": ["示例"],
+      "featured": false
+    }
+  }
+}

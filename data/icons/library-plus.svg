@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" style="background: transparent;">
+  <!-- Base App Icon Rounded Square (Fills 100% of the 512x512 canvas) -->
+  <rect x="0" y="0" width="512" height="512" rx="120" fill="#80ced7" />
+
+  <!-- MAXIMIZED Music Folder - SHIFTED UP BY 30px -->
+  <!-- Back tab of folder -->
+  <path d="M 30,50 L 160,50 L 205,95 L 482,95 L 482,430 C 482,441 471,450 460,450 L 52,450 C 41,450 30,441 30,430 Z" fill="#cfd8dc" />
+  <!-- Front body of folder -->
+  <path d="M 30,95 L 482,95 L 482,430 C 482,441 471,450 460,450 L 52,450 C 41,450 30,441 30,430 Z" fill="#f5f7f8" />
+
+  <!-- Giant Music Note on Folder - SHIFTED UP BY 30px -->
+  <g>
+    <!-- Note Stem & Beam -->
+    <path d="M 235,320 L 235,160 C 235,155 239,150 244,150 L 340,125 C 345,124 350,128 350,134 L 350,270" fill="none" stroke="#37474f" stroke-width="20" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M 235,175 L 350,145 L 350,185 L 235,215 Z" fill="#37474f" />
+    <!-- Left Note Head -->
+    <ellipse cx="195" cy="325" rx="42" ry="32" transform="rotate(-15 195 325)" fill="#37474f" />
+    <!-- Right Note Head -->
+    <ellipse cx="310" cy="280" rx="42" ry="32" transform="rotate(-15 310 280)" fill="#37474f" />
+  </g>
+
+  <!-- The "Plus" Badge on bottom right - SHIFTED UP BY 30px -->
+  <g>
+    <!-- Badge Circle Base -->
+    <circle cx="430" cy="400" r="75" fill="#ffb74d" stroke="#ffffff" stroke-width="9" />
+    <!-- Plus Symbol (+) -->
+    <path d="M 430,365 L 430,435 M 395,400 L 465,400" fill="none" stroke="#ffffff" stroke-width="16" stroke-linecap="round" />
+  </g>
+</svg>

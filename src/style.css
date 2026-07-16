@@ -1,0 +1,74 @@
+/* 全局样式 + 主题变量。
+ *
+ * 关键设计：所有颜色用 --slm-* 变量，默认回退到 VitePress 的 --vp-c-* 主题变量。
+ * - 独立站：--vp-c-* 未定义，用后面的回退值（并支持 prefers-color-scheme 暗色）。
+ * - 集成进 VitePress：自动继承主题变量，跟随亮/暗色切换，无需改代码。
+ */
+
+:root {
+  --slm-bg: var(--vp-c-bg, #ffffff);
+  --slm-bg-soft: var(--vp-c-bg-soft, #f6f6f7);
+  --slm-bg-alt: var(--vp-c-bg-alt, #f1f1f3);
+  --slm-border: var(--vp-c-divider, #e2e2e3);
+  --slm-text: var(--vp-c-text-1, #213547);
+  --slm-text-2: var(--vp-c-text-2, #5c6b77);
+  --slm-brand: var(--vp-c-brand-1, #3b82f6);
+  --slm-brand-soft: var(--vp-c-brand-soft, rgba(59, 130, 246, 0.14));
+  --slm-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.06);
+  --slm-radius: 12px;
+}
+
+/* 独立站暗色模式（VitePress 集成时由其自身机制接管，此处仅作独立回退） */
+@media (prefers-color-scheme: dark) {
+  :root:not(.vp-doc, [data-vitepress]) {
+    --slm-bg: var(--vp-c-bg, #1b1b1f);
+    --slm-bg-soft: var(--vp-c-bg-soft, #242424);
+    --slm-bg-alt: var(--vp-c-bg-alt, #2f2f2f);
+    --slm-border: var(--vp-c-divider, #3a3a3c);
+    --slm-text: var(--vp-c-text-1, #f4f4f5);
+    --slm-text-2: var(--vp-c-text-2, #a8a8ad);
+    --slm-brand: var(--vp-c-brand-1, #60a5fa);
+    --slm-brand-soft: var(--vp-c-brand-soft, rgba(96, 165, 250, 0.16));
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC',
+    'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  background: var(--slm-bg);
+  color: var(--slm-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 通用按钮（供 App.vue / SubmitSource / PendingSources 复用；
+ * PluginMarket.vue 内的 scoped .btn 会按其作用域生效，视觉保持一致） */
+.btn {
+  padding: 7px 14px;
+  border: 1px solid var(--slm-border);
+  border-radius: 8px;
+  background: var(--slm-bg-soft);
+  color: var(--slm-text);
+  font-size: 13px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+.btn:hover {
+  border-color: var(--slm-brand);
+  color: var(--slm-brand);
+}
+.btn--primary {
+  background: var(--slm-brand);
+  color: #fff;
+  border-color: var(--slm-brand);
+}
+.btn--primary:hover {
+  color: #fff;
+  opacity: 0.9;
+}

@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs>
+    <radialGradient id="bg2" cx="0.5" cy="0.35" r="0.7">
+      <stop offset="0%" stop-color="#22d3ee"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </radialGradient>
+    <linearGradient id="band" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#facc15"/>
+      <stop offset="100%" stop-color="#f97316"/>
+    </linearGradient>
+    <linearGradient id="pad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+
+  <circle cx="64" cy="64" r="62" fill="url(#bg2)"/>
+
+  <path d="M22 44 Q22 14 64 14 Q106 14 106 44" fill="none" stroke="url(#band)" stroke-width="6" stroke-linecap="round" opacity="0.95"/>
+  <path d="M24 44 Q24 18 64 18 Q104 18 104 44" fill="none" stroke="#fef08a" stroke-width="1" stroke-linecap="round" opacity="0.35"/>
+
+  <rect x="18" y="42" width="16" height="42" rx="8" fill="url(#pad)" stroke="#475569" stroke-width="1"/>
+  <rect x="20" y="44" width="12" height="38" rx="6" fill="#0f172a"/>
+  <circle cx="26" cy="63" r="4" fill="none" stroke="#22d3ee" stroke-opacity="0.4" stroke-width="0.8"/>
+  <circle cx="26" cy="63" r="1.5" fill="#22d3ee" opacity="0.5"/>
+
+  <rect x="94" y="42" width="16" height="42" rx="8" fill="url(#pad)" stroke="#475569" stroke-width="1"/>
+  <rect x="96" y="44" width="12" height="38" rx="6" fill="#0f172a"/>
+  <circle cx="102" cy="63" r="4" fill="none" stroke="#22d3ee" stroke-opacity="0.4" stroke-width="0.8"/>
+  <circle cx="102" cy="63" r="1.5" fill="#22d3ee" opacity="0.5"/>
+
+  <g transform="translate(35, 50)">
+    <path d="M4 24 L4 0 L10 14 L16 0 L16 24" fill="none" stroke="#facc15" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M24 24 L24 0 L34 0 Q38 0 38 7 L38 10 Q38 14 34 14 L24 14" fill="none" stroke="#facc15" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M42 24 L42 0 L50 0 Q56 3 56 12 Q56 21 50 24 Z" fill="none" stroke="#facc15" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <line x1="42" y1="82" x2="86" y2="82" stroke="#facc15" stroke-opacity="0.25" stroke-width="1.5" stroke-linecap="round"/>
+
+  <circle cx="110" cy="30" r="1.5" fill="#22d3ee" opacity="0.6"/>
+  <circle cx="16" cy="22" r="1" fill="#facc15" opacity="0.7"/>
+  <circle cx="38" cy="20" r="1.2" fill="#fff" opacity="0.5"/>
+</svg>

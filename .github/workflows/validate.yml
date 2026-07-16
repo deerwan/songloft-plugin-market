@@ -1,0 +1,43 @@
+name: Validate
+
+# PR 校验：确保 sources.json / overlay.json 是合法 JSON，
+# 且数据构建脚本能跑通（拉取插件源、探测开源/闭源、生成数据）。
+on:
+  pull_request:
+    paths:
+      - 'data/**'
+      - 'scripts/**'
+      - 'src/**'
+      - 'package.json'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      # 校验输入 JSON 合法
+      - name: Validate input JSON
+        run: |
+          node -e "JSON.parse(require('fs').readFileSync('data/sources.json','utf8')); console.log('sources.json OK')"
+          node -e "JSON.parse(require('fs').readFileSync('data/overlay.json','utf8')); console.log('overlay.json OK')"
+
+      # 跑通数据构建（可达性 + 探测逻辑）
+      - name: Dry-run data build
+        run: npm run build:data
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # 前端类型检查 + 构建
+      - name: Build website
+        run: npm run build:web

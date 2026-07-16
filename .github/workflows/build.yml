@@ -1,0 +1,72 @@
+name: Build and Deploy
+
+on:
+  # 定时刷新插件数据（每小时，UTC）
+  schedule:
+    - cron: '0 * * * *'
+  # 推送到 main 时重新构建
+  push:
+    branches: [main]
+  # 手动触发
+  workflow_dispatch:
+
+# GitHub Pages 部署所需权限
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # 生成插件数据（GITHUB_TOKEN 提高 API 限额）
+      - name: Build plugin data
+        run: npm run build:data
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # 回写更新后的缓存（仅 main 分支、非 PR）
+      - name: Commit updated cache
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if [ -n "$(git status --porcelain data/plugins.generated.json data/icons)" ]; then
+            git add data/plugins.generated.json data/icons
+            git commit -m "chore(data): refresh plugin cache [skip ci]"
+            git push
+          else
+            echo "插件数据无变化，跳过提交"
+          fi
+
+      # 构建前端
+      - name: Build website
+        run: npm run build:web
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
