@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-16T09:07:09.000Z",
+  "generatedAt": "2026-07-16T10:04:07.693Z",
   "count": 16,
   "openCount": 15,
   "closedCount": 1,
@@ -129,6 +129,32 @@
       "updatedAt": "2026-07-14T07:08:47Z",
       "license": "Apache-2.0",
       "logo": "icons/go-music-dl.svg",
+      "tags": [],
+      "featured": false
+    },
+    {
+      "entryPath": "iwebplayer",
+      "name": "iWebPlayer",
+      "version": "0.8.0",
+      "description": "适配iPhone的Web播放器，PWA模式下媲美原生APP。iPhone锁屏界面，灵动岛，耳机线控，平板模式，封面、歌词刮削展示，锁屏歌词，倍速播放，记忆续播，自建歌单，调用LXMusic插件……",
+      "author": "birdstudy-nj",
+      "permissions": [
+        "songs.read",
+        "playlists.*",
+        "storage"
+      ],
+      "minHostVersion": "2.6.3",
+      "homepage": null,
+      "pluginJsonUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-iwebplayer/main/plugin.json",
+      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-iwebplayer/releases/download/v0.8.0/iwebplayer.jsplugin.zip",
+      "updateUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-iwebplayer/main/plugin.json",
+      "source": "open",
+      "origin": "official",
+      "repo": "https://github.com/songloft-org/songloft-plugin-iwebplayer",
+      "stars": 1,
+      "updatedAt": "2026-07-16T09:48:16Z",
+      "license": "Apache-2.0",
+      "logo": "icons/iwebplayer.svg",
       "tags": [],
       "featured": false
     },
@@ -316,32 +342,6 @@
       "updatedAt": "2026-07-08T01:29:36Z",
       "license": null,
       "logo": "icons/audiobook.svg",
-      "tags": [],
-      "featured": false
-    },
-    {
-      "entryPath": "iwebplayer",
-      "name": "iWebPlayer",
-      "version": "0.7.6",
-      "description": "适配iPhone的Web播放器，PWA模式下媲美原生APP。iPhone锁屏界面，灵动岛，耳机线控，平板模式，封面、歌词刮削展示，锁屏歌词，倍速播放，记忆续播，自建歌单，调用LXMusic插件……",
-      "author": "birdstudy-nj",
-      "permissions": [
-        "songs.read",
-        "playlists.*",
-        "storage"
-      ],
-      "minHostVersion": "2.6.3",
-      "homepage": null,
-      "pluginJsonUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-iwebplayer/main/plugin.json",
-      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-iwebplayer/releases/download/v0.7.6/iwebplayer.jsplugin.zip",
-      "updateUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-iwebplayer/main/plugin.json",
-      "source": "open",
-      "origin": "official",
-      "repo": "https://github.com/songloft-org/songloft-plugin-iwebplayer",
-      "stars": 1,
-      "updatedAt": "2026-07-01T08:24:07Z",
-      "license": "Apache-2.0",
-      "logo": "icons/iwebplayer.svg",
       "tags": [],
       "featured": false
     },
