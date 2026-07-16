@@ -19,17 +19,28 @@
 }
 
 /* 独立站暗色模式（VitePress 集成时由其自身机制接管，此处仅作独立回退） */
-@media (prefers-color-scheme: dark) {
-  :root:not(.vp-doc, [data-vitepress]) {
-    --slm-bg: var(--vp-c-bg, #1b1b1f);
-    --slm-bg-soft: var(--vp-c-bg-soft, #242424);
-    --slm-bg-alt: var(--vp-c-bg-alt, #2f2f2f);
-    --slm-border: var(--vp-c-divider, #3a3a3c);
-    --slm-text: var(--vp-c-text-1, #f4f4f5);
-    --slm-text-2: var(--vp-c-text-2, #a8a8ad);
-    --slm-brand: var(--vp-c-brand-1, #60a5fa);
-    --slm-brand-soft: var(--vp-c-brand-soft, rgba(96, 165, 250, 0.16));
-  }
+/* 手动切换暗色模式 */
+:root[data-theme="dark"] {
+  --slm-bg: var(--vp-c-bg, #1b1b1f);
+  --slm-bg-soft: var(--vp-c-bg-soft, #242424);
+  --slm-bg-alt: var(--vp-c-bg-alt, #2f2f2f);
+  --slm-border: var(--vp-c-divider, #3a3a3c);
+  --slm-text: var(--vp-c-text-1, #f4f4f5);
+  --slm-text-2: var(--vp-c-text-2, #a8a8ad);
+  --slm-brand: var(--vp-c-brand-1, #60a5fa);
+  --slm-brand-soft: var(--vp-c-brand-soft, rgba(96, 165, 250, 0.16));
+}
+
+/* 手动切换浅色模式（覆盖系统暗色偏好） */
+:root[data-theme="light"] {
+  --slm-bg: #ffffff;
+  --slm-bg-soft: #f6f6f7;
+  --slm-bg-alt: #f1f1f3;
+  --slm-border: #e2e2e3;
+  --slm-text: #213547;
+  --slm-text-2: #5c6b77;
+  --slm-brand: #3b82f6;
+  --slm-brand-soft: rgba(59, 130, 246, 0.14);
 }
 
 * {

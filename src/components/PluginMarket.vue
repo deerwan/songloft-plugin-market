@@ -175,11 +175,11 @@ async function copySubscribe(p: Plugin) {
             {{ s.name }}（{{ s.count }}）
           </option>
         </select>
-        <div class="segmented" role="tablist" aria-label="类型筛选">
-          <button :class="{ active: sourceFilter === 'all' }" @click="sourceFilter = 'all'">全部</button>
-          <button :class="{ active: sourceFilter === 'open' }" @click="sourceFilter = 'open'">开源</button>
-          <button :class="{ active: sourceFilter === 'closed' }" @click="sourceFilter = 'closed'">闭源</button>
-        </div>
+        <select v-model="sourceFilter" aria-label="类型筛选">
+          <option value="all">全部（{{ data?.count ?? 0 }}）</option>
+          <option value="open">开源（{{ data?.openCount ?? 0 }}）</option>
+          <option value="closed">闭源（{{ data?.closedCount ?? 0 }}）</option>
+        </select>
         <select v-model="sortKey" aria-label="排序方式">
           <option value="stars">按 Star 排序</option>
           <option value="updated">按更新时间</option>
@@ -256,7 +256,7 @@ async function copySubscribe(p: Plugin) {
 
           <div class="card__actions">
             <button class="btn btn--primary" @click="copySubscribe(p)">
-              {{ copiedKey === p.entryPath ? '✓ 已复制' : '复制安装地址' }}
+              {{ copiedKey === p.entryPath ? '✓ 已复制' : '复制源' }}
             </button>
             <a v-if="p.repo" class="btn" :href="p.repo" target="_blank" rel="noopener">仓库</a>
             <a
@@ -287,16 +287,17 @@ async function copySubscribe(p: Plugin) {
   gap: 12px;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
+  min-width: 0;
 }
 
 .search {
-  flex: 1;
-  min-width: 220px;
+  flex: 1 1 180px;
+  min-width: 0;
 }
 
 .search input {
   width: 100%;
+  box-sizing: border-box;
   padding: 10px 14px;
   border: 1px solid var(--slm-border);
   border-radius: var(--slm-radius);
@@ -314,30 +315,12 @@ async function copySubscribe(p: Plugin) {
   display: flex;
   gap: 10px;
   align-items: center;
-}
-
-.segmented {
-  display: inline-flex;
-  border: 1px solid var(--slm-border);
-  border-radius: var(--slm-radius);
-  overflow: hidden;
-}
-
-.segmented button {
-  padding: 8px 14px;
-  border: none;
-  background: var(--slm-bg-soft);
-  color: var(--slm-text-2);
-  cursor: pointer;
-  font-size: 13px;
-}
-
-.segmented button.active {
-  background: var(--slm-brand);
-  color: #fff;
+  flex-wrap: wrap;
+  flex-shrink: 0;
 }
 
 select {
+  max-width: 160px;
   padding: 8px 12px;
   border: 1px solid var(--slm-border);
   border-radius: var(--slm-radius);
@@ -345,6 +328,9 @@ select {
   color: var(--slm-text);
   font-size: 13px;
   cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .tags-bar {
@@ -571,13 +557,22 @@ select {
   opacity: 0.9;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 640px) {
   .toolbar {
     flex-direction: column;
     align-items: stretch;
   }
+  .search {
+    flex: none;
+    width: 100%;
+  }
   .controls {
-    justify-content: space-between;
+    width: 100%;
+    justify-content: flex-start;
+  }
+  select {
+    flex: 1;
+    min-width: 0;
   }
 }
 </style>
