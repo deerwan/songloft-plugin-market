@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-16T10:13:25.908Z",
+  "generatedAt": "2026-07-16T12:23:21.179Z",
   "count": 16,
   "openCount": 15,
   "closedCount": 1,
@@ -32,7 +32,8 @@
         "playlists.read",
         "playlists.write",
         "inter-plugin",
-        "command"
+        "command",
+        "websocket"
       ],
       "minHostVersion": "2.9.5",
       "homepage": "https://github.com/songloft-org/songloft",
@@ -43,7 +44,7 @@
       "origin": "official",
       "repo": "https://github.com/songloft-org/songloft-plugin-miot",
       "stars": 30,
-      "updatedAt": "2026-07-16T08:07:35Z",
+      "updatedAt": "2026-07-16T11:39:27Z",
       "license": null,
       "logo": "icons/miot.svg",
       "tags": [],
