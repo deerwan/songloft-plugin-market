@@ -17,6 +17,11 @@
       "id": "fanliu-yi",
       "url": "https://raw.githubusercontent.com/fanliu-yi/songloft-plugin-registry/main/registry.json",
       "name": "fanliu-yi"
+    },
+    {
+      "id": "birdstudy-nj",
+      "url": "https://raw.githubusercontent.com/birdstudy-nj/songloft-lyrics-cover-helper/refs/heads/main/plugin.json",
+      "name": "歌词封面助手"
     }
   ]
 }
