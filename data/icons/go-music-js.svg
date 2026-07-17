@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="GD Music">
+  <rect width="64" height="64" rx="14" fill="#151515"/>
+  <circle cx="32" cy="32" r="22" fill="#22c55e"/>
+  <circle cx="32" cy="32" r="10" fill="#151515"/>
+  <path d="M42 18v22.5a7.5 7.5 0 1 1-4-6.6V22l-16 3v18.5a7.5 7.5 0 1 1-4-6.6V22.5L42 18z" fill="#f8fafc"/>
+</svg>
