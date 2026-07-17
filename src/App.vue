@@ -2,10 +2,8 @@
 import { ref, onMounted, watch } from 'vue'
 import PluginMarket from './components/PluginMarket.vue'
 import SubmitSource from './components/SubmitSource.vue'
-import PendingSources from './components/PendingSources.vue'
 
 const showSubmit = ref(false)
-const showPending = ref(false)
 const isDark = ref(false)
 // VitePress 集成时不接管主题
 const isVitePress = typeof document !== 'undefined' && document.documentElement.classList.contains('vp-doc')
@@ -17,18 +15,23 @@ function getSystemDark(): boolean {
 function applyTheme(dark: boolean) {
   if (isVitePress) return
   document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light')
-  localStorage.setItem('slm-theme', dark ? 'dark' : 'light')
 }
 
+// 仅当前会话内的临时切换：不写 localStorage，刷新后重新跟随系统
 function toggleTheme() {
   isDark.value = !isDark.value
 }
 
 onMounted(() => {
   if (isVitePress) return
-  const saved = localStorage.getItem('slm-theme')
-  isDark.value = saved ? saved === 'dark' : getSystemDark()
+  // 始终以系统主题为准
+  isDark.value = getSystemDark()
   applyTheme(isDark.value)
+  // 实时跟随系统主题变化（始终保持跟随系统）
+  const mq = window.matchMedia('(prefers-color-scheme: dark)')
+  mq.addEventListener('change', (e) => {
+    isDark.value = e.matches
+  })
 })
 
 watch(isDark, applyTheme)
@@ -60,12 +63,6 @@ const logoSrc = import.meta.env.BASE_URL + 'favicon.svg'
               <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
             </svg>
           </button>
-          <button class="app-header__icon" @click="showPending = true" title="待审插件源">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/>
-              <path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/>
-            </svg>
-          </button>
           <button class="app-header__icon" @click="showSubmit = true" title="提交插件">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <line x1="12" y1="5" x2="12" y2="19"/>
@@ -84,8 +81,6 @@ const logoSrc = import.meta.env.BASE_URL + 'favicon.svg'
     <main class="app-main">
       <PluginMarket />
     </main>
-
-    <PendingSources :visible="showPending" @close="showPending = false" />
 
     <footer class="app-footer">
       基于 Songloft 插件源自动生成 ·

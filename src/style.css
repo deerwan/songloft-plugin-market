@@ -56,7 +56,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* 通用按钮（供 App.vue / SubmitSource / PendingSources 复用；
+/* 通用按钮（供 App.vue / SubmitSource 复用；
  * PluginMarket.vue 内的 scoped .btn 会按其作用域生效，视觉保持一致） */
 .btn {
   padding: 7px 14px;
