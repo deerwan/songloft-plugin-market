@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-17T07:41:55.264Z",
+  "generatedAt": "2026-07-17T08:17:03.658Z",
   "count": 16,
   "openCount": 15,
   "closedCount": 1,
@@ -108,7 +108,7 @@
     {
       "entryPath": "iwebplayer",
       "name": "iWebPlayer",
-      "version": "0.8.1",
+      "version": "0.8.2",
       "description": "适配iPhone的Web播放器，PWA模式下媲美原生APP。iPhone锁屏界面，灵动岛，耳机线控，平板模式，封面、歌词刮削展示，锁屏歌词，倍速播放，记忆续播，自建歌单，调用LXMusic插件、WebDAV插件……",
       "author": "birdstudy-nj",
       "permissions": [
@@ -119,13 +119,13 @@
       "minHostVersion": "2.6.3",
       "homepage": null,
       "pluginJsonUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-iwebplayer/main/plugin.json",
-      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-iwebplayer/releases/download/v0.8.1/iwebplayer.jsplugin.zip",
+      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-iwebplayer/releases/download/v0.8.2/iwebplayer.jsplugin.zip",
       "updateUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-iwebplayer/main/plugin.json",
       "source": "open",
       "origin": "official",
       "repo": "https://github.com/songloft-org/songloft-plugin-iwebplayer",
-      "stars": 1,
-      "updatedAt": "2026-07-17T06:56:44Z",
+      "stars": 2,
+      "updatedAt": "2026-07-17T08:01:10Z",
       "license": "Apache-2.0",
       "logo": "icons/iwebplayer.svg",
       "tags": [],
