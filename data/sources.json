@@ -12,7 +12,11 @@
       "id": "deerwan",
       "url": "https://raw.githubusercontent.com/deerwan/songloft-plugin-registry/main/registry.json",
       "name": "deerwan"
+    },
+    {
+      "id": "",
+      "url": "https://raw.githubusercontent.com/fanliu-yi/songloft-plugin-registry/main/registry.json",
+      "name": "自定义源"
     }
-
   ]
 }
