@@ -90,7 +90,8 @@ jobs:
             const cfg = JSON.parse(fs.readFileSync(path, 'utf8'));
             const exists = cfg.sources.some(s => (typeof s === 'string' ? s : s.url) === process.env.URL);
             if (exists) { console.log('源已存在，跳过追加'); process.exit(0); }
-            const m = process.env.URL.match(/github\.com\/([^\/]+)\/([^\/]+)/i);
+            const m = process.env.URL.match(/raw\.githubusercontent\.com\/([^\/]+)\/([^\/]+)/i)
+              || process.env.URL.match(/github\.com\/([^\/]+)\/([^\/]+)/i);
             const name = m ? m[2].replace(/\.git$/i, '') : '自定义源';
             const id = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
             cfg.sources.push({ id, url: process.env.URL, name });
