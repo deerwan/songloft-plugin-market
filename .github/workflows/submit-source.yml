@@ -5,6 +5,8 @@ name: Submit Source
 #   2. 用 `npm run validate:source` 校验（复用现有构建管线的 dry-run）
 #   3. 校验通过 → 追加进 data/sources.json 并开 PR；失败 → 在 Issue 留言报错
 #
+# 触发条件：仅认 `approved` 标签（无论 Issue 是否带 source-submit，
+# 这样手动建的 Issue 也能走通流程；用模板提交的会自动带 source-submit，无害）。
 # 需要仓库 Secrets: PAT_TOKEN（含 contents:write + pull-requests:write）
 
 on:
@@ -17,10 +19,8 @@ permissions:
 
 jobs:
   submit-source:
-    # 仅在「打 approved 标签」且「Issue 带 source-submit 标签」时执行
-    if: >-
-      github.event.label.name == 'approved' &&
-      contains(fromJSON('["' + join(github.event.issue.labels.*.name, '","') + '"]'), 'source-submit')
+    # 仅在「打 approved 标签」时执行
+    if: github.event.label.name == 'approved'
     runs-on: ubuntu-latest
     permissions:
       contents: write
