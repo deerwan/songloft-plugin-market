@@ -1,9 +1,9 @@
 name: Build and Deploy
 
 on:
-  # 定时刷新插件数据（每小时，UTC）
-  schedule:
-    - cron: '0 * * * *'
+  # 定时刷新插件数据（已禁用，UTC）
+  # schedule:
+  #   - cron: '0 * * * *'
   # 推送到 main 时重新构建
   push:
     branches: [main]
