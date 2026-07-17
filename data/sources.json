@@ -14,9 +14,9 @@
       "name": "deerwan"
     },
     {
-      "id": "",
+      "id": "fanliu-yi",
       "url": "https://raw.githubusercontent.com/fanliu-yi/songloft-plugin-registry/main/registry.json",
-      "name": "自定义源"
+      "name": "songloft-plugin-registry"
     }
   ]
 }
