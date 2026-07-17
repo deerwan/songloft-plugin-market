@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-07-17T08:20:02.104Z",
-  "count": 16,
-  "openCount": 15,
+  "generatedAt": "2026-07-17T08:48:13.163Z",
+  "count": 17,
+  "openCount": 16,
   "closedCount": 1,
   "sources": [
     {
@@ -13,6 +13,12 @@
     {
       "id": "deerwan",
       "name": "deerwan",
+      "official": false,
+      "count": 1
+    },
+    {
+      "id": "fanliu-yi",
+      "name": "songloft-plugin-registry",
       "official": false,
       "count": 1
     }
@@ -371,6 +377,34 @@
       "updatedAt": "2026-06-24T08:46:24Z",
       "license": null,
       "logo": "icons/dav.svg",
+      "tags": [],
+      "featured": false
+    },
+    {
+      "entryPath": "go-music-js",
+      "name": "Go Music JS",
+      "version": "0.1.4",
+      "description": "Go Music JS 是 go-music-dl 项目的 JS 插件版，面向 Songloft 插件系统使用。",
+      "author": "fanliu-yi",
+      "permissions": [
+        "storage",
+        "songs.read",
+        "songs.write",
+        "playlists.read",
+        "playlists.write"
+      ],
+      "minHostVersion": "2.6.0",
+      "homepage": "https://github.com/fanliu-yi/go-music-js",
+      "pluginJsonUrl": "https://raw.githubusercontent.com/fanliu-yi/go-music-js/main/plugin.json",
+      "downloadUrl": "https://github.com/fanliu-yi/go-music-js/releases/download/v0.1.4/go-music-js-v0.1.4.jsplugin.zip",
+      "updateUrl": "https://raw.githubusercontent.com/fanliu-yi/go-music-js/main/plugin.json",
+      "source": "open",
+      "origin": "fanliu-yi",
+      "repo": "https://github.com/fanliu-yi/go-music-js",
+      "stars": 0,
+      "updatedAt": "2026-07-17T06:48:45Z",
+      "license": null,
+      "logo": "icons/go-music-js.svg",
       "tags": [],
       "featured": false
     },
