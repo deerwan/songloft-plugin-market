@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-07-17T10:50:48.926Z",
-  "count": 17,
-  "openCount": 16,
+  "generatedAt": "2026-07-17T11:40:57.796Z",
+  "count": 18,
+  "openCount": 17,
   "closedCount": 1,
   "sources": [
     {
@@ -19,6 +19,12 @@
     {
       "id": "fanliu-yi",
       "name": "fanliu-yi",
+      "official": false,
+      "count": 1
+    },
+    {
+      "id": "birdstudy-nj",
+      "name": "歌词封面助手",
       "official": false,
       "count": 1
     }
@@ -138,6 +144,35 @@
       "featured": false
     },
     {
+      "entryPath": "mpd-player",
+      "name": "MPD播控音箱",
+      "version": "1.2.0",
+      "description": "通过MPD播放器远程控制有线音箱、蓝牙音箱、DLNA设备放歌",
+      "author": "Songloft Team",
+      "permissions": [
+        "storage",
+        "persistent-storage",
+        "songs.read",
+        "playlists.read",
+        "command",
+        "net"
+      ],
+      "minHostVersion": "2.8.2",
+      "homepage": "https://github.com/songloft-org/songloft-plugin-mpd",
+      "pluginJsonUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-mpd/main/plugin.json",
+      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-mpd/releases/download/v1.2.0/mpd-player.jsplugin.zip",
+      "updateUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-mpd/main/plugin.json",
+      "source": "open",
+      "origin": "official",
+      "repo": "https://github.com/songloft-org/songloft-plugin-mpd",
+      "stars": 1,
+      "updatedAt": "2026-07-17T11:03:19Z",
+      "license": null,
+      "logo": "icons/mpd-player.svg",
+      "tags": [],
+      "featured": false
+    },
+    {
       "entryPath": "stats",
       "name": "播放统计",
       "version": "2026.7.15",
@@ -159,6 +194,30 @@
       "updatedAt": "2026-07-17T06:47:42Z",
       "license": null,
       "logo": "icons/stats.svg",
+      "tags": [],
+      "featured": false
+    },
+    {
+      "entryPath": "lyrics-cover-helper",
+      "name": "歌词封面助手",
+      "version": "1.0.0",
+      "description": "为“音流”，“箭头音乐”等提供歌词封面",
+      "author": "birdstudy-nj",
+      "permissions": [
+        "storage"
+      ],
+      "minHostVersion": "1.3.0",
+      "homepage": null,
+      "pluginJsonUrl": "https://raw.githubusercontent.com/birdstudy-nj/songloft-lyrics-cover-helper/refs/heads/main/plugin.json",
+      "downloadUrl": "https://github.com/birdstudy-nj/songloft-lyrics-cover-helper/releases/download/v1.0.0/lyrics-cover-helper.jsplugin.zip",
+      "updateUrl": "https://raw.githubusercontent.com/birdstudy-nj/songloft-lyrics-cover-helper/main/plugin.json",
+      "source": "open",
+      "origin": "birdstudy-nj",
+      "repo": "https://github.com/birdstudy-nj/songloft-lyrics-cover-helper",
+      "stars": 1,
+      "updatedAt": "2026-07-16T10:36:39Z",
+      "license": "Apache-2.0",
+      "logo": "icons/lyrics-cover-helper.svg",
       "tags": [],
       "featured": false
     },
@@ -267,34 +326,6 @@
       "updatedAt": "2026-07-14T02:05:51Z",
       "license": "Apache-2.0",
       "logo": "icons/radio.svg",
-      "tags": [],
-      "featured": false
-    },
-    {
-      "entryPath": "mpd-player",
-      "name": "MPD播控音箱",
-      "version": "1.0.8",
-      "description": "通过MPD播放器远程控制有线音箱、蓝牙音箱、DLNA设备放歌",
-      "author": "Songloft Team",
-      "permissions": [
-        "storage",
-        "songs.read",
-        "playlists.read",
-        "command",
-        "net"
-      ],
-      "minHostVersion": "2.8.2",
-      "homepage": "https://github.com/songloft-org/songloft-plugin-mpd",
-      "pluginJsonUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-mpd/main/plugin.json",
-      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-mpd/releases/download/v1.0.8/mpd-player.jsplugin.zip",
-      "updateUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-mpd/main/plugin.json",
-      "source": "open",
-      "origin": "official",
-      "repo": "https://github.com/songloft-org/songloft-plugin-mpd",
-      "stars": 1,
-      "updatedAt": "2026-07-11T01:46:50Z",
-      "license": null,
-      "logo": "icons/mpd-player.svg",
       "tags": [],
       "featured": false
     },

@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+    <defs>
+        <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#1e293b" />
+            <stop offset="100%" stop-color="#020617" />
+        </linearGradient>
+
+        <linearGradient id="coverGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#3b82f6" />
+            <stop offset="50%" stop-color="#8b5cf6" />
+            <stop offset="100%" stop-color="#ec4899" />
+        </linearGradient>
+
+        <filter id="shadowCover" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="4" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.6"/>
+        </filter>
+        <filter id="shadowNote" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.7"/>
+        </filter>
+    </defs>
+
+    <rect x="16" y="16" width="480" height="480" rx="108" fill="url(#bgGradient)" />
+    <rect x="16" y="16" width="480" height="480" rx="108" fill="none" stroke="#334155" stroke-width="2" />
+
+    <g transform="translate(0, -40)">
+        <line x1="64" y1="256" x2="448" y2="256" stroke="#334155" stroke-width="2" stroke-dasharray="8 8" />
+
+        <g stroke="#38bdf8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M 64 170 L 120 256 L 160 256" fill="none" stroke-width="6" opacity="0.85"/>
+            <path d="M 64 342 L 120 256" fill="none" stroke-width="6" opacity="0.85"/>
+            <circle cx="120" cy="256" r="22" fill="none" stroke-width="2" opacity="0.4"/>
+            <circle cx="64" cy="170" r="7" fill="#38bdf8" stroke="none"/>
+            <circle cx="64" cy="342" r="7" fill="#38bdf8" stroke="none"/>
+            <circle cx="120" cy="256" r="10" fill="#0f172a" stroke-width="4"/>
+        </g>
+
+        <g stroke="#ec4899" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M 352 256 L 392 256 L 448 170" fill="none" stroke-width="6" opacity="0.85"/>
+            <path d="M 392 256 L 448 342" fill="none" stroke-width="6" opacity="0.85"/>
+            <circle cx="392" cy="256" r="22" fill="none" stroke-width="2" opacity="0.4"/>
+            <circle cx="448" cy="170" r="7" fill="#ec4899" stroke="none"/>
+            <circle cx="448" cy="342" r="7" fill="#ec4899" stroke="none"/>
+            <circle cx="392" cy="256" r="10" fill="#0f172a" stroke-width="4"/>
+        </g>
+
+        <g transform="rotate(-8 256 256)" filter="url(#shadowCover)">
+            <rect x="146" y="136" width="220" height="220" rx="40" fill="url(#coverGradient)" />
+            <rect x="180" y="176" width="90" height="14" rx="7" fill="#ffffff" opacity="0.85" />
+            <rect x="180" y="208" width="140" height="14" rx="7" fill="#ffffff" opacity="0.85" />
+            <rect x="180" y="240" width="110" height="14" rx="7" fill="#ffffff" opacity="0.85" />
+            <rect x="180" y="272" width="152" height="14" rx="7" fill="#ffffff" opacity="0.85" />
+        </g>
+
+        <g filter="url(#shadowNote)">
+            <circle cx="210" cy="320" r="32" fill="#ffffff"/>
+            <rect x="228" y="180" width="14" height="140" fill="#ffffff"/>
+            <circle cx="310" cy="290" r="32" fill="#ffffff"/>
+            <rect x="328" y="150" width="14" height="140" fill="#ffffff"/>
+            <path d="M 228 180 L 342 145 L 342 175 L 228 210 Z" fill="#ffffff"/>
+        </g>
+    </g>
+
+    <g transform="translate(0, -15)">
+        <rect x="76" y="360" width="360" height="116" rx="58" fill="#0f172a" stroke="#334155" stroke-width="4"/>
+        <circle cx="136" cy="418" r="18" fill="#10b981" />
+        <text x="276" y="446" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="900" font-size="84" fill="#e2e8f0" text-anchor="middle" letter-spacing="4">API</text>
+    </g>
+</svg>
