@@ -1,15 +1,19 @@
 #!/usr/bin/env node
-// 从「提交插件源」Issue 的正文里解析出源地址（registry.json / plugin.json URL）。
+// 从「提交插件源」Issue 的正文里解析出源地址（registry.json / plugin.json URL）
+// 以及用户填写的可选「展示名」。
 //
 // 这是 submit-source.yml 的第一环：把用户在 Issue 表单里填写的
-// 「插件源地址」抽取成标准 URL，交给后续的 `validate:source` 校验。
+// 「插件源地址」抽取成标准 URL，并尽量带上「展示名」，交给后续的
+// `validate:source` 校验与 sources.json 追加。
 //
 // 用法：
 //   node scripts/parse_submission.mjs <issue_body_file>   读取文件内容解析
 //   node scripts/parse_submission.mjs <url>               直接传入 URL（本地调试）
 //
-// 输出：成功时把解析到的 URL 打印到 stdout（一行），退出码 0；
-//       找不到合法 URL 时打印原因到 stderr，退出码 1。
+// 输出：成功时打印两行到 stdout ——
+//       第 1 行：解析到的源 URL
+//       第 2 行：用户填写的「展示名」（未填写则为空行）
+//       退出码 0。找不到合法 URL 时打印原因到 stderr，退出码 1。
 
 import { readFileSync, existsSync } from 'node:fs'
 import { resolve } from 'node:path'
@@ -40,6 +44,17 @@ function extractUrl(body) {
   return null
 }
 
+// 从正文抽取用户填写的「展示名（选填）」小节内容。
+// GitHub Forms 渲染为 `### 展示名（选填）` 标题 + 一段内容，直到下一个 `### ` 小节或文件尾。
+// 未填写时返回 null，交给上层 fallback（仓库 owner）。
+function extractName(body) {
+  if (typeof body !== 'string' || !body.trim()) return null
+  const m = body.match(/展示名（选填）([\s\S]*?)(?=\n###\s|$)/)
+  if (!m) return null
+  const v = m[1].trim()
+  return v || null
+}
+
 function main() {
   const arg = process.argv[2]
   if (!arg) {
@@ -47,9 +62,9 @@ function main() {
     process.exit(1)
   }
 
-  // 直接传了 URL
+  // 直接传了 URL：仅输出 URL，第二行留空（无展示名）
   if (/^https?:\/\//i.test(arg)) {
-    process.stdout.write(arg + '\n')
+    process.stdout.write(arg + '\n\n')
     process.exit(0)
   }
 
@@ -72,7 +87,8 @@ function main() {
     console.error('未能从 Issue 正文中解析出合法的 http(s) 源地址（registry.json / plugin.json）。')
     process.exit(1)
   }
-  process.stdout.write(url + '\n')
+  const name = extractName(body)
+  process.stdout.write(url + '\n' + (name || '') + '\n')
   process.exit(0)
 }
 

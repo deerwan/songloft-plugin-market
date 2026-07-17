@@ -43,13 +43,16 @@ jobs:
           BODY: ${{ github.event.issue.body }}
         run: |
           printf '%s' "$BODY" > /tmp/issue_body.txt
-          URL=$(node scripts/parse_submission.mjs /tmp/issue_body.txt) || {
+          OUT=$(node scripts/parse_submission.mjs /tmp/issue_body.txt) || {
             echo "valid=false" >> "$GITHUB_OUTPUT"
             echo "error_msg=无法从 Issue 解析出源地址（URL），请检查是否填写了合法的 http(s) 链接。" >> "$GITHUB_OUTPUT"
             exit 0
           }
+          URL=$(printf '%s' "$OUT" | sed -n '1p')
+          NAME=$(printf '%s' "$OUT" | sed -n '2p')
           echo "url=$URL" >> "$GITHUB_OUTPUT"
-          echo "正在校验源：$URL"
+          echo "name=$NAME" >> "$GITHUB_OUTPUT"
+          echo "正在校验源：$URL（展示名：${NAME:-<未填写>}）"
           if npm run validate:source -- "$URL"; then
             echo "valid=true" >> "$GITHUB_OUTPUT"
           else
@@ -83,6 +86,7 @@ jobs:
         id: append
         env:
           URL: ${{ steps.validate.outputs.url }}
+          DISPLAY_NAME: ${{ steps.validate.outputs.name }}
         run: |
           node -e "
             const fs = require('fs');
@@ -90,13 +94,15 @@ jobs:
             const cfg = JSON.parse(fs.readFileSync(path, 'utf8'));
             const exists = cfg.sources.some(s => (typeof s === 'string' ? s : s.url) === process.env.URL);
             if (exists) { console.log('源已存在，跳过追加'); process.exit(0); }
-            const m = process.env.URL.match(/raw\.githubusercontent\.com\/([^\/]+)\/([^\/]+)/i)
-              || process.env.URL.match(/github\.com\/([^\/]+)\/([^\/]+)/i);
-            const name = m ? m[2].replace(/\.git$/i, '') : '自定义源';
-            const id = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+            const ownerMatch = process.env.URL.match(/raw\.githubusercontent\.com\/([^\/]+)/i)
+              || process.env.URL.match(/github\.com\/([^\/]+)/i);
+            const owner = ownerMatch ? ownerMatch[1] : '';
+            const displayName = (process.env.DISPLAY_NAME || '').trim();
+            const name = displayName || owner || '自定义源';
+            const id = (owner || displayName || 'source').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || 'source';
             cfg.sources.push({ id, url: process.env.URL, name });
             fs.writeFileSync(path, JSON.stringify(cfg, null, 2) + '\n');
-            console.log('已追加源：' + process.env.URL);
+            console.log('已追加源：' + process.env.URL + '（展示名：' + name + '）');
           "
 
       # 校验通过：开 PR
