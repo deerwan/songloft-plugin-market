@@ -38,6 +38,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      # 静态校验所有已收录插件的包（结构/清单/入口/JS 语法），拦截坏包
+      - name: Validate plugin packages
+        run: npm run validate:source
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       # 前端类型检查 + 构建
       - name: Build website
         run: npm run build:web

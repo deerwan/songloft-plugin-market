@@ -21,6 +21,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync, copyFileSync } from
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { unzipSync, strFromU8 } from 'fflate'
+import { createScript } from 'node:vm'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const repoRoot = resolve(__dirname, '..')
@@ -50,8 +51,13 @@ const GITHUB_PROXY = process.env.GITHUB_PROXY || ''
 //   node scripts/build.mjs https://.../plugin.json   （单插件也行）
 const CLI_TEST_URL = process.argv.slice(2).find((a) => /^https?:\/\//i.test(a)) || ''
 const DRY_RUN = Boolean(CLI_TEST_URL) || process.argv.includes('--dry-run')
+// 包校验：在 DRY_RUN 基础上，额外下载 .jsplugin.zip 做结构/语法静态校验。
+// 用于 submit-source.yml 与 validate.yml（PR 拦截坏包）。不影响正常的生产数据构建。
+const CHECK_PACKAGES = process.argv.includes('--check-packages')
 
 const warnings = []
+// 包校验错误：entryPath -> string[]。仅 --check-packages 时填充，用于 CI 拦截。
+const packageErrors = new Map()
 function warn(msg) {
   warnings.push(msg)
   console.warn(`[build] ⚠️  ${msg}`)
@@ -249,6 +255,24 @@ async function repoHasSource(owner, repo) {
   return false
 }
 
+// 下载并解包 .jsplugin.zip，带内存缓存（图标提取与包校验共用，避免重复下载）。
+// 返回 { files, lastModified }：files 为 { 相对路径 -> Uint8Array }；lastModified 取自响应头。
+const zipCache = new Map()
+async function fetchZip(url) {
+  if (zipCache.has(url)) return zipCache.get(url)
+  const resp = await fetchWithTimeout(viaProxy(url))
+  if (!resp.ok) throw new Error(`HTTP ${resp.status}`)
+  const lm = resp.headers.get('last-modified')
+  const len = Number(resp.headers.get('content-length') || 0)
+  if (len && len > MAX_ZIP_BYTES) throw new Error(`zip 超过 ${MAX_ZIP_BYTES} 字节上限`)
+  const ab = await resp.arrayBuffer()
+  if (ab.byteLength > MAX_ZIP_BYTES) throw new Error(`zip 超过 ${MAX_ZIP_BYTES} 字节上限`)
+  const files = unzipSync(new Uint8Array(ab))
+  const result = { files, lastModified: lm ? new Date(Date.parse(lm)).toISOString() : null }
+  zipCache.set(url, result)
+  return result
+}
+
 // ——————————————————————————————————————————————
 // 图标提取：插件图标只打包在 .jsplugin.zip 内（构建后带 hash 文件名），
 // 仓库里没有独立图片 URL。这里下载插件包、按 zip 内 plugin.json 的 icon
@@ -282,20 +306,9 @@ async function extractIconFromZip(entry, prevMap) {
   if (prev && prev.version === entry.version && reusePrevIcon(entry, prev)) return
 
   try {
-    const resp = await fetchWithTimeout(viaProxy(entry.downloadUrl))
-    if (!resp.ok) throw new Error(`HTTP ${resp.status}`)
-    // 用 release 资源的 Last-Modified 作“最后更新时间”兜底（不依赖 GitHub API 限额）
-    const lm = resp.headers.get('last-modified')
-    if (lm) {
-      const t = Date.parse(lm)
-      if (!Number.isNaN(t)) entry.updatedAt = new Date(t).toISOString()
-    }
-    const len = Number(resp.headers.get('content-length') || 0)
-    if (len && len > MAX_ZIP_BYTES) throw new Error(`zip 超过 ${MAX_ZIP_BYTES} 字节上限`)
-    const ab = await resp.arrayBuffer()
-    if (ab.byteLength > MAX_ZIP_BYTES) throw new Error(`zip 超过 ${MAX_ZIP_BYTES} 字节上限`)
-
-    const files = unzipSync(new Uint8Array(ab))
+    // 下载插件包（带缓存：校验包时复用，避免重复下载）
+    const { files, lastModified } = await fetchZip(entry.downloadUrl)
+    if (lastModified) entry.updatedAt = lastModified
     const names = Object.keys(files)
 
     // 优先按 zip 内 plugin.json 的 icon 字段定位（打包后为 hash 文件名）
@@ -328,6 +341,77 @@ async function extractIconFromZip(entry, prevMap) {
     warn(`提取图标失败：${entry.entryPath}（${e.message}）`)
     reusePrevIcon(entry, prev) // 回退到上次缓存的图标
   }
+}
+
+// ——————————————————————————————————————————————
+// 插件包静态校验（--check-packages）：不执行插件、不需要宿主运行时，
+// 只做「包可解、清单合法、入口存在、JS 语法可编译」四件事，足以在 CI
+// 拦截坏包 / 损坏 zip / 语法错误 / 缺字段等问题。
+// 返回 string[]：错误信息列表；空数组表示通过。
+// ——————————————————————————————————————————————
+
+const REQUIRED_PJ_FIELDS = ['name', 'version', 'description', 'author']
+
+// 这些报错属于 ESM 模块特征，script 模式无法编译，不应判为语法错误
+const ESM_NOISE = /import statement|export .* outside|Cannot use import|Unexpected token 'export'|Unexpected token 'import'/i
+
+async function validatePackage(entry) {
+  const errs = []
+  if (!entry.downloadUrl) {
+    errs.push('缺少 downloadUrl（无法获取插件包）')
+    return errs
+  }
+  let files
+  try {
+    ({ files } = await fetchZip(entry.downloadUrl))
+  } catch (e) {
+    errs.push(`插件包下载/解包失败：${e.message}`)
+    return errs
+  }
+
+  const pjRaw = files['plugin.json']
+  if (!pjRaw) {
+    errs.push('插件包内缺少 plugin.json')
+    return errs
+  }
+  let pj
+  try {
+    pj = JSON.parse(strFromU8(pjRaw))
+  } catch {
+    errs.push('插件包内 plugin.json 不是合法 JSON')
+    return errs
+  }
+
+  for (const f of REQUIRED_PJ_FIELDS) {
+    const v = pj[f]
+    if (v == null || (typeof v === 'string' && !v.trim())) {
+      errs.push(`plugin.json 缺少必填字段：${f}`)
+    }
+  }
+  if (!Array.isArray(pj.permissions)) {
+    errs.push('plugin.json.permissions 应为数组')
+  }
+  if (pj.main) {
+    const base = String(pj.main).split('/').pop()
+    const hit = Object.keys(files).find(
+      (n) => n === pj.main || n === base || n.endsWith('/' + base),
+    )
+    if (!hit) errs.push(`声明的入口文件不存在于包内：${pj.main}`)
+  }
+
+  // 逐个 JS 文件做语法编译（不执行），拦截语法错误/坏包
+  for (const [name, data] of Object.entries(files)) {
+    if (!/\.m?js$/i.test(name) || name.endsWith('/')) continue
+    try {
+      createScript(strFromU8(data), { filename: name })
+    } catch (e) {
+      const msg = e.message || ''
+      if (ESM_NOISE.test(msg)) continue // ESM 特征，跳过
+      errs.push(`JS 语法错误 ${name}：${msg}`)
+    }
+  }
+
+  return errs
 }
 
 // ——————————————————————————————————————————————
@@ -524,6 +608,18 @@ async function main() {
     }
   }
 
+  // 3.5) 包静态校验（仅 --check-packages）：校验将进入输出的插件包
+  if (CHECK_PACKAGES) {
+    for (const entry of byEntry.values()) {
+      if (!entry.downloadUrl) {
+        packageErrors.set(entry.entryPath, ['缺少 downloadUrl（无法获取插件包）'])
+        continue
+      }
+      const errs = await validatePackage(entry)
+      if (errs.length) packageErrors.set(entry.entryPath, errs)
+    }
+  }
+
   // 4) overlay 合并 + 排序（精选优先，其次 stars，再次更新时间）
   let plugins = [...byEntry.values()].map((e) => applyOverlay(e, overrides))
   plugins.sort((a, b) => {
@@ -550,6 +646,16 @@ async function main() {
     plugins,
   }
 
+  // 包静态校验：有错误则直接判失败（submit-source.yml / validate.yml 均会拦截）
+  if (CHECK_PACKAGES && packageErrors.size) {
+    console.error('\n[build] ❌ 插件包校验未通过：')
+    for (const [ep, errs] of packageErrors) {
+      console.error(`  • ${ep}:`)
+      for (const e of errs) console.error(`    - ${e}`)
+    }
+    process.exit(1)
+  }
+
   // 5) 测试模式只打印结果，不写盘；否则写 data/（缓存）与 public/（前端运行时）
   if (DRY_RUN) {
     info(`【测试模式】共 ${plugins.length} 个插件（开源 ${openCount} / 闭源 ${plugins.length - openCount}），警告 ${warnings.length} 条`)
@@ -567,6 +673,7 @@ async function main() {
       console.error('[build] ❌ 测试失败：未能从源解析到任何插件（URL 不可达，或不是合法的 registry.json / plugin.json）')
       process.exit(1)
     }
+    if (CHECK_PACKAGES) info('✅ 全部插件包静态校验通过')
     if (warnings.length) console.log(`  警告：\n    - ${warnings.join('\n    - ')}`)
     info('✅ 测试完成（未写入任何文件）')
     return
