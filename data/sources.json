@@ -1,6 +1,6 @@
 {
   "$schema": "./sources.schema.json",
-  "note": "官方/社区插件源入口。每一项可为字符串 URL，或对象 { id, url, name, official }。构建脚本会递归解析其 includes 与 plugins（去重、深度限制、循环检测），并按顶层源给插件打上 origin 标签，供前端「来源」筛选。",
+  "note": "官方/社区插件源入口。每一项可为字符串 URL，或对象 { id, url, name, official }（可选字段 issue：来源 Issue 编号，由提交工作流自动写入，用于同一 Issue 改地址时替换旧条目；构建脚本会忽略未知字段，手动维护可省略）。构建脚本会递归解析其 includes 与 plugins（去重、深度限制、循环检测），并按顶层源给插件打上 origin 标签，供前端「来源」筛选。",
   "sources": [
     {
       "id": "official",

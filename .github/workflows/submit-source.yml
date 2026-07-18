@@ -3,7 +3,8 @@ name: Submit Source
 # 维护者在提交 Issue 上打 `approved` 标签后触发：
 #   1. 解析 Issue 正文里的源地址
 #   2. 用 `npm run validate:source` 校验（复用现有构建管线的 dry-run）
-#   3. 校验通过 → 追加进 data/sources.json 并开 PR；失败 → 在 Issue 留言报错
+#   3. 校验通过 → 追加进 data/sources.json（同一 Issue 重复提交会先移除旧条目再追加，
+#      实现改地址即更新）并开 PR；失败 → 在 Issue 留言报错
 #
 # 触发条件：仅认 `approved` 标签（无论 Issue 是否带 source-submit，
 # 这样手动建的 Issue 也能走通流程；用模板提交的会自动带 source-submit，无害）。
@@ -87,13 +88,24 @@ jobs:
         env:
           URL: ${{ steps.validate.outputs.url }}
           DISPLAY_NAME: ${{ steps.validate.outputs.name }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
         run: |
           node -e "
             const fs = require('fs');
             const path = 'data/sources.json';
             const cfg = JSON.parse(fs.readFileSync(path, 'utf8'));
-            const exists = cfg.sources.some(s => (typeof s === 'string' ? s : s.url) === process.env.URL);
-            if (exists) { console.log('源已存在，跳过追加'); process.exit(0); }
+            const url = process.env.URL;
+            const issueNo = Number(process.env.ISSUE_NUMBER) || 0;
+            // 1) 同 Issue 替换：先移除该 Issue 之前提交的所有源（按 issue 编号精确匹配），
+            //    实现「在原有 Issue 上改地址、重新打标即更新」而非叠加幽灵源。
+            if (issueNo) {
+              const before = cfg.sources.length;
+              cfg.sources = cfg.sources.filter(s => !(s && typeof s === 'object' && s.issue === issueNo));
+              if (cfg.sources.length < before) console.log('已移除该 Issue 之前的旧源条目（' + (before - cfg.sources.length) + ' 条），准备替换');
+            }
+            // 2) url 去重（双保险）：若新 url 已被其它源收录，则跳过追加
+            const exists = cfg.sources.some(s => (typeof s === 'string' ? s : s.url) === url);
+            if (exists) { console.log('源已存在（url 去重），跳过追加'); process.exit(0); }
             const m = process.env.URL.match(/raw\.githubusercontent\.com\/([^\/]+)\/([^\/]+)(?:\/([^\/]+))?/i)
               || process.env.URL.match(/github\.com\/([^\/]+)\/([^\/]+)(?:\/(?:raw\/)?([^\/]+))?/i);
             const owner = m ? m[1] : '';
@@ -105,9 +117,11 @@ jobs:
             // id 用 owner/repo（含分支），同一 owner 下的不同源也能区分，避免 origin 碰撞
             const idBase = owner ? `${owner}-${repo}${ref ? '-' + ref : ''}` : (displayName || 'source');
             const id = idBase.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || 'source';
-            cfg.sources.push({ id, url: process.env.URL, name });
+            // 记录来源 Issue 编号（可选字段，供后续同 Issue 替换；构建端会忽略未知字段）
+            const entry = issueNo ? { id, url, name, issue: issueNo } : { id, url, name };
+            cfg.sources.push(entry);
             fs.writeFileSync(path, JSON.stringify(cfg, null, 2) + '\n');
-            console.log('已追加源：' + process.env.URL + '（展示名：' + name + '）');
+            console.log('已追加源：' + url + '（展示名：' + name + '）');
           "
 
       # 校验通过：开 PR
