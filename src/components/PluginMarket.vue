@@ -130,16 +130,12 @@ function logoSrc(logo: string): string {
   return `${import.meta.env.BASE_URL}${logo.replace(/^\//, '')}`
 }
 
-function relativeTime(iso: string | null): string {
+function formatDateTime(iso: string | null): string {
   if (!iso) return ''
-  const d = new Date(iso).getTime()
-  if (Number.isNaN(d)) return ''
-  const diff = Date.now() - d
-  const day = 86400000
-  if (diff < day) return '今天'
-  if (diff < 30 * day) return `${Math.floor(diff / day)} 天前`
-  if (diff < 365 * day) return `${Math.floor(diff / (30 * day))} 个月前`
-  return `${Math.floor(diff / (365 * day))} 年前`
+  const d = new Date(iso)
+  if (Number.isNaN(d.getTime())) return ''
+  const pad = (n: number) => String(n).padStart(2, '0')
+  return `${d.getFullYear()}/${d.getMonth() + 1}/${d.getDate()} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`
 }
 
 async function copySubscribe(p: Plugin) {
@@ -246,7 +242,7 @@ async function copySubscribe(p: Plugin) {
             </span>
             <span v-if="p.license" class="badge">{{ p.license }}</span>
             <span v-if="p.source === 'open' && p.stars !== null" class="badge">★ {{ p.stars }}</span>
-            <span v-if="p.updatedAt" class="badge">{{ relativeTime(p.updatedAt) }}</span>
+            <span v-if="p.updatedAt" class="badge">{{ formatDateTime(p.updatedAt) }}</span>
           </div>
 
           <div v-if="p.permissions.length" class="card__perms">
