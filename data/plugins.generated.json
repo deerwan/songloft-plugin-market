@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-18T13:20:36.471Z",
+  "generatedAt": "2026-07-18T14:03:11.741Z",
   "count": 21,
   "openCount": 20,
   "closedCount": 1,
@@ -223,8 +223,8 @@
     {
       "entryPath": "news",
       "name": "新闻资讯",
-      "version": "1.3.18",
-      "description": "新闻资讯聚合 - 多平台新闻与音频播放",
+      "version": "1.3.21",
+      "description": "新闻资讯聚合 - 多平台新闻与TTS朗读",
       "author": "Mars",
       "permissions": [
         "storage",
@@ -236,13 +236,13 @@
       "minHostVersion": "1.0.0",
       "homepage": "https://github.com/moonbai/songloft-plugin-news",
       "pluginJsonUrl": "https://github.com/moonbai/songloft-plugin-news/raw/main/news-plugin/plugin.json",
-      "downloadUrl": "https://github.com/moonbai/songloft-plugin-news/releases/download/v1.3.18/news.jsplugin.zip",
+      "downloadUrl": "https://github.com/moonbai/songloft-plugin-news/releases/download/v1.3.21/news.jsplugin.zip",
       "updateUrl": "https://github.com/moonbai/songloft-plugin-news/raw/main/news-plugin/plugin.json",
       "source": "open",
       "origin": "moonbai",
       "repo": "https://github.com/moonbai/songloft-plugin-news",
       "stars": 1,
-      "updatedAt": "2026-07-18T12:09:17Z",
+      "updatedAt": "2026-07-18T14:02:52Z",
       "license": "MIT",
       "logo": null,
       "tags": [],
