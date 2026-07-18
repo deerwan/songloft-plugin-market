@@ -53,9 +53,15 @@ jobs:
             echo "插件数据无变化，跳过提交"
           fi
 
-      # 构建前端
+      # 构建前端（纯静态，不加载 Cloudflare 插件）
       - name: Build website
         run: npm run build:web
+        env:
+          DEPLOY_TARGET: github-pages
+
+      # 写入自定义域名（避免 Actions 部署后自定义域名被清空）
+      - name: Write CNAME for custom domain
+        run: echo "songloft-store.lllh.de" > dist/CNAME
 
       - uses: actions/upload-pages-artifact@v3
         with:
