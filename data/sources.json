@@ -27,6 +27,11 @@
       "id": "moonbai",
       "url": "https://github.com/moonbai/songloft-plugin-news/raw/main/news-plugin/plugin.json",
       "name": "新闻资讯聚合"
+    },
+    {
+      "id": "snakejohn",
+      "url": "https://raw.githubusercontent.com/snakeJohn/starlight/main/registry.json",
+      "name": "Starlight"
     }
   ]
 }
