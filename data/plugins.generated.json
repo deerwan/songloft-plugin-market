@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-07-18T00:39:51.020Z",
-  "count": 18,
-  "openCount": 17,
+  "generatedAt": "2026-07-18T10:21:12.470Z",
+  "count": 20,
+  "openCount": 19,
   "closedCount": 1,
   "sources": [
     {
@@ -14,7 +14,7 @@
       "id": "deerwan",
       "name": "deerwan",
       "official": false,
-      "count": 1
+      "count": 2
     },
     {
       "id": "fanliu-yi",
@@ -27,6 +27,12 @@
       "name": "歌词封面助手",
       "official": false,
       "count": 1
+    },
+    {
+      "id": "moonbai",
+      "name": "新闻资讯聚合",
+      "official": false,
+      "count": 1
     }
   ],
   "warnings": [],
@@ -34,7 +40,7 @@
     {
       "entryPath": "miot",
       "name": "智能音箱",
-      "version": "2026.7.17",
+      "version": "2026.7.18",
       "description": "通过 MIoT 协议把歌曲投放到智能音箱设备",
       "author": "Songloft Team",
       "permissions": [
@@ -50,13 +56,13 @@
       "minHostVersion": "2.9.5",
       "homepage": "https://github.com/songloft-org/songloft",
       "pluginJsonUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-miot/main/plugin.json",
-      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-miot/releases/download/v2026.7.17/miot.jsplugin.zip",
+      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-miot/releases/download/v2026.7.18/miot.jsplugin.zip",
       "updateUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-miot/main/plugin.json",
       "source": "open",
       "origin": "official",
       "repo": "https://github.com/songloft-org/songloft-plugin-miot",
       "stars": 31,
-      "updatedAt": "2026-07-17T15:24:55Z",
+      "updatedAt": "2026-07-18T03:04:29Z",
       "license": null,
       "logo": "icons/miot.svg",
       "tags": [],
@@ -140,6 +146,87 @@
       "updatedAt": "2026-07-17T08:01:10Z",
       "license": "Apache-2.0",
       "logo": "icons/iwebplayer.svg",
+      "tags": [],
+      "featured": false
+    },
+    {
+      "entryPath": "audiobook",
+      "name": "有声书",
+      "version": "1.0.8",
+      "description": "本地有声书管理与播放：扫描本地有声书目录，提供分类展示、搜索、章节播放、播放进度与收藏功能。",
+      "author": "MiMusic Team",
+      "permissions": [
+        "storage",
+        "fs",
+        "fs:music",
+        "fs:external",
+        "command"
+      ],
+      "minHostVersion": "2.0.0",
+      "homepage": "https://github.com/mimusic-org/mimusic-jsplugin-releases/tree/audiobook",
+      "pluginJsonUrl": "https://raw.githubusercontent.com/mimusic-org/mimusic-jsplugin-releases/audiobook/plugin.json",
+      "downloadUrl": "https://github.com/mimusic-org/mimusic-jsplugin-releases/releases/download/audiobook-v1.0.8/audiobook.jsplugin.zip",
+      "updateUrl": "https://raw.githubusercontent.com/mimusic-org/mimusic-jsplugin-releases/audiobook/plugin.json",
+      "source": "closed",
+      "origin": "official",
+      "repo": "https://github.com/mimusic-org/mimusic-jsplugin-releases",
+      "stars": 2,
+      "updatedAt": "2026-07-08T01:29:36Z",
+      "license": null,
+      "logo": "icons/audiobook.svg",
+      "tags": [],
+      "featured": false
+    },
+    {
+      "entryPath": "news",
+      "name": "新闻资讯",
+      "version": "1.3.11",
+      "description": "新闻资讯聚合 - 多平台新闻与音频播放",
+      "author": "Mars",
+      "permissions": [
+        "storage",
+        "jsenv",
+        "songs.write",
+        "playlists.read"
+      ],
+      "minHostVersion": "1.0.0",
+      "homepage": "https://github.com/moonbai/songloft-plugin-news",
+      "pluginJsonUrl": "https://github.com/moonbai/songloft-plugin-news/raw/main/news-plugin/plugin.json",
+      "downloadUrl": "https://github.com/moonbai/songloft-plugin-news/releases/download/v1.3.11/news.jsplugin.zip",
+      "updateUrl": "https://github.com/moonbai/songloft-plugin-news/raw/main/news-plugin/plugin.json",
+      "source": "open",
+      "origin": "moonbai",
+      "repo": "https://github.com/moonbai/songloft-plugin-news",
+      "stars": 1,
+      "updatedAt": "2026-07-18T10:16:41Z",
+      "license": "MIT",
+      "logo": null,
+      "tags": [],
+      "featured": false
+    },
+    {
+      "entryPath": "coco-downloader",
+      "name": "COCO音乐",
+      "version": "1.0.0",
+      "description": "基于 Coco Downloader 的音乐搜索、播放和下载插件，接入自建 Coco Server",
+      "author": "deerwan",
+      "permissions": [
+        "storage",
+        "songs.write",
+        "playlists.write"
+      ],
+      "minHostVersion": "1.0.0",
+      "homepage": null,
+      "pluginJsonUrl": "https://raw.githubusercontent.com/deerwan/songloft-plugin-coco/main/plugin.json",
+      "downloadUrl": "https://github.com/deerwan/songloft-plugin-coco/releases/download/v1.0.0/coco-downloader.jsplugin.zip",
+      "updateUrl": "https://raw.githubusercontent.com/deerwan/songloft-plugin-coco/main/plugin.json",
+      "source": "open",
+      "origin": "deerwan",
+      "repo": "https://github.com/deerwan/songloft-plugin-coco",
+      "stars": 1,
+      "updatedAt": "2026-07-18T02:34:45Z",
+      "license": null,
+      "logo": "icons/coco-downloader.svg",
       "tags": [],
       "featured": false
     },
@@ -380,34 +467,6 @@
       "updatedAt": "2026-07-09T01:41:30Z",
       "license": null,
       "logo": "icons/downloader.svg",
-      "tags": [],
-      "featured": false
-    },
-    {
-      "entryPath": "audiobook",
-      "name": "有声书",
-      "version": "1.0.8",
-      "description": "本地有声书管理与播放：扫描本地有声书目录，提供分类展示、搜索、章节播放、播放进度与收藏功能。",
-      "author": "MiMusic Team",
-      "permissions": [
-        "storage",
-        "fs",
-        "fs:music",
-        "fs:external",
-        "command"
-      ],
-      "minHostVersion": "2.0.0",
-      "homepage": "https://github.com/mimusic-org/mimusic-jsplugin-releases/tree/audiobook",
-      "pluginJsonUrl": "https://raw.githubusercontent.com/mimusic-org/mimusic-jsplugin-releases/audiobook/plugin.json",
-      "downloadUrl": "https://github.com/mimusic-org/mimusic-jsplugin-releases/releases/download/audiobook-v1.0.8/audiobook.jsplugin.zip",
-      "updateUrl": "https://raw.githubusercontent.com/mimusic-org/mimusic-jsplugin-releases/audiobook/plugin.json",
-      "source": "closed",
-      "origin": "official",
-      "repo": "https://github.com/mimusic-org/mimusic-jsplugin-releases",
-      "stars": 1,
-      "updatedAt": "2026-07-08T01:29:36Z",
-      "license": null,
-      "logo": "icons/audiobook.svg",
       "tags": [],
       "featured": false
     },
