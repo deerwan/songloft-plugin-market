@@ -634,6 +634,7 @@ async function main() {
     id: s.id,
     name: s.name,
     official: s.official,
+    url: s.url,
     count: plugins.filter((p) => p.origin === s.id).length,
   }))
   const output = {

@@ -28,6 +28,7 @@ interface SourceInfo {
   id: string
   name: string
   official: boolean
+  url: string
   count: number
 }
 
@@ -86,6 +87,15 @@ const originSources = computed<SourceInfo[]>(() => {
   return list.slice().sort((a, b) => Number(b.official) - Number(a.official))
 })
 
+// 来源 id -> 用户提交的源地址（registry feed），用于「复制源」
+const sourceUrlMap = computed(() => {
+  const m = new Map<string, string>()
+  for (const s of data.value?.sources || []) {
+    if (s.url) m.set(s.id, s.url)
+  }
+  return m
+})
+
 const filtered = computed(() => {
   let list = data.value?.plugins ? [...data.value.plugins] : []
 
@@ -139,7 +149,7 @@ function formatDateTime(iso: string | null): string {
 }
 
 async function copySubscribe(p: Plugin) {
-  const text = p.pluginJsonUrl
+  const text = sourceUrlMap.value.get(p.origin || '') || p.pluginJsonUrl
   try {
     await navigator.clipboard.writeText(text)
     copiedKey.value = p.entryPath

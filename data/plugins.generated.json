@@ -8,37 +8,43 @@
       "id": "official",
       "name": "官方",
       "official": true,
-      "count": 15
+      "count": 15,
+      "url": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-registry/main/registry.json"
     },
     {
       "id": "deerwan",
       "name": "deerwan",
       "official": false,
-      "count": 2
+      "count": 2,
+      "url": "https://raw.githubusercontent.com/deerwan/songloft-plugin-registry/main/registry.json"
     },
     {
       "id": "fanliu-yi",
       "name": "fanliu-yi",
       "official": false,
-      "count": 1
+      "count": 1,
+      "url": "https://raw.githubusercontent.com/fanliu-yi/songloft-plugin-registry/main/registry.json"
     },
     {
       "id": "birdstudy-nj",
       "name": "歌词封面助手",
       "official": false,
-      "count": 1
+      "count": 1,
+      "url": "https://raw.githubusercontent.com/birdstudy-nj/songloft-lyrics-cover-helper/refs/heads/main/plugin.json"
     },
     {
       "id": "moonbai",
       "name": "新闻资讯聚合",
       "official": false,
-      "count": 1
+      "count": 1,
+      "url": "https://github.com/moonbai/songloft-plugin-news/raw/main/news-plugin/plugin.json"
     },
     {
       "id": "snakejohn",
       "name": "Starlight",
       "official": false,
-      "count": 1
+      "count": 1,
+      "url": "https://raw.githubusercontent.com/snakeJohn/starlight/main/registry.json"
     }
   ],
   "warnings": [],
