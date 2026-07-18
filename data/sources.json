@@ -22,6 +22,11 @@
       "id": "birdstudy-nj",
       "url": "https://raw.githubusercontent.com/birdstudy-nj/songloft-lyrics-cover-helper/refs/heads/main/plugin.json",
       "name": "歌词封面助手"
+    },
+    {
+      "id": "moonbai",
+      "url": "https://github.com/moonbai/songloft-plugin-news/raw/main/news-plugin/plugin.json",
+      "name": "新闻资讯聚合"
     }
   ]
 }
