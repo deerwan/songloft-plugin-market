@@ -160,10 +160,13 @@ function normalizeSource(entry, index) {
   const raw = typeof entry === 'string' ? { url: entry } : { ...(entry || {}) }
   const url = String(raw.url || '').trim()
   if (!url) return null
-  const owner = parseGitHubRepo(url)?.owner || ''
+  const gh = parseGitHubRepo(url)
+  const owner = gh?.owner || ''
   const official = raw.official ?? owner === 'songloft-org'
-  const id = String(raw.id || owner || `source-${index + 1}`)
-  const name = String(raw.name || (official ? '官方' : owner || `源 ${index + 1}`))
+  // 兜底 id：用 owner/repo（含分支），与 submit-source.yml 一致，避免同 owner 不同源碰撞
+  const idBase = raw.id || (gh ? `${gh.owner}-${gh.repo}${gh.ref ? '-' + gh.ref : ''}` : `source-${index + 1}`)
+  const id = String(idBase).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || `source-${index + 1}`
+  const name = String(raw.name || (official ? '官方' : (gh ? `${gh.owner}/${gh.repo}` : `源 ${index + 1}`)))
   return { id, url, name, official: Boolean(official) }
 }
 
@@ -231,11 +234,11 @@ async function expandRegistry(url, { depth, visited, pluginUrls, pluginOrigin, o
 function parseGitHubRepo(...urls) {
   for (const u of urls) {
     if (typeof u !== 'string') continue
-    // raw.githubusercontent.com/owner/repo/... 优先（能拿到插件自身仓库）
-    let m = u.match(/raw\.githubusercontent\.com\/([^/]+)\/([^/#?]+)/i)
-    if (m) return { owner: m[1], repo: m[2].replace(/\.git$/, '') }
-    m = u.match(/github\.com\/([^/]+)\/([^/#?]+)/i)
-    if (m) return { owner: m[1], repo: m[2].replace(/\.git$/, '') }
+    // raw.githubusercontent.com/owner/repo/branch/... 优先（能拿到插件自身仓库）
+    let m = u.match(/raw\.githubusercontent\.com\/([^/]+)\/([^/#?]+)(?:\/([^/#?]+))?/i)
+    if (m) return { owner: m[1], repo: m[2].replace(/\.git$/, ''), ref: m[3] || null }
+    m = u.match(/github\.com\/([^/]+)\/([^/#?]+)(?:\/(?:raw\/)?([^/#?]+))?/i)
+    if (m) return { owner: m[1], repo: m[2].replace(/\.git$/, ''), ref: (m[3] && m[3] !== 'raw') ? m[3] : null }
   }
   return null
 }

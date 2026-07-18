@@ -94,12 +94,17 @@ jobs:
             const cfg = JSON.parse(fs.readFileSync(path, 'utf8'));
             const exists = cfg.sources.some(s => (typeof s === 'string' ? s : s.url) === process.env.URL);
             if (exists) { console.log('源已存在，跳过追加'); process.exit(0); }
-            const ownerMatch = process.env.URL.match(/raw\.githubusercontent\.com\/([^\/]+)/i)
-              || process.env.URL.match(/github\.com\/([^\/]+)/i);
-            const owner = ownerMatch ? ownerMatch[1] : '';
+            const m = process.env.URL.match(/raw\.githubusercontent\.com\/([^\/]+)\/([^\/]+)(?:\/([^\/]+))?/i)
+              || process.env.URL.match(/github\.com\/([^\/]+)\/([^\/]+)(?:\/(?:raw\/)?([^\/]+))?/i);
+            const owner = m ? m[1] : '';
+            const repo = m ? m[2] : '';
+            const ref = (m && m[3] && m[3] !== 'raw') ? m[3] : '';
             const displayName = (process.env.DISPLAY_NAME || '').trim();
-            const name = displayName || owner || '自定义源';
-            const id = (owner || displayName || 'source').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || 'source';
+            // 展示名：优先用户填写；否则用 owner/repo，避免同 owner 不同源时标签雷同
+            const name = displayName || (owner ? `${owner}/${repo}` : '自定义源');
+            // id 用 owner/repo（含分支），同一 owner 下的不同源也能区分，避免 origin 碰撞
+            const idBase = owner ? `${owner}-${repo}${ref ? '-' + ref : ''}` : (displayName || 'source');
+            const id = idBase.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || 'source';
             cfg.sources.push({ id, url: process.env.URL, name });
             fs.writeFileSync(path, JSON.stringify(cfg, null, 2) + '\n');
             console.log('已追加源：' + process.env.URL + '（展示名：' + name + '）');
