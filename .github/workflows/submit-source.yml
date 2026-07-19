@@ -113,9 +113,9 @@ jobs:
             const ref = (m && m[3] && m[3] !== 'raw') ? m[3] : '';
             const displayName = (process.env.DISPLAY_NAME || '').trim();
             // 展示名：优先用户填写；否则用 owner/repo，避免同 owner 不同源时标签雷同
-            const name = displayName || (owner ? `${owner}/${repo}` : '自定义源');
+            const name = displayName || (owner ? (owner + '/' + repo) : '自定义源');
             // id 用 owner/repo（含分支），同一 owner 下的不同源也能区分，避免 origin 碰撞
-            const idBase = owner ? `${owner}-${repo}${ref ? '-' + ref : ''}` : (displayName || 'source');
+            const idBase = owner ? (owner + '-' + repo + (ref ? '-' + ref : '')) : (displayName || 'source');
             const id = idBase.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || 'source';
             // 记录来源 Issue 编号（可选字段，供后续同 Issue 替换；构建端会忽略未知字段）
             const entry = issueNo ? { id, url, name, issue: issueNo } : { id, url, name };
