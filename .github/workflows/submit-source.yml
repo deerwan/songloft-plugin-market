@@ -53,6 +53,15 @@ jobs:
           NAME=$(printf '%s' "$OUT" | sed -n '2p')
           echo "url=$URL" >> "$GITHUB_OUTPUT"
           echo "name=$NAME" >> "$GITHUB_OUTPUT"
+          # 早拦截：源地址必须以 registry.json 结尾（允许 ?/# 查询串），
+          # 避免把 HTML/Markdown 等非 JSON 文档页（如 plugin_registry.html 指南页）当作插件源收录。
+          if printf '%s' "$URL" | grep -qE 'registry\.json([?#].*)?$'; then
+            echo "源地址以 registry.json 结尾，进入校验：$URL"
+          else
+            echo "valid=false" >> "$GITHUB_OUTPUT"
+            echo "error_msg=源地址必须以 registry.json 结尾（可在 URL 后附加 ?token= 等查询参数）。请提交公开可访问的 registry.json 源地址，而非 HTML/Markdown 文档页；若只有一个 plugin.json，请先包一层 registry.json（含 plugins 数组）再提交。" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
           echo "正在校验源：$URL（展示名：${NAME:-<未填写>}）"
           if npm run validate:source -- "$URL"; then
             echo "valid=true" >> "$GITHUB_OUTPUT"

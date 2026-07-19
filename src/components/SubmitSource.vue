@@ -16,6 +16,10 @@ function submit() {
     alert('请输入合法的 http(s) 源地址')
     return
   }
+  if (!/registry\.json([?#].*)?$/i.test(raw)) {
+    alert('源地址必须以 registry.json 结尾（如 https://.../main/registry.json）。若只有一个 plugin.json，请先包一层含 plugins 数组的 registry.json 再提交。')
+    return
+  }
   const title = encodeURIComponent(`[Source] ${name.value.trim() || raw}`)
   const body = encodeURIComponent(
     `### 插件源地址（必填）\n${raw}\n\n### 展示名（选填）\n${name.value.trim()}\n\n### 备注（选填）\n\n### 确认项\n- [x] 该源可公开访问，且我已自测能正常解析。\n- [x] 该源中的插件不含恶意代码。`,
@@ -38,7 +42,8 @@ function onKey(e: KeyboardEvent) {
         <button class="modal__close" aria-label="关闭" @click="emit('close')">×</button>
       </header>
       <p class="modal__hint">
-        提交一个可公开访问的 <code>registry.json</code>（或单个 <code>plugin.json</code>）地址。
+        提交一个可公开访问的 <code>registry.json</code> 源地址（URL 须以
+        <code>registry.json</code> 结尾，可附加 <code>?token=</code> 等查询参数）。
         维护者审核通过后，该源会自动收录进本仓库，下次构建即可展示其下所有插件。
       </p>
       <label class="field">
