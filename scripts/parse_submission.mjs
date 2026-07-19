@@ -52,7 +52,11 @@ function extractName(body) {
   const m = body.match(/展示名（选填）([\s\S]*?)(?=\n###\s|$)/)
   if (!m) return null
   const v = m[1].trim()
-  return v || null
+  if (!v) return null
+  // GitHub Forms 未填写时默认占位符为 "_No response_"，应视为空，交上层按 owner fallback
+  const norm = v.toLowerCase().replace(/[_\s]/g, '')
+  if (['noreponse', '无', '暂无', 'n/a', 'na'].includes(norm)) return null
+  return v
 }
 
 function main() {
