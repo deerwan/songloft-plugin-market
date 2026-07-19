@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-07-19T08:54:32.710Z",
-  "count": 22,
-  "openCount": 21,
+  "generatedAt": "2026-07-19T08:55:57.536Z",
+  "count": 23,
+  "openCount": 22,
   "closedCount": 1,
   "sources": [
     {
@@ -48,9 +48,16 @@
     },
     {
       "id": "hanxi-songloft-plugin-ytdlp-main",
-      "name": "_No response_",
+      "name": "hanxi/ytdlp",
       "official": false,
       "url": "https://raw.githubusercontent.com/hanxi/songloft-plugin-ytdlp/main/registry.json",
+      "count": 1
+    },
+    {
+      "id": "hanxi-songloft-plugin-bili-main",
+      "name": "hanxi/bili",
+      "official": false,
+      "url": "https://raw.githubusercontent.com/hanxi/songloft-plugin-bili/main/registry.json",
       "count": 1
     }
   ],
@@ -137,6 +144,33 @@
       "updatedAt": "2026-07-16T08:39:48Z",
       "license": "Apache-2.0",
       "logo": "icons/ytdlp.svg",
+      "tags": [],
+      "featured": false
+    },
+    {
+      "entryPath": "bili",
+      "name": "哔哩音乐",
+      "version": "2026.7.16",
+      "description": "登录 B 站后搜索、导入歌曲，浏览并导入收藏夹歌单，支持按需播放与下载到本地",
+      "author": "songloft",
+      "permissions": [
+        "storage",
+        "playlists.read",
+        "songs.write",
+        "inter-plugin"
+      ],
+      "minHostVersion": "2.0.0",
+      "homepage": null,
+      "pluginJsonUrl": "https://raw.githubusercontent.com/hanxi/songloft-plugin-bili/main/plugin.json",
+      "downloadUrl": "https://github.com/hanxi/songloft-plugin-bili/releases/download/v2026.7.16/bili.jsplugin.zip",
+      "updateUrl": null,
+      "source": "open",
+      "origin": "hanxi-songloft-plugin-bili-main",
+      "repo": "https://github.com/hanxi/songloft-plugin-bili",
+      "stars": 5,
+      "updatedAt": "2026-07-16T04:04:45Z",
+      "license": null,
+      "logo": "icons/bili.svg",
       "tags": [],
       "featured": false
     },
