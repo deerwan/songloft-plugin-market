@@ -55,7 +55,7 @@ function extractName(body) {
   if (!v) return null
   // GitHub Forms 未填写时默认占位符为 "_No response_"，应视为空，交上层按 owner fallback
   const norm = v.toLowerCase().replace(/[_\s]/g, '')
-  if (['noreponse', '无', '暂无', 'n/a', 'na'].includes(norm)) return null
+  if (['noresponse', '无', '暂无', 'n/a', 'na'].includes(norm)) return null
   return v
 }
 
