@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-07-19T08:41:08.941Z",
-  "count": 21,
-  "openCount": 20,
+  "generatedAt": "2026-07-19T08:46:06.312Z",
+  "count": 22,
+  "openCount": 21,
   "closedCount": 1,
   "sources": [
     {
@@ -44,6 +44,13 @@
       "name": "Starlight",
       "official": false,
       "url": "https://raw.githubusercontent.com/snakeJohn/starlight/main/registry.json",
+      "count": 1
+    },
+    {
+      "id": "hanxi-songloft-plugin-ytdlp-main",
+      "name": "_No response_",
+      "official": false,
+      "url": "https://raw.githubusercontent.com/hanxi/songloft-plugin-ytdlp/main/registry.json",
       "count": 1
     }
   ],
@@ -102,6 +109,34 @@
       "updatedAt": "2026-07-12T16:36:32Z",
       "license": "Apache-2.0",
       "logo": "icons/tag.svg",
+      "tags": [],
+      "featured": false
+    },
+    {
+      "entryPath": "ytdlp",
+      "name": "yt-dlp",
+      "version": "2026.7.16",
+      "description": "通过 yt-dlp 从 YouTube、Bilibili 等平台导入歌单，支持按需播放和下载到本地",
+      "author": "hanxi",
+      "permissions": [
+        "storage",
+        "command",
+        "fs",
+        "songs.write",
+        "inter-plugin"
+      ],
+      "minHostVersion": "2.0.0",
+      "homepage": null,
+      "pluginJsonUrl": "https://raw.githubusercontent.com/hanxi/songloft-plugin-ytdlp/main/plugin.json",
+      "downloadUrl": "https://github.com/hanxi/songloft-plugin-ytdlp/releases/download/v2026.7.16/ytdlp.jsplugin.zip",
+      "updateUrl": null,
+      "source": "open",
+      "origin": "hanxi-songloft-plugin-ytdlp-main",
+      "repo": "https://github.com/hanxi/songloft-plugin-ytdlp",
+      "stars": 5,
+      "updatedAt": "2026-07-16T08:39:48Z",
+      "license": "Apache-2.0",
+      "logo": "icons/ytdlp.svg",
       "tags": [],
       "featured": false
     },
