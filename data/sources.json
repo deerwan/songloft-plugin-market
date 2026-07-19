@@ -32,6 +32,12 @@
       "id": "snakejohn",
       "url": "https://raw.githubusercontent.com/snakeJohn/starlight/main/registry.json",
       "name": "Starlight"
+    },
+    {
+      "id": "hanxi-songloft-plugin-bili-main",
+      "url": "https://raw.githubusercontent.com/hanxi/songloft-plugin-bili/main/registry.json",
+      "name": "_No response_",
+      "issue": 12
     }
   ]
 }
