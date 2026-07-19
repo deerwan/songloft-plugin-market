@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-19T02:57:02.582Z",
+  "generatedAt": "2026-07-19T08:41:08.941Z",
   "count": 21,
   "openCount": 20,
   "closedCount": 1,
@@ -138,7 +138,7 @@
     {
       "entryPath": "starlight",
       "name": "Starlight",
-      "version": "2026.7.19-2.55",
+      "version": "2026.7.19-3.54",
       "description": "智能音箱控制与 LX Music 音源搜索、歌单、榜单、URL 播放桥接插件",
       "author": "Songloft Starlight",
       "permissions": [
@@ -155,13 +155,13 @@
       "minHostVersion": "2.0.0",
       "homepage": "https://github.com/snakeJohn/starlight",
       "pluginJsonUrl": "https://raw.githubusercontent.com/snakeJohn/starlight/main/plugin.json",
-      "downloadUrl": "https://github.com/snakeJohn/starlight/releases/download/V-2026.07.19.02.55/starlight-V-2026.07.19.02.55.zip",
+      "downloadUrl": "https://github.com/snakeJohn/starlight/releases/download/V-2026.07.19.03.54/starlight-V-2026.07.19.03.54.zip",
       "updateUrl": "https://raw.githubusercontent.com/snakeJohn/starlight/main/plugin.json",
       "source": "open",
       "origin": "snakejohn",
       "repo": "https://github.com/snakeJohn/starlight",
       "stars": 2,
-      "updatedAt": "2026-07-19T02:56:05Z",
+      "updatedAt": "2026-07-19T03:55:14Z",
       "license": null,
       "logo": "icons/starlight.png",
       "tags": [],
