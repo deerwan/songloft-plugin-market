@@ -32,14 +32,29 @@ jobs:
           node -e "JSON.parse(require('fs').readFileSync('data/sources.json','utf8')); console.log('sources.json OK')"
           node -e "JSON.parse(require('fs').readFileSync('data/overlay.json','utf8')); console.log('overlay.json OK')"
 
+      # 仅当 data（sources/overlay）或 scripts 变化时，才做数据构建与包校验，
+      # 避免纯前端/文档 PR 误下载全量插件包（浪费 CI 与 GitHub API 配额）。
+      - name: Detect data/scripts changes
+        id: changed
+        run: |
+          BASE="${{ github.event.pull_request.base.sha }}"
+          git fetch origin "$BASE" --depth=1
+          if git diff --quiet "$BASE" HEAD -- data/sources.json data/overlay.json scripts/; then
+            echo "data_changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "data_changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
       # 跑通数据构建（可达性 + 探测逻辑）
       - name: Dry-run data build
+        if: steps.changed.outputs.data_changed == 'true'
         run: npm run build:data
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # 静态校验所有已收录插件的包（结构/清单/入口/JS 语法），拦截坏包
       - name: Validate plugin packages
+        if: steps.changed.outputs.data_changed == 'true'
         run: npm run validate:source
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

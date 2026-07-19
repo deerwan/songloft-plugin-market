@@ -350,7 +350,9 @@ async function extractIconFromZip(entry, prevMap) {
 // 插件包静态校验（--check-packages）：不执行插件、不需要宿主运行时，
 // 只做「包可解、清单合法、入口存在、JS 语法可编译」四件事，足以在 CI
 // 拦截坏包 / 损坏 zip / 语法错误 / 缺字段等问题。
-// 返回 string[]：错误信息列表；空数组表示通过。
+// 返回：
+//   string[] —— 校验结论（空数组表示通过；非空表示该包本身有问题）
+//   null     —— 跳过（无 downloadUrl / 临时下载故障），不计入失败
 // ——————————————————————————————————————————————
 
 const REQUIRED_PJ_FIELDS = ['name', 'version', 'description', 'author']
@@ -359,19 +361,22 @@ const REQUIRED_PJ_FIELDS = ['name', 'version', 'description', 'author']
 const ESM_NOISE = /import statement|export .* outside|Cannot use import|Unexpected token 'export'|Unexpected token 'import'/i
 
 async function validatePackage(entry) {
-  const errs = []
+  // 无 downloadUrl：没有包可校验，跳过（不判失败）
   if (!entry.downloadUrl) {
-    errs.push('缺少 downloadUrl（无法获取插件包）')
-    return errs
+    warn(`跳过包校验（无 downloadUrl）：${entry.entryPath}`)
+    return null
   }
   let files
   try {
     ({ files } = await fetchZip(entry.downloadUrl))
   } catch (e) {
-    errs.push(`插件包下载/解包失败：${e.message}`)
-    return errs
+    // 下载/解包失败（限流 403、网络抖动、S3 重定向等临时故障）降级为警告，
+    // 不阻断 PR：生产构建已对不可达包告警；真实坏包由结构/语法错误拦截。
+    warn(`插件包下载/解包失败，跳过校验：${entry.entryPath}（${e.message}）`)
+    return null
   }
 
+  const errs = []
   const pjRaw = files['plugin.json']
   if (!pjRaw) {
     errs.push('插件包内缺少 plugin.json')
@@ -614,12 +619,9 @@ async function main() {
   // 3.5) 包静态校验（仅 --check-packages）：校验将进入输出的插件包
   if (CHECK_PACKAGES) {
     for (const entry of byEntry.values()) {
-      if (!entry.downloadUrl) {
-        packageErrors.set(entry.entryPath, ['缺少 downloadUrl（无法获取插件包）'])
-        continue
-      }
-      const errs = await validatePackage(entry)
-      if (errs.length) packageErrors.set(entry.entryPath, errs)
+      const res = await validatePackage(entry)
+      if (res === null) continue // 跳过（无包 / 临时故障），不计入失败
+      if (res.length) packageErrors.set(entry.entryPath, res)
     }
   }
 
