@@ -34,9 +34,15 @@
       "name": "Starlight"
     },
     {
+      "id": "hanxi-songloft-plugin-ytdlp-main",
+      "url": "https://raw.githubusercontent.com/hanxi/songloft-plugin-ytdlp/main/registry.json",
+      "name": "hanxi/ytdlp",
+      "issue": 11
+    },
+    {
       "id": "hanxi-songloft-plugin-bili-main",
       "url": "https://raw.githubusercontent.com/hanxi/songloft-plugin-bili/main/registry.json",
-      "name": "_No response_",
+      "name": "hanxi/bili",
       "issue": 12
     }
   ]
