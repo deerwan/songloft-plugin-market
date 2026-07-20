@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-07-19T10:22:07.464Z",
-  "count": 23,
-  "openCount": 22,
+  "generatedAt": "2026-07-20T03:17:19.244Z",
+  "count": 24,
+  "openCount": 23,
   "closedCount": 1,
   "sources": [
     {
@@ -58,6 +58,13 @@
       "name": "hanxi/bili",
       "official": false,
       "url": "https://raw.githubusercontent.com/hanxi/songloft-plugin-bili/main/registry.json",
+      "count": 1
+    },
+    {
+      "id": "lirenjun11-js-plugin-refs",
+      "name": "HW-RJ",
+      "official": false,
+      "url": "https://raw.githubusercontent.com/Lirenjun11/js_plugin/refs/heads/main/registry.json",
       "count": 1
     }
   ],
@@ -291,6 +298,31 @@
       "featured": false
     },
     {
+      "entryPath": "stats",
+      "name": "播放统计",
+      "version": "2026.7.20",
+      "description": "记录播放历史，统计听歌次数与艺术家排行，支持定时推送听歌报告、WebDAV 备份和定时自动备份",
+      "author": "Songloft Team",
+      "permissions": [
+        "storage",
+        "songs.read"
+      ],
+      "minHostVersion": "1.1.0",
+      "homepage": "https://github.com/songloft-org/songloft-plugin-stats",
+      "pluginJsonUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-stats/main/plugin.json",
+      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-stats/releases/download/v2026.7.20/stats.jsplugin.zip",
+      "updateUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-stats/main/plugin.json",
+      "source": "open",
+      "origin": "official",
+      "repo": "https://github.com/songloft-org/songloft-plugin-stats",
+      "stars": 1,
+      "updatedAt": "2026-07-20T02:59:33Z",
+      "license": null,
+      "logo": "icons/stats.svg",
+      "tags": [],
+      "featured": false
+    },
+    {
       "entryPath": "news",
       "name": "新闻资讯",
       "version": "1.3.26",
@@ -398,31 +430,6 @@
       "updatedAt": "2026-07-17T11:03:19Z",
       "license": null,
       "logo": "icons/mpd-player.svg",
-      "tags": [],
-      "featured": false
-    },
-    {
-      "entryPath": "stats",
-      "name": "播放统计",
-      "version": "2026.7.15",
-      "description": "记录播放历史，统计听歌次数与艺术家排行，支持定时推送听歌报告、WebDAV 备份和定时自动备份",
-      "author": "Songloft Team",
-      "permissions": [
-        "storage",
-        "songs.read"
-      ],
-      "minHostVersion": "1.1.0",
-      "homepage": "https://github.com/songloft-org/songloft-plugin-stats",
-      "pluginJsonUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-stats/main/plugin.json",
-      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-stats/releases/download/v2026.7.15/stats.jsplugin.zip",
-      "updateUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-stats/main/plugin.json",
-      "source": "open",
-      "origin": "official",
-      "repo": "https://github.com/songloft-org/songloft-plugin-stats",
-      "stars": 1,
-      "updatedAt": "2026-07-17T06:47:42Z",
-      "license": null,
-      "logo": "icons/stats.svg",
       "tags": [],
       "featured": false
     },
@@ -609,6 +616,35 @@
       "updatedAt": "2026-06-24T08:46:24Z",
       "license": null,
       "logo": "icons/dav.svg",
+      "tags": [],
+      "featured": false
+    },
+    {
+      "entryPath": "musicfree-adapter",
+      "name": "musicFree",
+      "version": "1.0.9",
+      "description": "MusicFree音源插件，允许Songloft使用MusicFree格式的音源插件",
+      "author": "LIRJ",
+      "permissions": [
+        "storage",
+        "songs.read",
+        "playlists.read",
+        "jsenv",
+        "fs",
+        "inter-plugin"
+      ],
+      "minHostVersion": null,
+      "homepage": null,
+      "pluginJsonUrl": "https://github.com/Lirenjun11/musicfree-songloft-js/raw/refs/heads/master/plugin.json",
+      "downloadUrl": "https://github.com/Lirenjun11/musicfree-songloft-js/releases/download/v1.0.9/musicfree-adapter.jsplugin.zip",
+      "updateUrl": "https://github.com/Lirenjun11/musicfree-songloft-js/raw/refs/heads/master/plugin.json",
+      "source": "open",
+      "origin": "lirenjun11-js-plugin-refs",
+      "repo": "https://github.com/Lirenjun11/musicfree-songloft-js",
+      "stars": 0,
+      "updatedAt": "2026-07-20T01:28:54Z",
+      "license": null,
+      "logo": "icons/musicfree-adapter.svg",
       "tags": [],
       "featured": false
     },
