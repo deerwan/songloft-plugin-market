@@ -43,18 +43,19 @@ jobs:
       - name: Generate aggregated registry
         run: npm run build:registry
 
-      # 回写更新后的缓存（仅 main 分支、非 PR）
+      # 回写更新后的缓存（仅 main 分支、非 PR）。registry.json 也提交进仓库根目录，
+      # 使 raw.githubusercontent.com 的聚合源订阅地址实时可用（提交带 [skip ci] 防循环触发）。
       - name: Commit updated cache
         if: github.ref == 'refs/heads/main'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          if [ -n "$(git status --porcelain data/plugins.generated.json data/icons)" ]; then
-            git add data/plugins.generated.json data/icons
-            git commit -m "chore(data): refresh plugin cache [skip ci]"
+          if [ -n "$(git status --porcelain data/plugins.generated.json data/icons registry.json)" ]; then
+            git add data/plugins.generated.json data/icons registry.json
+            git commit -m "chore(data): refresh plugin cache & registry [skip ci]"
             git push
           else
-            echo "插件数据无变化，跳过提交"
+            echo "数据无变化，跳过提交"
           fi
 
       # 构建前端（纯静态，不加载 Cloudflare 插件）

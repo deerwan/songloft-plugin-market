@@ -1,0 +1,18 @@
+{
+  "name": "Songloft 社区聚合源",
+  "description": "由 songloft-plugin-market 自动生成，聚合官方与社区收录的全部插件源。",
+  "homepage": "https://github.com/deerwan/songloft-plugin-market",
+  "includes": [
+    "https://raw.githubusercontent.com/songloft-org/songloft-plugin-registry/main/registry.json",
+    "https://raw.githubusercontent.com/deerwan/songloft-plugin-registry/main/registry.json",
+    "https://raw.githubusercontent.com/fanliu-yi/songloft-plugin-registry/main/registry.json",
+    "https://raw.githubusercontent.com/snakeJohn/starlight/main/registry.json",
+    "https://raw.githubusercontent.com/hanxi/songloft-plugin-ytdlp/main/registry.json",
+    "https://raw.githubusercontent.com/hanxi/songloft-plugin-bili/main/registry.json",
+    "https://raw.githubusercontent.com/Lirenjun11/js_plugin/main/registry.json"
+  ],
+  "plugins": [
+    "https://raw.githubusercontent.com/birdstudy-nj/songloft-lyrics-cover-helper/main/plugin.json",
+    "https://raw.githubusercontent.com/moonbai/songloft-plugin-news/main/news-plugin/plugin.json"
+  ]
+}

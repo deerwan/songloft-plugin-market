@@ -55,8 +55,9 @@ const activeOrigin = ref<string>('all')
 const sortKey = ref<SortKey>('stars')
 const copiedKey = ref('')
 
-// 聚合源：宿主只需订阅这一个 URL 即可拉取全部收录源的插件
-const registryUrl = `${location.origin}${import.meta.env.BASE_URL}registry.json`
+// 聚合源：固定使用 raw.githubusercontent.com 形态，使宿主端「GitHub 镜像加速」可用。
+// 自定义域名 songloft-store.lllh.de 不被镜像加速覆盖，直连不稳时建议用此地址（见 plugin_registry.md 第 263 行）。
+const registryUrl = 'https://raw.githubusercontent.com/deerwan/songloft-plugin-market/main/registry.json'
 const copiedAgg = ref(false)
 
 // 运行时 fetch：用 BASE_URL 拼路径，独立站与 VitePress 子路径均可用
