@@ -43,6 +43,12 @@
       "url": "https://raw.githubusercontent.com/hanxi/songloft-plugin-bili/main/registry.json",
       "name": "hanxi/bili",
       "issue": 12
+    },
+    {
+      "id": "lirenjun11-js-plugin-refs",
+      "url": "https://raw.githubusercontent.com/Lirenjun11/js_plugin/refs/heads/main/registry.json",
+      "name": "HW-RJ",
+      "issue": 16
     }
   ]
 }
