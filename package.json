@@ -6,6 +6,7 @@
   "description": "Songloft 插件市场 - 展示社区 JS 插件列表的静态站点",
   "scripts": {
     "build:data": "node scripts/build.mjs",
+    "build:registry": "node scripts/gen-aggregated-registry.mjs",
     "test:source": "node scripts/build.mjs",
     "validate:source": "node scripts/build.mjs --check-packages",
     "dev": "vite",

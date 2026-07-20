@@ -21,6 +21,8 @@ dist/
 
 # 前端构建时从 data/ 复制的运行时数据（生成物，不入库）
 public/plugins.generated.json
+# 聚合源（由 scripts/gen-aggregated-registry.mjs 生成，随 CI 发布）
+public/registry.json
 # 前端运行时图标副本（生成物，规范图标提交在 data/icons/）
 public/icons/
 

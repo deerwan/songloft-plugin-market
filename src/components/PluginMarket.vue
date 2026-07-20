@@ -55,6 +55,10 @@ const activeOrigin = ref<string>('all')
 const sortKey = ref<SortKey>('stars')
 const copiedKey = ref('')
 
+// 聚合源：宿主只需订阅这一个 URL 即可拉取全部收录源的插件
+const registryUrl = `${location.origin}${import.meta.env.BASE_URL}registry.json`
+const copiedAgg = ref(false)
+
 // 运行时 fetch：用 BASE_URL 拼路径，独立站与 VitePress 子路径均可用
 async function load() {
   loading.value = true
@@ -160,6 +164,16 @@ async function copySubscribe(p: Plugin) {
     /* 剪贴板不可用时静默 */
   }
 }
+
+async function copyAggregated() {
+  try {
+    await navigator.clipboard.writeText(registryUrl)
+    copiedAgg.value = true
+    setTimeout(() => (copiedAgg.value = false), 1600)
+  } catch {
+    /* 剪贴板不可用时静默 */
+  }
+}
 </script>
 
 <template>
@@ -191,6 +205,13 @@ async function copySubscribe(p: Plugin) {
           <option value="updated">按更新时间</option>
           <option value="name">按名称</option>
         </select>
+        <button
+          class="btn btn--primary agg-btn"
+          title="复制聚合源地址，在宿主「管理订阅源」里添加即可一次性订阅全部源"
+          @click="copyAggregated"
+        >
+          {{ copiedAgg ? '✓ 已复制聚合源' : '复制聚合源' }}
+        </button>
       </div>
     </div>
 
@@ -561,6 +582,10 @@ select {
 .btn--primary:hover {
   color: #fff;
   opacity: 0.9;
+}
+
+.agg-btn {
+  white-space: nowrap;
 }
 
 @media (max-width: 640px) {

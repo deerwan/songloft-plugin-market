@@ -39,6 +39,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      # 生成聚合 registry.json（零网络，供宿主一键订阅；随 Pages 发布）
+      - name: Generate aggregated registry
+        run: npm run build:registry
+
       # 回写更新后的缓存（仅 main 分支、非 PR）
       - name: Commit updated cache
         if: github.ref == 'refs/heads/main'
