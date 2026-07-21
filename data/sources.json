@@ -49,6 +49,12 @@
       "url": "https://raw.githubusercontent.com/Lirenjun11/js_plugin/refs/heads/main/registry.json",
       "name": "HW-RJ",
       "issue": 16
+    },
+    {
+      "id": "fly818-lxmusic-plugin-release-refs",
+      "url": "https://raw.githubusercontent.com/fly818/lxmusic-plugin-release/refs/heads/main/registry.json",
+      "name": "lxmusic",
+      "issue": 18
     }
   ]
 }
