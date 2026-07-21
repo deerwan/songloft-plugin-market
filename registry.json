@@ -9,7 +9,8 @@
     "https://raw.githubusercontent.com/snakeJohn/starlight/main/registry.json",
     "https://raw.githubusercontent.com/hanxi/songloft-plugin-ytdlp/main/registry.json",
     "https://raw.githubusercontent.com/hanxi/songloft-plugin-bili/main/registry.json",
-    "https://raw.githubusercontent.com/Lirenjun11/js_plugin/main/registry.json"
+    "https://raw.githubusercontent.com/Lirenjun11/js_plugin/main/registry.json",
+    "https://raw.githubusercontent.com/fly818/lxmusic-plugin-release/main/registry.json"
   ],
   "plugins": [
     "https://raw.githubusercontent.com/birdstudy-nj/songloft-lyrics-cover-helper/main/plugin.json",

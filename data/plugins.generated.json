@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-07-21T02:53:11.232Z",
-  "count": 24,
+  "generatedAt": "2026-07-21T04:54:07.191Z",
+  "count": 25,
   "openCount": 23,
-  "closedCount": 1,
+  "closedCount": 2,
   "sources": [
     {
       "id": "official",
@@ -66,16 +66,21 @@
       "official": false,
       "url": "https://raw.githubusercontent.com/Lirenjun11/js_plugin/refs/heads/main/registry.json",
       "count": 1
+    },
+    {
+      "id": "fly818-lxmusic-plugin-release-refs",
+      "name": "lxmusic",
+      "official": false,
+      "url": "https://raw.githubusercontent.com/fly818/lxmusic-plugin-release/refs/heads/main/registry.json",
+      "count": 1
     }
   ],
-  "warnings": [
-    "提取图标失败：iwebplayer（HTTP 404）"
-  ],
+  "warnings": [],
   "plugins": [
     {
       "entryPath": "miot",
       "name": "智能音箱",
-      "version": "2026.7.18",
+      "version": "2026.7.21",
       "description": "通过 MIoT 协议把歌曲投放到智能音箱设备",
       "author": "Songloft Team",
       "permissions": [
@@ -91,15 +96,45 @@
       "minHostVersion": "2.9.5",
       "homepage": "https://github.com/songloft-org/songloft",
       "pluginJsonUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-miot/main/plugin.json",
-      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-miot/releases/download/v2026.7.18/miot.jsplugin.zip",
+      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-miot/releases/download/v2026.7.21/miot.jsplugin.zip",
       "updateUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-miot/main/plugin.json",
       "source": "open",
       "origin": "official",
       "repo": "https://github.com/songloft-org/songloft-plugin-miot",
       "stars": 31,
-      "updatedAt": "2026-07-18T03:04:29Z",
+      "updatedAt": "2026-07-21T03:14:45Z",
       "license": null,
       "logo": "icons/miot.svg",
+      "tags": [],
+      "featured": false
+    },
+    {
+      "entryPath": "lxmusic",
+      "name": "洛雪音源",
+      "version": "3.6.0",
+      "description": "洛雪音源 - 多平台音乐搜索、歌单管理、音源管理",
+      "author": "LX Team",
+      "permissions": [
+        "storage",
+        "songs.read",
+        "songs.write",
+        "playlists.read",
+        "playlists.write",
+        "jsenv",
+        "inter-plugin"
+      ],
+      "minHostVersion": "2.0.0",
+      "homepage": null,
+      "pluginJsonUrl": "https://raw.githubusercontent.com/fly818/lxmusic-plugin-release/main/plugin.json",
+      "downloadUrl": "https://github.com/fly818/lxmusic-plugin-release/releases/download/3.6.0/lxmusic.jsplugin.zip",
+      "updateUrl": "https://raw.githubusercontent.com/fly818/lxmusic-plugin-release/main/plugin.json",
+      "source": "closed",
+      "origin": "fly818-lxmusic-plugin-release-refs",
+      "repo": "https://github.com/fly818/lxmusic-plugin-release",
+      "stars": 15,
+      "updatedAt": "2026-07-17T05:04:44Z",
+      "license": null,
+      "logo": "icons/lxmusic.svg",
       "tags": [],
       "featured": false
     },
@@ -131,7 +166,7 @@
     {
       "entryPath": "ytdlp",
       "name": "yt-dlp",
-      "version": "2026.7.16",
+      "version": "2026.7.21",
       "description": "通过 yt-dlp 从 YouTube、Bilibili 等平台导入歌单，支持按需播放和下载到本地",
       "author": "hanxi",
       "permissions": [
@@ -144,13 +179,13 @@
       "minHostVersion": "2.0.0",
       "homepage": null,
       "pluginJsonUrl": "https://raw.githubusercontent.com/hanxi/songloft-plugin-ytdlp/main/plugin.json",
-      "downloadUrl": "https://github.com/hanxi/songloft-plugin-ytdlp/releases/download/v2026.7.16/ytdlp.jsplugin.zip",
+      "downloadUrl": "https://github.com/hanxi/songloft-plugin-ytdlp/releases/download/v2026.7.21/ytdlp.jsplugin.zip",
       "updateUrl": null,
       "source": "open",
       "origin": "hanxi-songloft-plugin-ytdlp-main",
       "repo": "https://github.com/hanxi/songloft-plugin-ytdlp",
       "stars": 5,
-      "updatedAt": "2026-07-16T08:39:48Z",
+      "updatedAt": "2026-07-21T03:05:38Z",
       "license": "Apache-2.0",
       "logo": "icons/ytdlp.svg",
       "tags": [],
