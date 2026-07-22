@@ -55,6 +55,12 @@
       "url": "https://raw.githubusercontent.com/fly818/lxmusic-plugin-release/refs/heads/main/registry.json",
       "name": "lxmusic",
       "issue": 18
+    },
+    {
+      "id": "songloft-org-songloft-plugin-karaoke-lyric-refs",
+      "url": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-karaoke-lyric/refs/heads/main/registry.json",
+      "name": "逐字歌词插件源",
+      "issue": 20
     }
   ]
 }
