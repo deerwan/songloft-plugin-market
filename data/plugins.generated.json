@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-07-22T09:34:53.074Z",
-  "count": 25,
-  "openCount": 23,
+  "generatedAt": "2026-07-23T02:57:43.137Z",
+  "count": 26,
+  "openCount": 24,
   "closedCount": 2,
   "sources": [
     {
@@ -37,7 +37,7 @@
       "name": "新闻资讯聚合",
       "official": false,
       "url": "https://github.com/moonbai/songloft-plugin-news/raw/main/news-plugin/plugin.json",
-      "count": 0
+      "count": 1
     },
     {
       "id": "snakejohn",
@@ -82,14 +82,12 @@
       "count": 1
     }
   ],
-  "warnings": [
-    "拉取源失败，跳过：https://github.com/moonbai/songloft-plugin-news/raw/main/news-plugin/plugin.json（This operation was aborted）"
-  ],
+  "warnings": [],
   "plugins": [
     {
       "entryPath": "miot",
       "name": "智能音箱",
-      "version": "2026.7.21",
+      "version": "2026.7.23",
       "description": "通过 MIoT 协议把歌曲投放到智能音箱设备",
       "author": "Songloft Team",
       "permissions": [
@@ -105,13 +103,13 @@
       "minHostVersion": "2.9.5",
       "homepage": "https://github.com/songloft-org/songloft",
       "pluginJsonUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-miot/main/plugin.json",
-      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-miot/releases/download/v2026.7.21/miot.jsplugin.zip",
+      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-miot/releases/download/v2026.7.23/miot.jsplugin.zip",
       "updateUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-miot/main/plugin.json",
       "source": "open",
       "origin": "official",
       "repo": "https://github.com/songloft-org/songloft-plugin-miot",
       "stars": 32,
-      "updatedAt": "2026-07-22T07:54:21Z",
+      "updatedAt": "2026-07-23T00:10:24Z",
       "license": null,
       "logo": "icons/miot.svg",
       "tags": [],
@@ -428,6 +426,34 @@
       "featured": false
     },
     {
+      "entryPath": "news",
+      "name": "新闻资讯",
+      "version": "1.3.27",
+      "description": "新闻资讯聚合 - 多平台新闻与TTS朗读",
+      "author": "Mars",
+      "permissions": [
+        "storage",
+        "jsenv",
+        "songs.write",
+        "playlists.read",
+        "playlists.write"
+      ],
+      "minHostVersion": "1.0.0",
+      "homepage": "https://github.com/moonbai/songloft-plugin-news",
+      "pluginJsonUrl": "https://github.com/moonbai/songloft-plugin-news/raw/main/news-plugin/plugin.json",
+      "downloadUrl": "https://github.com/moonbai/songloft-plugin-news/releases/download/v1.3.27/news.jsplugin.zip",
+      "updateUrl": "https://github.com/moonbai/songloft-plugin-news/raw/main/news-plugin/plugin.json",
+      "source": "open",
+      "origin": "moonbai",
+      "repo": "https://github.com/moonbai/songloft-plugin-news",
+      "stars": 1,
+      "updatedAt": "2026-07-20T03:45:15Z",
+      "license": "MIT",
+      "logo": null,
+      "tags": [],
+      "featured": false
+    },
+    {
       "entryPath": "stats",
       "name": "播放统计",
       "version": "2026.7.20",
@@ -696,6 +722,30 @@
       "featured": false
     },
     {
+      "entryPath": "lyrics",
+      "name": "歌词搜索",
+      "version": "2026.6.17",
+      "description": "从 lrclib.net 或自定义 API 自动搜索歌词，当歌曲无歌词时由服务端自动调用",
+      "author": "Songloft Team",
+      "permissions": [
+        "storage"
+      ],
+      "minHostVersion": "2.6.0",
+      "homepage": "https://github.com/songloft-org/songloft-plugin-lyrics",
+      "pluginJsonUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-lyrics/main/plugin.json",
+      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-lyrics/releases/download/v2026.6.17/lyrics.jsplugin.zip",
+      "updateUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-lyrics/main/plugin.json",
+      "source": "open",
+      "origin": "official",
+      "repo": "https://github.com/songloft-org/songloft-plugin-lyrics",
+      "stars": 0,
+      "updatedAt": "2026-07-22T11:10:03Z",
+      "license": "Apache-2.0",
+      "logo": "icons/lyrics.svg",
+      "tags": [],
+      "featured": false
+    },
+    {
       "entryPath": "hostc",
       "name": "Hostc 隧道",
       "version": "2026.7.2",
@@ -717,30 +767,6 @@
       "updatedAt": "2026-07-05T10:36:57Z",
       "license": "Apache-2.0",
       "logo": null,
-      "tags": [],
-      "featured": false
-    },
-    {
-      "entryPath": "lyrics",
-      "name": "歌词搜索",
-      "version": "2026.6.17",
-      "description": "从 lrclib.net 或自定义 API 自动搜索歌词，当歌曲无歌词时由服务端自动调用",
-      "author": "Songloft Team",
-      "permissions": [
-        "storage"
-      ],
-      "minHostVersion": "2.6.0",
-      "homepage": "https://github.com/songloft-org/songloft-plugin-lyrics",
-      "pluginJsonUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-lyrics/main/plugin.json",
-      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-lyrics/releases/download/v2026.6.17/lyrics.jsplugin.zip",
-      "updateUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-lyrics/main/plugin.json",
-      "source": "open",
-      "origin": "official",
-      "repo": "https://github.com/songloft-org/songloft-plugin-lyrics",
-      "stars": 0,
-      "updatedAt": "2026-06-17T10:06:04Z",
-      "license": "Apache-2.0",
-      "logo": "icons/lyrics.svg",
       "tags": [],
       "featured": false
     },
