@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="Bridge 通用流桥接插件图标">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4f46e5"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 渐变圆角背景 -->
+  <rect x="16" y="16" width="480" height="480" rx="112" ry="112" fill="url(#bg)"/>
+
+  <!-- 桥拱：连接左(源插件)与右(音箱)两个端点 -->
+  <path d="M160 312 Q256 168 352 312" fill="none" stroke="#ffffff" stroke-width="20"
+        stroke-linecap="round" opacity="0.95"/>
+
+  <!-- 端点：源插件 -->
+  <circle cx="160" cy="312" r="40" fill="#ffffff"/>
+  <!-- 端点：音箱 -->
+  <circle cx="352" cy="312" r="40" fill="#ffffff"/>
+
+  <!-- 流动的圆点：代表音频流在桥上往返传输 -->
+  <circle r="18" fill="#ffffff">
+    <animateMotion dur="2.6s" repeatCount="indefinite"
+                   path="M160 312 Q256 168 352 312 Q256 168 160 312"/>
+  </circle>
+</svg>
