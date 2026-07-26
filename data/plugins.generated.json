@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-07-25T02:50:55.320Z",
-  "count": 28,
-  "openCount": 26,
+  "generatedAt": "2026-07-26T03:15:42.363Z",
+  "count": 29,
+  "openCount": 27,
   "closedCount": 2,
   "sources": [
     {
@@ -9,7 +9,7 @@
       "name": "官方",
       "official": true,
       "url": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-registry/main/registry.json",
-      "count": 16
+      "count": 17
     },
     {
       "id": "deerwan",
@@ -87,7 +87,7 @@
     {
       "entryPath": "miot",
       "name": "智能音箱",
-      "version": "2026.7.24",
+      "version": "2026.7.25",
       "description": "通过 MIoT 协议把歌曲投放到智能音箱设备",
       "author": "Songloft Team",
       "permissions": [
@@ -103,13 +103,13 @@
       "minHostVersion": "2.9.5",
       "homepage": "https://github.com/songloft-org/songloft",
       "pluginJsonUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-miot/main/plugin.json",
-      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-miot/releases/download/v2026.7.24/miot.jsplugin.zip",
+      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-miot/releases/download/v2026.7.25/miot.jsplugin.zip",
       "updateUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-miot/main/plugin.json",
       "source": "open",
       "origin": "official",
       "repo": "https://github.com/songloft-org/songloft-plugin-miot",
       "stars": 34,
-      "updatedAt": "2026-07-24T14:43:39Z",
+      "updatedAt": "2026-07-25T05:25:47Z",
       "license": null,
       "logo": "icons/miot.svg",
       "tags": [],
@@ -401,7 +401,7 @@
     {
       "entryPath": "go-music-dl",
       "name": "GoMusicDL",
-      "version": "2026.7.24",
+      "version": "2026.7.25",
       "description": "通过本地或远程 go-music-dl 实例聚合搜索网易云、QQ、酷狗、酷我、咪咕、Bilibili 等音源，支持试听、歌词与导入本地库。",
       "author": "Songloft Team",
       "permissions": [
@@ -414,13 +414,13 @@
       "minHostVersion": "1.0.0",
       "homepage": "https://github.com/songloft-org/songloft-plugin-go-music-dl",
       "pluginJsonUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-go-music-dl/main/plugin.json",
-      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-go-music-dl/releases/download/v2026.7.24/go-music-dl.jsplugin.zip",
+      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-go-music-dl/releases/download/v2026.7.25/go-music-dl.jsplugin.zip",
       "updateUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-go-music-dl/main/plugin.json",
       "source": "open",
       "origin": "deerwan",
       "repo": "https://github.com/songloft-org/songloft-plugin-go-music-dl",
       "stars": 1,
-      "updatedAt": "2026-07-24T13:13:57Z",
+      "updatedAt": "2026-07-25T20:31:52Z",
       "license": "Apache-2.0",
       "logo": "icons/go-music-dl.svg",
       "tags": [],
@@ -694,6 +694,31 @@
       "featured": false
     },
     {
+      "entryPath": "hostc",
+      "name": "Hostc 隧道",
+      "version": "2026.7.2",
+      "description": "通过 hostc 将本地 Songloft 服务暴露到公网（无需安装额外二进制）",
+      "author": "Songloft Team",
+      "permissions": [
+        "storage",
+        "websocket"
+      ],
+      "minHostVersion": "2.5.0",
+      "homepage": null,
+      "pluginJsonUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-hostc/refs/heads/main/plugin.json",
+      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-hostc/releases/download/v2026.7.2/hostc.jsplugin.zip",
+      "updateUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-hostc/main/plugin.json",
+      "source": "open",
+      "origin": "official",
+      "repo": "https://github.com/songloft-org/songloft-plugin-hostc",
+      "stars": 1,
+      "updatedAt": "2026-07-05T10:36:57Z",
+      "license": "Apache-2.0",
+      "logo": null,
+      "tags": [],
+      "featured": false
+    },
+    {
       "entryPath": "dav",
       "name": "WebDAV 音乐源",
       "version": "1.1.1",
@@ -718,6 +743,59 @@
       "updatedAt": "2026-06-24T08:46:24Z",
       "license": null,
       "logo": "icons/dav.svg",
+      "tags": [],
+      "featured": false
+    },
+    {
+      "entryPath": "cloudflared",
+      "name": "Cloudflared 隧道",
+      "version": "2026.6.9",
+      "description": "通过 Cloudflare Tunnel 将本地 Songloft 服务暴露到公网",
+      "author": "Songloft Team",
+      "permissions": [
+        "storage",
+        "command",
+        "fs"
+      ],
+      "minHostVersion": "1.3.0",
+      "homepage": null,
+      "pluginJsonUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-cloudflared/refs/heads/main/plugin.json",
+      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-cloudflared/releases/download/v2026.6.9/cloudflared.jsplugin.zip",
+      "updateUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-cloudflared/main/plugin.json",
+      "source": "open",
+      "origin": "official",
+      "repo": "https://github.com/songloft-org/songloft-plugin-cloudflared",
+      "stars": 1,
+      "updatedAt": "2026-06-17T10:05:46Z",
+      "license": null,
+      "logo": null,
+      "tags": [],
+      "featured": false
+    },
+    {
+      "entryPath": "music-feed",
+      "name": "抖歌",
+      "version": "1.4.6",
+      "description": "沉浸式本地音乐发现插件，借鉴信息流体验，基于用户行为不断学习，帮助你重新发现自己的音乐库。",
+      "author": "charce526",
+      "permissions": [
+        "storage",
+        "songs.read",
+        "playlists.read",
+        "playlists.write"
+      ],
+      "minHostVersion": "2.11.0",
+      "homepage": null,
+      "pluginJsonUrl": "https://raw.githubusercontent.com/charce526/songloft-music-feed/main/plugin.json",
+      "downloadUrl": "https://github.com/charce526/songloft-music-feed/releases/latest/download/songloft-music-feed-v1.4.6.jsplugin.zip",
+      "updateUrl": null,
+      "source": "open",
+      "origin": "official",
+      "repo": "https://github.com/charce526/songloft-music-feed",
+      "stars": 0,
+      "updatedAt": "2026-07-25T10:40:09Z",
+      "license": "Apache-2.0",
+      "logo": "icons/music-feed.svg",
       "tags": [],
       "featured": false
     },
@@ -789,57 +867,6 @@
       "updatedAt": "2026-07-22T11:10:03Z",
       "license": "Apache-2.0",
       "logo": "icons/lyrics.svg",
-      "tags": [],
-      "featured": false
-    },
-    {
-      "entryPath": "hostc",
-      "name": "Hostc 隧道",
-      "version": "2026.7.2",
-      "description": "通过 hostc 将本地 Songloft 服务暴露到公网（无需安装额外二进制）",
-      "author": "Songloft Team",
-      "permissions": [
-        "storage",
-        "websocket"
-      ],
-      "minHostVersion": "2.5.0",
-      "homepage": null,
-      "pluginJsonUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-hostc/refs/heads/main/plugin.json",
-      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-hostc/releases/download/v2026.7.2/hostc.jsplugin.zip",
-      "updateUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-hostc/main/plugin.json",
-      "source": "open",
-      "origin": "official",
-      "repo": "https://github.com/songloft-org/songloft-plugin-hostc",
-      "stars": 0,
-      "updatedAt": "2026-07-05T10:36:57Z",
-      "license": "Apache-2.0",
-      "logo": null,
-      "tags": [],
-      "featured": false
-    },
-    {
-      "entryPath": "cloudflared",
-      "name": "Cloudflared 隧道",
-      "version": "2026.6.9",
-      "description": "通过 Cloudflare Tunnel 将本地 Songloft 服务暴露到公网",
-      "author": "Songloft Team",
-      "permissions": [
-        "storage",
-        "command",
-        "fs"
-      ],
-      "minHostVersion": "1.3.0",
-      "homepage": null,
-      "pluginJsonUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-cloudflared/refs/heads/main/plugin.json",
-      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-cloudflared/releases/download/v2026.6.9/cloudflared.jsplugin.zip",
-      "updateUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-cloudflared/main/plugin.json",
-      "source": "open",
-      "origin": "official",
-      "repo": "https://github.com/songloft-org/songloft-plugin-cloudflared",
-      "stars": 0,
-      "updatedAt": "2026-06-17T10:05:46Z",
-      "license": null,
-      "logo": null,
       "tags": [],
       "featured": false
     }
