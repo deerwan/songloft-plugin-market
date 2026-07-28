@@ -61,6 +61,12 @@
       "url": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-karaoke-lyric/refs/heads/main/registry.json",
       "name": "逐字歌词插件源",
       "issue": 20
+    },
+    {
+      "id": "neoheee-songloft-plugin-audiobookshelf-main",
+      "url": "https://raw.githubusercontent.com/NeoHeee/songloft-plugin-audiobookshelf/main/registry.json",
+      "name": "NeoHeee/songloft-plugin-audiobookshelf",
+      "issue": 22
     }
   ]
 }
