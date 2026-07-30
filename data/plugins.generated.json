@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-30T10:48:15.116Z",
+  "generatedAt": "2026-07-30T12:45:35.318Z",
   "count": 30,
   "openCount": 27,
   "closedCount": 3,
@@ -89,9 +89,7 @@
       "count": 1
     }
   ],
-  "warnings": [
-    "提取图标失败：dav（HTTP 404）"
-  ],
+  "warnings": [],
   "plugins": [
     {
       "entryPath": "miot",
