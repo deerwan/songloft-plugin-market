@@ -884,9 +884,11 @@ onBeforeUnmount(() => window.removeEventListener('resize', updateIndicator))
   color: #4ade80;
 }
 
+/* 聚合源按钮复制成功：提高优先级覆盖 .btn--primary，与其它按钮同款半透明绿 */
 .agg-btn.is-copied {
-  background: rgba(48, 164, 108, 0.9);
-  color: #fff;
+  background: rgba(48, 164, 108, 0.2);
+  border-color: rgba(48, 164, 108, 0.5);
+  color: #4ade80;
 }
 
 .agg-btn {
