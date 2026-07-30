@@ -155,6 +155,23 @@ function initials(name: string): string {
   return (name || '?').trim().charAt(0).toUpperCase()
 }
 
+// 从仓库 URL 解析 GitHub 用户名（repo owner）：作者位展示/跳转以此为准，保证名字与落地页自洽
+function ownerOf(p: Plugin): string | null {
+  const m = (p.repo || '').match(/^https?:\/\/github\.com\/([^/]+)\//)
+  return m ? m[1] : null
+}
+
+// 头像经 wsrv.nl 图片代理（缩放+转 webp）：直连 avatars.githubusercontent.com 国内基本不可达
+function avatarUrl(owner: string): string {
+  return `https://wsrv.nl/?url=${encodeURIComponent(`github.com/${owner}.png`)}&w=40&h=40&output=webp`
+}
+
+// 加载失败的 owner 集合：隐藏失败头像，退回纯用户名链接
+const avatarFailed = ref<Set<string>>(new Set())
+function onAvatarError(owner: string) {
+  avatarFailed.value = new Set(avatarFailed.value).add(owner)
+}
+
 // logo 可能是绝对 URL（作者自托），也可能是相对路径 icons/xxx.svg
 // （构建时从插件包提取），后者需按部署子路径拼上 BASE_URL
 function logoSrc(logo: string): string {
@@ -371,7 +388,25 @@ onBeforeUnmount(() => window.removeEventListener('resize', updateIndicator))
               </div>
 
               <div class="card__meta">
-                <span class="meta">{{ p.author || '未知作者' }}</span>
+                <a
+                  v-if="ownerOf(p)"
+                  class="meta meta--author"
+                  :href="`https://github.com/${ownerOf(p)}`"
+                  target="_blank"
+                  rel="noopener"
+                  :title="p.author && p.author !== ownerOf(p) ? `作者署名：${p.author}` : '访问 GitHub 主页'"
+                >
+                  <img
+                    v-if="!avatarFailed.has(ownerOf(p)!)"
+                    class="meta__avatar"
+                    :src="avatarUrl(ownerOf(p)!)"
+                    alt=""
+                    loading="lazy"
+                    @error="onAvatarError(ownerOf(p)!)"
+                  />
+                  {{ ownerOf(p) }}
+                </a>
+                <span v-else class="meta">{{ p.author || '未知作者' }}</span>
                 <span class="meta">v{{ p.version }}</span>
                 <span v-if="p.source === 'open' && p.stars !== null" class="meta">★ {{ p.stars }}</span>
                 <span v-if="p.updatedAt" class="meta meta--date">{{ formatDateTime(p.updatedAt) }}</span>
@@ -858,6 +893,30 @@ onBeforeUnmount(() => window.removeEventListener('resize', updateIndicator))
 
 .meta {
   white-space: nowrap;
+}
+
+/* 作者链接：头像 + 用户名，灰字 hover 变白，与页脚链接同款 */
+.meta--author {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--slm-text-2);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.meta--author:hover {
+  color: var(--slm-text);
+}
+
+.meta__avatar {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--slm-bg-alt);
+  outline: 1px solid rgba(255, 255, 255, 0.1);
+  outline-offset: -1px;
 }
 
 .card__links {
