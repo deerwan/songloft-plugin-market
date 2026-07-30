@@ -35,7 +35,8 @@ function onKey(e: KeyboardEvent) {
 </script>
 
 <template>
-  <div v-if="visible" class="modal-mask" @click.self="emit('close')" @keydown="onKey">
+  <Transition name="modal">
+    <div v-if="visible" class="modal-mask" @click.self="emit('close')" @keydown="onKey">
     <div class="modal" role="dialog" aria-modal="true">
       <header class="modal__head">
         <h2 class="modal__title">提交插件源</h2>
@@ -65,28 +66,58 @@ function onKey(e: KeyboardEvent) {
         <button class="btn btn--primary" @click="submit">提交到 GitHub</button>
       </footer>
     </div>
-  </div>
+    </div>
+  </Transition>
 </template>
 
 <style scoped>
 .modal-mask {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.45);
+  background: rgba(0, 0, 0, 0.6);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 100;
   padding: 16px;
 }
+
+/* 入场/退场：遮罩淡入，弹窗弹性缩放上浮 */
+.modal-enter-active {
+  transition: opacity 0.25s ease;
+}
+.modal-leave-active {
+  transition: opacity 0.2s ease;
+}
+.modal-enter-from,
+.modal-leave-to {
+  opacity: 0;
+}
+.modal-enter-active .modal {
+  transition: transform 0.4s var(--ease-spring);
+}
+.modal-leave-active .modal {
+  transition: transform 0.2s ease;
+}
+.modal-enter-from .modal {
+  transform: scale(0.94) translateY(12px);
+}
+.modal-leave-to .modal {
+  transform: scale(0.96);
+}
+
 .modal {
   width: 100%;
   max-width: 480px;
-  background: var(--slm-bg);
-  border: 1px solid var(--slm-border);
+  background: rgba(26, 26, 29, 0.85);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid var(--glass-border);
   border-radius: var(--slm-radius);
-  box-shadow: var(--slm-shadow);
-  padding: 20px;
+  box-shadow: var(--slm-shadow), var(--glass-highlight);
+  padding: 24px;
 }
 .modal__head {
   display: flex;
@@ -98,12 +129,26 @@ function onKey(e: KeyboardEvent) {
   font-size: 18px;
 }
 .modal__close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
   border: none;
+  border-radius: 50%;
   background: transparent;
-  font-size: 22px;
+  font-size: 20px;
   line-height: 1;
   color: var(--slm-text-2);
   cursor: pointer;
+  transition: color 0.2s, background 0.2s, transform 0.25s var(--ease-spring);
+}
+.modal__close:hover {
+  color: var(--slm-text);
+  background: var(--slm-bg-alt);
+}
+.modal__close:active {
+  transform: scale(0.9);
 }
 .modal__hint {
   font-size: 13px;
@@ -128,16 +173,23 @@ function onKey(e: KeyboardEvent) {
 }
 .field__input {
   width: 100%;
-  padding: 10px 12px;
-  border: 1px solid var(--slm-border);
-  border-radius: var(--slm-radius);
-  background: var(--slm-bg-soft);
+  padding: 11px 14px;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--slm-radius-sm);
+  background: rgba(255, 255, 255, 0.04);
   color: var(--slm-text);
   font-size: 14px;
   outline: none;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+.field__input::placeholder {
+  color: var(--slm-text-2);
+  opacity: 0.7;
 }
 .field__input:focus {
-  border-color: var(--slm-brand);
+  border-color: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.05);
 }
 .modal__foot {
   display: flex;

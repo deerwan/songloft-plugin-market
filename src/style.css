@@ -1,85 +1,210 @@
-/* 全局样式 + 主题变量。
+/* 全局样式 + 设计令牌（Raycast 风深色单主题）。
  *
- * 关键设计：所有颜色用 --slm-* 变量，默认回退到 VitePress 的 --vp-c-* 主题变量。
- * - 独立站：--vp-c-* 未定义，用后面的回退值（并支持 prefers-color-scheme 暗色）。
- * - 集成进 VitePress：自动继承主题变量，跟随亮/暗色切换，无需改代码。
+ * 关键设计：
+ * - 仅深色，无主题切换；所有颜色经 --slm-* 令牌输出。
+ * - 背景近黑，顶部一块暗红/紫氛围光（.bg-glow），卡片用低透明度白色叠加。
+ * - 玻璃模糊（backdrop-filter）只用于悬浮导航等少量元素，卡片不使用以保证性能。
  */
 
 :root {
-  --slm-bg: var(--vp-c-bg, #ffffff);
-  --slm-bg-soft: var(--vp-c-bg-soft, #f6f6f7);
-  --slm-bg-alt: var(--vp-c-bg-alt, #f1f1f3);
-  --slm-border: var(--vp-c-divider, #e2e2e3);
-  --slm-text: var(--vp-c-text-1, #213547);
-  --slm-text-2: var(--vp-c-text-2, #5c6b77);
-  --slm-brand: var(--vp-c-brand-1, #3b82f6);
-  --slm-brand-soft: var(--vp-c-brand-soft, rgba(59, 130, 246, 0.14));
-  --slm-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.06);
-  --slm-radius: 12px;
-}
+  color-scheme: dark;
 
-/* 独立站暗色模式（VitePress 集成时由其自身机制接管，此处仅作独立回退） */
-/* 手动切换暗色模式 */
-:root[data-theme="dark"] {
-  --slm-bg: var(--vp-c-bg, #1b1b1f);
-  --slm-bg-soft: var(--vp-c-bg-soft, #242424);
-  --slm-bg-alt: var(--vp-c-bg-alt, #2f2f2f);
-  --slm-border: var(--vp-c-divider, #3a3a3c);
-  --slm-text: var(--vp-c-text-1, #f4f4f5);
-  --slm-text-2: var(--vp-c-text-2, #a8a8ad);
-  --slm-brand: var(--vp-c-brand-1, #60a5fa);
-  --slm-brand-soft: var(--vp-c-brand-soft, rgba(96, 165, 250, 0.16));
-}
+  --slm-bg: #0a0a0b;
+  --slm-bg-soft: rgba(255, 255, 255, 0.05);
+  --slm-bg-alt: rgba(255, 255, 255, 0.08);
+  --slm-border: rgba(255, 255, 255, 0.09);
+  --slm-text: #f5f5f7;
+  --slm-text-2: #9b9ba1;
+  --slm-brand: #2997ff;
+  --slm-brand-soft: rgba(41, 151, 255, 0.16);
+  --slm-radius: 18px;
+  --slm-radius-sm: 12px;
+  --slm-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
 
-/* 手动切换浅色模式（覆盖系统暗色偏好） */
-:root[data-theme="light"] {
-  --slm-bg: #ffffff;
-  --slm-bg-soft: #f6f6f7;
-  --slm-bg-alt: #f1f1f3;
-  --slm-border: #e2e2e3;
-  --slm-text: #213547;
-  --slm-text-2: #5c6b77;
-  --slm-brand: #3b82f6;
-  --slm-brand-soft: rgba(59, 130, 246, 0.14);
+  /* 玻璃/卡片材质 */
+  --glass-nav: rgba(18, 18, 20, 0.65);
+  --glass-card: rgba(255, 255, 255, 0.04);
+  --glass-card-hover: rgba(255, 255, 255, 0.06);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+
+  /* 动效曲线（苹果式弹性） */
+  --ease-spring: cubic-bezier(0.34, 1.3, 0.5, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 * {
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+  /* 背景只能画在 html 上：若 body 也铺不透明背景，会盖住负 z-index 的 .bg-glow 光线层 */
+  background: var(--slm-bg);
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC',
-    'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
-  background: var(--slm-bg);
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto,
+    'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  background: transparent;
   color: var(--slm-text);
   -webkit-font-smoothing: antialiased;
 }
 
-/* 通用按钮（供 App.vue / SubmitSource 复用；
- * PluginMarket.vue 内的 scoped .btn 会按其作用域生效，视觉保持一致） */
+/* —— 顶部氛围背景：斜向光线素材（.bg-glow__art）+ 弥散光斑兼做兼容回退 —— */
+.bg-glow {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Raycast 同款：光线图只铺 Hero 高度，重压暗，四周用 mask 渐隐融进纯黑 */
+.bg-glow__art {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: min(72vh, 720px);
+  background-size: cover;
+  background-position: center top;
+  opacity: 0.5;
+  -webkit-mask-image: radial-gradient(120% 100% at 50% 0%, black 30%, transparent 78%);
+  mask-image: radial-gradient(120% 100% at 50% 0%, black 30%, transparent 78%);
+  animation: art-in 1.2s var(--ease-out) both;
+}
+
+@keyframes art-in {
+  from {
+    opacity: 0;
+    transform: scale(1.04);
+  }
+  to {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+}
+
+.bg-glow::before,
+.bg-glow::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(110px);
+  will-change: transform;
+}
+
+.bg-glow::before {
+  width: 60vw;
+  height: 40vw;
+  top: -22vw;
+  left: 8vw;
+  background: radial-gradient(closest-side, rgba(210, 60, 60, 0.14), transparent);
+  animation: glow-drift-a 30s ease-in-out infinite alternate;
+}
+
+.bg-glow::after {
+  width: 44vw;
+  height: 34vw;
+  top: -16vw;
+  right: -6vw;
+  background: radial-gradient(closest-side, rgba(120, 60, 200, 0.1), transparent);
+  animation: glow-drift-b 38s ease-in-out infinite alternate;
+}
+
+@keyframes glow-drift-a {
+  to { transform: translate(6vw, 5vh) scale(1.12); }
+}
+@keyframes glow-drift-b {
+  to { transform: translate(-8vw, 7vh) scale(0.92); }
+}
+
+/* —— 悬浮导航玻璃（唯一的 backdrop-filter 使用处） —— */
+.glass-nav {
+  background: var(--glass-nav);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--slm-shadow), var(--glass-highlight);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass-nav {
+    background: rgba(18, 18, 20, 0.96);
+  }
+}
+
+/* —— 通用动画 —— */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+@keyframes shimmer {
+  from { background-position: 200% 0; }
+  to { background-position: -200% 0; }
+}
+
+/* —— 通用按钮（Raycast 幽灵描边风，App.vue / SubmitSource 复用） —— */
 .btn {
-  padding: 7px 14px;
-  border: 1px solid var(--slm-border);
-  border-radius: 8px;
-  background: var(--slm-bg-soft);
+  padding: 8px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
   color: var(--slm-text);
   font-size: 13px;
   cursor: pointer;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
+  gap: 6px;
+  transition: transform 0.25s var(--ease-spring), border-color 0.2s, background 0.2s,
+    color 0.2s;
 }
+
 .btn:hover {
-  border-color: var(--slm-brand);
-  color: var(--slm-brand);
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.09);
 }
+
+.btn:active {
+  transform: scale(0.96);
+}
+
 .btn--primary {
-  background: var(--slm-brand);
-  color: #fff;
-  border-color: var(--slm-brand);
+  background: #f5f5f7;
+  color: #0a0a0b;
+  border-color: transparent;
+  font-weight: 600;
 }
+
 .btn--primary:hover {
-  color: #fff;
-  opacity: 0.9;
+  background: #fff;
+  color: #0a0a0b;
+  border-color: transparent;
+}
+
+/* —— 动效降级 —— */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

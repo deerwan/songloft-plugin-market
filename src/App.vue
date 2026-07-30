@@ -1,68 +1,31 @@
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue'
+import { ref } from 'vue'
 import PluginMarket from './components/PluginMarket.vue'
 import SubmitSource from './components/SubmitSource.vue'
 
 const showSubmit = ref(false)
-const isDark = ref(false)
-// VitePress 集成时不接管主题
-const isVitePress = typeof document !== 'undefined' && document.documentElement.classList.contains('vp-doc')
-
-function getSystemDark(): boolean {
-  return window.matchMedia('(prefers-color-scheme: dark)').matches
-}
-
-function applyTheme(dark: boolean) {
-  if (isVitePress) return
-  document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light')
-}
-
-// 仅当前会话内的临时切换：不写 localStorage，刷新后重新跟随系统
-function toggleTheme() {
-  isDark.value = !isDark.value
-}
-
-onMounted(() => {
-  if (isVitePress) return
-  // 始终以系统主题为准
-  isDark.value = getSystemDark()
-  applyTheme(isDark.value)
-  // 实时跟随系统主题变化（始终保持跟随系统）
-  const mq = window.matchMedia('(prefers-color-scheme: dark)')
-  mq.addEventListener('change', (e) => {
-    isDark.value = e.matches
-  })
-})
-
-watch(isDark, applyTheme)
 
 // 官方品牌图标（与 favicon 共用，支持子路径部署）
 const logoSrc = import.meta.env.BASE_URL + 'favicon.svg'
+// Hero 背景光线素材（SVG，经 BASE_URL 拼接支持子路径部署）
+const heroArt = import.meta.env.BASE_URL + 'hero-art.svg'
+// 页脚版权年份随系统时间自动更新
+const year = new Date().getFullYear()
 </script>
 
 <template>
   <div class="app-shell">
-    <header class="app-header">
+    <div class="bg-glow" aria-hidden="true">
+      <div class="bg-glow__art" :style="{ backgroundImage: `url(${heroArt})` }"></div>
+    </div>
+
+    <header class="app-header glass-nav">
       <div class="app-header__inner">
         <div class="app-brand">
           <img class="app-brand__logo" :src="logoSrc" alt="Songloft" />
           <h1 class="app-brand__title">Songloft</h1>
         </div>
         <div class="app-header__actions">
-          <button v-if="!isVitePress" class="app-header__icon" @click="toggleTheme" :title="isDark ? '浅色模式' : '深色模式'">
-            <!-- 太阳（浅色模式时显示，切换为暗色） -->
-            <svg v-if="!isDark" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="5"/>
-              <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
-              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-              <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
-              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-            </svg>
-            <!-- 月亮（深色模式时显示，切换为浅色） -->
-            <svg v-else xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-            </svg>
-          </button>
           <button class="app-header__icon" @click="showSubmit = true" title="提交插件">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <line x1="12" y1="5" x2="12" y2="19"/>
@@ -83,8 +46,21 @@ const logoSrc = import.meta.env.BASE_URL + 'favicon.svg'
     </main>
 
     <footer class="app-footer">
-      基于 Songloft 插件源自动生成 ·
-      <a href="https://songloft.hanxi.cc/plugin_registry" target="_blank" rel="noopener">如何发布插件</a>
+      <div class="app-footer__inner">
+        <div class="app-footer__top">
+          <div class="app-footer__brand">
+            <img class="app-footer__logo" :src="logoSrc" alt="" />
+            <span class="app-footer__name">Songloft</span>
+          </div>
+          <a
+            class="app-footer__link"
+            href="https://songloft.hanxi.cc/plugin_registry"
+            target="_blank"
+            rel="noopener"
+          >如何发布插件</a>
+        </div>
+        <p class="app-footer__copy">© {{ year }} Songloft · 由 GitHub Actions 每日自动构建</p>
+      </div>
     </footer>
 
     <SubmitSource :visible="showSubmit" @close="showSubmit = false" />
@@ -98,19 +74,20 @@ const logoSrc = import.meta.env.BASE_URL + 'favicon.svg'
   flex-direction: column;
 }
 
+/* 悬浮胶囊导航：吸顶，内容滚动时从其后方穿过被模糊 */
 .app-header {
-  border-bottom: 1px solid var(--slm-border);
-  background: var(--slm-bg);
   position: sticky;
-  top: 0;
+  top: 12px;
   z-index: 10;
-  backdrop-filter: blur(8px);
+  max-width: 1240px;
+  width: calc(100% - clamp(16px, 4vw, 48px));
+  margin: 12px auto 0;
+  border-radius: 999px;
+  animation: fade-up 0.5s var(--ease-out) both;
 }
 
 .app-header__inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 16px 24px;
+  padding: 10px clamp(14px, 2.5vw, 24px);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -120,25 +97,29 @@ const logoSrc = import.meta.env.BASE_URL + 'favicon.svg'
   display: flex;
   align-items: center;
   gap: 12px;
+  min-width: 0;
 }
 
 .app-brand__logo {
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   border-radius: 7px;
   object-fit: contain;
 }
 
 .app-brand__title {
   margin: 0;
-  font-size: 20px;
+  font-size: clamp(16px, 2.5vw, 19px);
   font-weight: 700;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
 }
 
 .app-header__actions {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
+  flex-shrink: 0;
 }
 
 .app-header__icon {
@@ -148,47 +129,119 @@ const logoSrc = import.meta.env.BASE_URL + 'favicon.svg'
   width: 36px;
   height: 36px;
   border: none;
-  border-radius: 8px;
+  border-radius: 50%;
   background: transparent;
   color: var(--slm-text-2);
   cursor: pointer;
-  transition: color 0.2s, background 0.2s;
+  transition: color 0.2s, background 0.2s, transform 0.25s var(--ease-spring);
 }
 
 .app-header__icon:hover {
-  color: var(--slm-brand);
-  background: var(--slm-bg-soft);
+  color: var(--slm-text);
+  background: var(--slm-bg-alt);
+}
+
+.app-header__icon:active {
+  transform: scale(0.9);
 }
 
 .app-header__github {
   color: var(--slm-text-2);
   display: flex;
   align-items: center;
-  transition: color 0.2s;
+  transition: color 0.2s, transform 0.25s var(--ease-spring);
 }
 
 .app-header__github:hover {
   color: var(--slm-text);
+  transform: scale(1.08);
 }
 
 .app-main {
   flex: 1;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1240px;
   margin: 0 auto;
-  padding: 24px;
+  padding: clamp(16px, 3vw, 28px) clamp(12px, 3vw, 24px) clamp(32px, 5vw, 56px);
 }
 
 .app-footer {
-  border-top: 1px solid var(--slm-border);
-  padding: 20px 24px;
-  text-align: center;
-  font-size: 13px;
-  color: var(--slm-text-2);
+  position: relative;
+  padding: 28px clamp(12px, 3vw, 24px) 36px;
 }
 
-.app-footer a {
-  color: var(--slm-brand);
+/* 两端渐隐的分隔细线，代替生硬的通栏实线 */
+.app-footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(1240px, calc(100% - clamp(24px, 6vw, 48px)));
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.12), transparent);
+}
+
+.app-footer__inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.app-footer__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.app-footer__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.app-footer__logo {
+  width: 22px;
+  height: 22px;
+  border-radius: 5px;
+  object-fit: contain;
+}
+
+.app-footer__name {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.app-footer__link {
+  font-size: 13px;
+  color: var(--slm-text-2);
   text-decoration: none;
+  transition: color 0.2s;
+}
+
+.app-footer__link:hover {
+  color: var(--slm-text);
+}
+
+.app-footer__copy {
+  margin: 0;
+  font-size: 12px;
+  color: var(--slm-text-2);
+  opacity: 0.7;
+}
+
+@media (max-width: 560px) {
+  .app-footer__top {
+    flex-direction: column;
+    align-items: center;
+  }
+  .app-footer__copy {
+    text-align: center;
+  }
 }
 </style>

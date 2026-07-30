@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+  <!-- Raycast 风暗色斜向光线：渐变彩带 + 高斯模糊，四周由页面遮罩渐隐 -->
+  <defs>
+    <linearGradient id="g-red" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7a1220" stop-opacity="0"/>
+      <stop offset="0.45" stop-color="#c22e3e" stop-opacity="0.85"/>
+      <stop offset="1" stop-color="#5c0f1c" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="g-crimson" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8f1b2c" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#e5484d" stop-opacity="0.7"/>
+      <stop offset="1" stop-color="#6b1120" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="g-purple" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2a1b5e" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#5b3bb5" stop-opacity="0.6"/>
+      <stop offset="1" stop-color="#1d1245" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="g-blue" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0f2456" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#1e4b9e" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#0a1a3d" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="soft" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="26"/>
+    </filter>
+    <filter id="softer" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="48"/>
+    </filter>
+  </defs>
+
+  <!-- 彩带统一沿 -32° 斜向排布，宽窄错落制造笔触感 -->
+  <g transform="rotate(-32 800 450)" filter="url(#soft)">
+    <rect x="-200" y="120" width="2000" height="120" rx="60" fill="url(#g-red)"/>
+    <rect x="-200" y="300" width="2000" height="56" rx="28" fill="url(#g-crimson)"/>
+    <rect x="-200" y="420" width="2000" height="170" rx="85" fill="url(#g-purple)"/>
+    <rect x="-200" y="660" width="2000" height="90" rx="45" fill="url(#g-crimson)" opacity="0.75"/>
+  </g>
+  <g transform="rotate(-32 800 450)" filter="url(#softer)">
+    <rect x="-200" y="30" width="2000" height="200" rx="100" fill="url(#g-blue)" opacity="0.8"/>
+    <rect x="-200" y="540" width="2000" height="70" rx="35" fill="url(#g-red)" opacity="0.9"/>
+    <rect x="-200" y="790" width="2000" height="160" rx="80" fill="url(#g-purple)" opacity="0.6"/>
+  </g>
+</svg>
