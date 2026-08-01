@@ -8,6 +8,7 @@
  *   拆包收益不抵额外请求，保持简单。
  */
 import { createRouter, createWebHashHistory } from 'vue-router'
+import HomeView from './views/HomeView.vue'
 import PluginMarket from './components/PluginMarket.vue'
 import IssuesView from './views/IssuesView.vue'
 import DiscussionsView from './views/DiscussionsView.vue'
@@ -15,7 +16,8 @@ import DiscussionsView from './views/DiscussionsView.vue'
 const router = createRouter({
   history: createWebHashHistory(),
   routes: [
-    { path: '/', name: 'market', component: PluginMarket, meta: { title: '插件市场' } },
+    { path: '/', name: 'home', component: HomeView, meta: { title: '首页' } },
+    { path: '/market', name: 'market', component: PluginMarket, meta: { title: '插件市场' } },
     { path: '/issues', name: 'issues', component: IssuesView, meta: { title: 'Issues' } },
     {
       path: '/discussions',
@@ -23,7 +25,7 @@ const router = createRouter({
       component: DiscussionsView,
       meta: { title: '讨论' },
     },
-    // 未知路径一律回市场页，避免出现空白视图
+    // 未知路径一律回首页，避免出现空白视图
     { path: '/:pathMatch(.*)*', redirect: '/' },
   ],
   scrollBehavior() {

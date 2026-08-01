@@ -7,8 +7,9 @@ const showSubmit = ref(false)
 const menuOpen = ref(false)
 const route = useRoute()
 
-// 顶部导航项；品牌 logo 本身即是「市场」首页入口，故此处不再重复
+// 顶部导航项；品牌 logo 指向首页（动画着陆页），「市场」单独作为入口排在首位
 const navItems = [
+  { to: '/market', label: '市场' },
   { to: '/issues', label: '提交列表' },
   { to: '/discussions', label: '讨论' },
 ]
@@ -24,7 +25,8 @@ const year = new Date().getFullYear()
 <template>
   <div class="app-shell">
     <div class="bg-glow" aria-hidden="true">
-      <div class="bg-glow__art" :style="{ backgroundImage: `url(${heroArt})` }"></div>
+      <!-- 首页已有全屏 WebGL 光球背景，不再叠加顶部静态光带，避免重复/隐约可见 -->
+      <div v-if="route.path !== '/'" class="bg-glow__art" :style="{ backgroundImage: `url(${heroArt})` }"></div>
     </div>
 
     <header class="app-header glass-nav">
