@@ -14,6 +14,8 @@ const props = withDefaults(
     rotateOnHover?: boolean
     forceHoverState?: boolean
     className?: string
+    /** 暂停渲染（隐藏时），但保留 WebGL 上下文与 canvas，避免反复创建销毁导致闪烁 */
+    paused?: boolean
   }>(),
   {
     hue: 0,
@@ -21,11 +23,13 @@ const props = withDefaults(
     rotateOnHover: true,
     forceHoverState: false,
     className: '',
+    paused: false,
   },
 )
 
 const ctnDom = ref<HTMLDivElement | null>(null)
 let cleanupAnimation: (() => void) | null = null
+let programRef: Program | null = null
 
 const vert = /* glsl */ `
     precision highp float;
@@ -218,6 +222,8 @@ function setupAnimation() {
 
   const mesh = new Mesh(gl, { geometry, program })
 
+  programRef = program
+
   function resize() {
     if (!container)
       return
@@ -268,6 +274,9 @@ function setupAnimation() {
     rafId = requestAnimationFrame(update)
     if (reducedMotion)
       return
+    // 暂停态：保留 WebGL 上下文与 canvas，仅跳过渲染以节省 GPU
+    if (props.paused)
+      return
     const dt = (t - lastTime) * 0.001
     lastTime = t
     program.uniforms.iTime.value = t * 0.001
@@ -293,6 +302,7 @@ function setupAnimation() {
     container.removeEventListener('mouseleave', handleMouseLeave)
     container.removeChild(gl.canvas)
     gl.getExtension('WEBGL_lose_context')?.loseContext()
+    programRef = null
   }
 }
 
@@ -316,15 +326,15 @@ onBeforeUnmount(() => {
 })
 
 watch(
-  () => props,
-  () => {
-    if (cleanupAnimation) {
-      cleanupAnimation()
-      cleanupAnimation = null
+  () => [props.hue, props.hoverIntensity],
+  ([hue, hoverIntensity]) => {
+    // 仅 uniform 变化时直接更新，不重建 WebGL 上下文；
+    // paused 变化只影响渲染开关，避免路由切换时反复创建销毁导致闪烁。
+    if (programRef) {
+      programRef.uniforms.hue.value = hue
+      programRef.uniforms.hoverIntensity.value = hoverIntensity
     }
-    setupAnimation()
   },
-  { deep: true },
 )
 </script>
 

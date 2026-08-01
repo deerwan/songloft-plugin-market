@@ -90,9 +90,11 @@ const year = new Date().getFullYear()
 
     <main class="app-main">
       <RouterView v-slot="{ Component }">
-        <Transition name="view" mode="out-in">
-          <component :is="Component" />
-        </Transition>
+        <KeepAlive include="HomeView">
+          <Transition name="view" mode="out-in">
+            <component :is="Component" />
+          </Transition>
+        </KeepAlive>
       </RouterView>
     </main>
 

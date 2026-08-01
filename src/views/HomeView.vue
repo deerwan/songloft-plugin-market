@@ -1,12 +1,22 @@
+<script lang="ts">
+export default { name: 'HomeView' }
+</script>
+
 <script setup lang="ts">
+import { ref, onActivated, onDeactivated } from 'vue'
 import { RouterLink } from 'vue-router'
 import OrbBackground from '../components/OrbBackground.vue'
+
+// KeepAlive 缓存首页时停/启 WebGL 渲染，既保留上下文又省 GPU
+const orbActive = ref(true)
+onActivated(() => orbActive.value = true)
+onDeactivated(() => orbActive.value = false)
 </script>
 
 <template>
   <section class="hero">
     <!-- WebGL 持续流动光球背景（始终在动），铺满整屏底层 -->
-    <OrbBackground class="hero__orb" />
+    <OrbBackground class="hero__orb" :paused="!orbActive" />
 
     <div class="hero__content">
       <h1 class="hero__title">Songloft 插件市场</h1>
