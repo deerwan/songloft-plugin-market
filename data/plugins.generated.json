@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-01T08:46:53.334Z",
+  "generatedAt": "2026-08-01T10:10:30.457Z",
   "count": 30,
   "openCount": 27,
   "closedCount": 3,
@@ -401,7 +401,7 @@
       "origin": "official",
       "repo": "https://github.com/songloft-org/songloft-plugin-mpd",
       "stars": 2,
-      "updatedAt": "2026-07-31T07:05:04Z",
+      "updatedAt": "2026-08-01T09:20:48Z",
       "license": null,
       "logo": "icons/mpd-player.svg",
       "tags": [],
