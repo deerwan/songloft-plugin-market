@@ -159,7 +159,7 @@ body {
   to { background-position: -200% 0; }
 }
 
-/* —— 通用按钮（Raycast 幽灵描边风，App.vue / SubmitSource 复用） —— */
+/* —— 通用按钮（Raycast 幽灵描边风，App.vue 等复用） —— */
 .btn {
   padding: 8px 16px;
   border: 1px solid rgba(255, 255, 255, 0.14);

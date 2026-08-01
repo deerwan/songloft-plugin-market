@@ -25,7 +25,9 @@
     "wrangler": "^4.111.0"
   },
   "dependencies": {
+    "@giscus/vue": "^3.1.1",
     "fflate": "^0.8.3",
-    "vue": "^3.5.13"
+    "vue": "^3.5.13",
+    "vue-router": "^4.6.4"
   }
 }

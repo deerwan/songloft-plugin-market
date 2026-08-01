@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { GITHUB_SUBMIT_PLUGIN_URL } from '../config'
 
 const props = defineProps<{ visible: boolean }>()
 const emit = defineEmits<{ close: [] }>()
 
-// 仓库 slug：前端提交会打开预填好的 GitHub Issue（无需后端）
-const REPO = 'deerwan/songloft-plugin-market'
-
 const url = ref('')
 const name = ref('')
+const note = ref('')
 
 function submit() {
   const raw = url.value.trim()
@@ -20,11 +19,12 @@ function submit() {
     alert('源地址必须以 registry.json 结尾（如 https://.../main/registry.json）。若只有一个 plugin.json，请先包一层含 plugins 数组的 registry.json 再提交。')
     return
   }
-  const title = encodeURIComponent(`[Source] ${name.value.trim() || raw}`)
-  const body = encodeURIComponent(
-    `### 插件源地址（必填）\n${raw}\n\n### 展示名（选填）\n${name.value.trim()}\n\n### 备注（选填）\n\n### 确认项\n- [x] 该源可公开访问，且我已自测能正常解析。\n- [x] 该源中的插件不含恶意代码。`,
-  )
-  const issueUrl = `https://github.com/${REPO}/issues/new?title=${title}&body=${body}&labels=source-submit`
+  const params = new URLSearchParams({
+    'source-url': raw,
+    'display-name': name.value.trim(),
+    note: note.value.trim(),
+  })
+  const issueUrl = `${GITHUB_SUBMIT_PLUGIN_URL}&${params.toString()}`
   window.open(issueUrl, '_blank', 'noopener')
   emit('close')
 }
@@ -45,7 +45,8 @@ function onKey(e: KeyboardEvent) {
       <p class="modal__hint">
         提交一个可公开访问的 <code>registry.json</code> 源地址（URL 须以
         <code>registry.json</code> 结尾，可附加 <code>?token=</code> 等查询参数）。
-        维护者审核通过后，该源会自动收录进本仓库，下次构建即可展示其下所有插件。
+        若只有一个 plugin.json，请先包一层含 plugins 数组的 registry.json 再提交。
+        确认后会跳转到 GitHub 的 <strong>SUBMIT_SOURCE</strong> Issue 模板，预填你已填写的内容。
       </p>
       <label class="field">
         <span class="field__label">插件源地址 *</span>
@@ -60,6 +61,10 @@ function onKey(e: KeyboardEvent) {
       <label class="field">
         <span class="field__label">展示名（选填）</span>
         <input v-model="name" class="field__input" type="text" placeholder="如：我的插件源" />
+      </label>
+      <label class="field">
+        <span class="field__label">备注（选填）</span>
+        <textarea v-model="note" class="field__input field__input--area" rows="3" placeholder="可选填一些补充说明" />
       </label>
       <footer class="modal__foot">
         <button class="btn" @click="emit('close')">取消</button>
@@ -190,6 +195,11 @@ function onKey(e: KeyboardEvent) {
   border-color: rgba(255, 255, 255, 0.25);
   background: rgba(255, 255, 255, 0.06);
   box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.05);
+}
+.field__input--area {
+  resize: vertical;
+  min-height: 72px;
+  line-height: 1.5;
 }
 .modal__foot {
   display: flex;
