@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-08-02T03:14:53.724Z",
-  "count": 30,
-  "openCount": 27,
+  "generatedAt": "2026-08-02T16:23:17.565Z",
+  "count": 31,
+  "openCount": 28,
   "closedCount": 3,
   "sources": [
     {
@@ -87,9 +87,18 @@
       "official": false,
       "url": "https://raw.githubusercontent.com/NeoHeee/songloft-plugin-audiobookshelf/main/registry.json",
       "count": 1
+    },
+    {
+      "id": "youxikexue-songloft-plugin-registry-main",
+      "name": "soundforge",
+      "official": false,
+      "url": "https://raw.githubusercontent.com/youxikexue/songloft-plugin-registry/main/registry.json",
+      "count": 1
     }
   ],
-  "warnings": [],
+  "warnings": [
+    "提取图标失败：go-music-dl（HTTP 404）"
+  ],
   "plugins": [
     {
       "entryPath": "miot",
@@ -115,8 +124,8 @@
       "source": "open",
       "origin": "official",
       "repo": "https://github.com/songloft-org/songloft-plugin-miot",
-      "stars": 37,
-      "updatedAt": "2026-08-02T02:07:02Z",
+      "stars": 38,
+      "updatedAt": "2026-08-02T03:55:58Z",
       "license": null,
       "logo": "icons/miot.svg",
       "tags": [],
@@ -146,7 +155,7 @@
       "origin": "fly818-lxmusic-plugin-release-refs",
       "repo": "https://github.com/fly818/lxmusic-plugin-release",
       "stars": 19,
-      "updatedAt": "2026-08-02T02:56:48Z",
+      "updatedAt": "2026-08-02T11:00:21Z",
       "license": null,
       "logo": "https://raw.githubusercontent.com/fly818/lxmusic-plugin-release/main/static/icon.svg",
       "tags": [],
@@ -378,6 +387,34 @@
       "featured": false
     },
     {
+      "entryPath": "go-music-dl",
+      "name": "GoMusicDL",
+      "version": "2026.8.1",
+      "description": "通过本地或远程 go-music-dl 实例聚合搜索网易云、QQ、酷狗、酷我、咪咕、Bilibili 等音源，支持试听、歌词与导入本地库。",
+      "author": "Songloft Team",
+      "permissions": [
+        "storage",
+        "songs.read",
+        "songs.write",
+        "playlists.write",
+        "inter-plugin"
+      ],
+      "minHostVersion": "1.0.0",
+      "homepage": "https://github.com/songloft-org/songloft-plugin-go-music-dl",
+      "pluginJsonUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-go-music-dl/main/plugin.json",
+      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-go-music-dl/releases/download/v2026.8.1/go-music-dl.jsplugin.zip",
+      "updateUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-go-music-dl/main/plugin.json",
+      "source": "open",
+      "origin": "deerwan",
+      "repo": "https://github.com/songloft-org/songloft-plugin-go-music-dl",
+      "stars": 2,
+      "updatedAt": "2026-08-02T05:32:28Z",
+      "license": "Apache-2.0",
+      "logo": "icons/go-music-dl.svg",
+      "tags": [],
+      "featured": false
+    },
+    {
       "entryPath": "downloader",
       "name": "歌曲下载",
       "version": "2026.8.2",
@@ -458,34 +495,6 @@
       "updatedAt": "2026-07-30T18:54:10Z",
       "license": null,
       "logo": "icons/stats.svg",
-      "tags": [],
-      "featured": false
-    },
-    {
-      "entryPath": "go-music-dl",
-      "name": "GoMusicDL",
-      "version": "2026.7.25",
-      "description": "通过本地或远程 go-music-dl 实例聚合搜索网易云、QQ、酷狗、酷我、咪咕、Bilibili 等音源，支持试听、歌词与导入本地库。",
-      "author": "Songloft Team",
-      "permissions": [
-        "storage",
-        "songs.read",
-        "songs.write",
-        "playlists.write",
-        "inter-plugin"
-      ],
-      "minHostVersion": "1.0.0",
-      "homepage": "https://github.com/songloft-org/songloft-plugin-go-music-dl",
-      "pluginJsonUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-go-music-dl/main/plugin.json",
-      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-go-music-dl/releases/download/v2026.7.25/go-music-dl.jsplugin.zip",
-      "updateUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-go-music-dl/main/plugin.json",
-      "source": "open",
-      "origin": "deerwan",
-      "repo": "https://github.com/songloft-org/songloft-plugin-go-music-dl",
-      "stars": 2,
-      "updatedAt": "2026-07-25T20:31:52Z",
-      "license": "Apache-2.0",
-      "logo": "icons/go-music-dl.svg",
       "tags": [],
       "featured": false
     },
@@ -808,6 +817,34 @@
       "updatedAt": "2026-06-17T10:05:46Z",
       "license": null,
       "logo": null,
+      "tags": [],
+      "featured": false
+    },
+    {
+      "entryPath": "lxbridge",
+      "name": "LX音乐桥",
+      "version": "2.7.0",
+      "description": "连接lxserver与MIOT插件",
+      "author": "soundforge",
+      "permissions": [
+        "storage",
+        "songs.read",
+        "songs.write",
+        "inter-plugin",
+        "command"
+      ],
+      "minHostVersion": "1.3.0",
+      "homepage": "https://github.com/youxikexue/lxbridge",
+      "pluginJsonUrl": "https://raw.githubusercontent.com/youxikexue/songloft-plugin-registry/main/plugins/lxbridge/plugin.json",
+      "downloadUrl": "https://github.com/youxikexue/lxbridge/releases/download/v2.7.0/lxbridge.jsplugin.zip",
+      "updateUrl": "https://raw.githubusercontent.com/youxikexue/songloft-plugin-registry/main/plugins/lxbridge/manifest.json",
+      "source": "open",
+      "origin": "youxikexue-songloft-plugin-registry-main",
+      "repo": "https://github.com/youxikexue/lxbridge",
+      "stars": 0,
+      "updatedAt": "2026-08-02T11:36:10Z",
+      "license": null,
+      "logo": "icons/lxbridge.svg",
       "tags": [],
       "featured": false
     },
