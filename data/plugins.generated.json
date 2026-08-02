@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-01T10:31:10.477Z",
+  "generatedAt": "2026-08-02T03:14:53.724Z",
   "count": 30,
   "openCount": 27,
   "closedCount": 3,
@@ -94,7 +94,7 @@
     {
       "entryPath": "miot",
       "name": "智能音箱",
-      "version": "2026.7.31",
+      "version": "2026.8.2",
       "description": "通过 MIoT 协议把歌曲投放到智能音箱设备",
       "author": "Songloft Team",
       "permissions": [
@@ -110,13 +110,13 @@
       "minHostVersion": "2.9.5",
       "homepage": "https://github.com/songloft-org/songloft",
       "pluginJsonUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-miot/main/plugin.json",
-      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-miot/releases/download/v2026.7.31/miot.jsplugin.zip",
+      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-miot/releases/download/v2026.8.2/miot.jsplugin.zip",
       "updateUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-miot/main/plugin.json",
       "source": "open",
       "origin": "official",
       "repo": "https://github.com/songloft-org/songloft-plugin-miot",
-      "stars": 36,
-      "updatedAt": "2026-07-31T03:53:01Z",
+      "stars": 37,
+      "updatedAt": "2026-08-02T02:07:02Z",
       "license": null,
       "logo": "icons/miot.svg",
       "tags": [],
@@ -125,7 +125,7 @@
     {
       "entryPath": "lxmusic",
       "name": "洛雪音源",
-      "version": "3.6.2",
+      "version": "3.7.0",
       "description": "洛雪音源 - 多平台音乐搜索、歌单管理、音源管理",
       "author": "LX Team",
       "permissions": [
@@ -140,13 +140,13 @@
       "minHostVersion": "2.6.0",
       "homepage": null,
       "pluginJsonUrl": "https://raw.githubusercontent.com/fly818/lxmusic-plugin-release/main/plugin.json",
-      "downloadUrl": "https://github.com/fly818/lxmusic-plugin-release/releases/download/3.6.2/lxmusic.jsplugin.zip",
+      "downloadUrl": "https://github.com/fly818/lxmusic-plugin-release/releases/download/3.7.0/lxmusic.jsplugin.zip",
       "updateUrl": "https://raw.githubusercontent.com/fly818/lxmusic-plugin-release/main/plugin.json",
       "source": "closed",
       "origin": "fly818-lxmusic-plugin-release-refs",
       "repo": "https://github.com/fly818/lxmusic-plugin-release",
-      "stars": 18,
-      "updatedAt": "2026-08-01T07:33:16Z",
+      "stars": 19,
+      "updatedAt": "2026-08-02T02:56:48Z",
       "license": null,
       "logo": "https://raw.githubusercontent.com/fly818/lxmusic-plugin-release/main/static/icon.svg",
       "tags": [],
@@ -378,6 +378,33 @@
       "featured": false
     },
     {
+      "entryPath": "downloader",
+      "name": "歌曲下载",
+      "version": "2026.8.2",
+      "description": "将 WebDAV/Subsonic 等自有网络存储中的歌曲下载到服务端本地，支持自定义目录结构和元数据嵌入",
+      "author": "Songloft Team",
+      "permissions": [
+        "storage",
+        "songs.read",
+        "songs.write",
+        "playlists.read"
+      ],
+      "minHostVersion": "2.6.0",
+      "homepage": "https://github.com/songloft-org/songloft-plugin-downloader",
+      "pluginJsonUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-downloader/main/plugin.json",
+      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-downloader/releases/download/v2026.8.2/downloader.jsplugin.zip",
+      "updateUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-downloader/main/plugin.json",
+      "source": "open",
+      "origin": "official",
+      "repo": "https://github.com/songloft-org/songloft-plugin-downloader",
+      "stars": 2,
+      "updatedAt": "2026-08-02T00:56:05Z",
+      "license": null,
+      "logo": "icons/downloader.svg",
+      "tags": [],
+      "featured": false
+    },
+    {
       "entryPath": "mpd-player",
       "name": "MPD音箱",
       "version": "2.1.1",
@@ -459,33 +486,6 @@
       "updatedAt": "2026-07-25T20:31:52Z",
       "license": "Apache-2.0",
       "logo": "icons/go-music-dl.svg",
-      "tags": [],
-      "featured": false
-    },
-    {
-      "entryPath": "downloader",
-      "name": "歌曲下载",
-      "version": "2026.7.22",
-      "description": "将 WebDAV/Subsonic 等自有网络存储中的歌曲下载到服务端本地，支持自定义目录结构和元数据嵌入",
-      "author": "Songloft Team",
-      "permissions": [
-        "storage",
-        "songs.read",
-        "songs.write",
-        "playlists.read"
-      ],
-      "minHostVersion": "2.6.0",
-      "homepage": "https://github.com/songloft-org/songloft-plugin-downloader",
-      "pluginJsonUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-downloader/main/plugin.json",
-      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-downloader/releases/download/v2026.7.22/downloader.jsplugin.zip",
-      "updateUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-downloader/main/plugin.json",
-      "source": "open",
-      "origin": "official",
-      "repo": "https://github.com/songloft-org/songloft-plugin-downloader",
-      "stars": 2,
-      "updatedAt": "2026-07-22T02:26:23Z",
-      "license": null,
-      "logo": "icons/downloader.svg",
       "tags": [],
       "featured": false
     },
@@ -812,6 +812,30 @@
       "featured": false
     },
     {
+      "entryPath": "lyrics",
+      "name": "歌词搜索",
+      "version": "2026.8.2",
+      "description": "从 lrclib.net 或自定义 API 自动搜索歌词，当歌曲无歌词时由服务端自动调用",
+      "author": "Songloft Team",
+      "permissions": [
+        "storage"
+      ],
+      "minHostVersion": "2.6.0",
+      "homepage": "https://github.com/songloft-org/songloft-plugin-lyrics",
+      "pluginJsonUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-lyrics/main/plugin.json",
+      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-lyrics/releases/download/v2026.8.2/lyrics.jsplugin.zip",
+      "updateUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-lyrics/main/plugin.json",
+      "source": "open",
+      "origin": "official",
+      "repo": "https://github.com/songloft-org/songloft-plugin-lyrics",
+      "stars": 0,
+      "updatedAt": "2026-08-02T00:56:04Z",
+      "license": "Apache-2.0",
+      "logo": "icons/lyrics.svg",
+      "tags": [],
+      "featured": false
+    },
+    {
       "entryPath": "music-feed",
       "name": "抖歌",
       "version": "1.4.7",
@@ -882,30 +906,6 @@
       "updatedAt": "2026-07-23T06:25:19Z",
       "license": "Apache-2.0",
       "logo": "icons/songloft-now-playing.svg",
-      "tags": [],
-      "featured": false
-    },
-    {
-      "entryPath": "lyrics",
-      "name": "歌词搜索",
-      "version": "2026.6.17",
-      "description": "从 lrclib.net 或自定义 API 自动搜索歌词，当歌曲无歌词时由服务端自动调用",
-      "author": "Songloft Team",
-      "permissions": [
-        "storage"
-      ],
-      "minHostVersion": "2.6.0",
-      "homepage": "https://github.com/songloft-org/songloft-plugin-lyrics",
-      "pluginJsonUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-lyrics/main/plugin.json",
-      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-lyrics/releases/download/v2026.6.17/lyrics.jsplugin.zip",
-      "updateUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-lyrics/main/plugin.json",
-      "source": "open",
-      "origin": "official",
-      "repo": "https://github.com/songloft-org/songloft-plugin-lyrics",
-      "stars": 0,
-      "updatedAt": "2026-07-22T11:10:03Z",
-      "license": "Apache-2.0",
-      "logo": "icons/lyrics.svg",
       "tags": [],
       "featured": false
     }
