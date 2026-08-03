@@ -73,6 +73,12 @@
       "url": "https://raw.githubusercontent.com/youxikexue/songloft-plugin-registry/main/registry.json",
       "name": "soundforge",
       "issue": 24
+    },
+    {
+      "id": "neoheee-songloft-plugin-registry-main",
+      "url": "https://raw.githubusercontent.com/NeoHeee/songloft-plugin-registry/main/registry.json",
+      "name": "NeoHeee/songloft-plugin-registry",
+      "issue": 28
     }
   ]
 }
