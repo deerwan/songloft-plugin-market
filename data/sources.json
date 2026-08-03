@@ -82,7 +82,7 @@
     },
     {
       "id": "source",
-      "url": "https://gitee.com/pcyear/pcyear-songloft-plugin/raw/master/registry.json",
+      "url": "https://raw.giteeusercontent.com/pcyear/pcyear-songloft-plugin/raw/master/registry.json",
       "name": "多源音乐桥",
       "issue": 30
     }
