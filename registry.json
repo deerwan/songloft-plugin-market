@@ -15,7 +15,7 @@
     "https://raw.githubusercontent.com/NeoHeee/songloft-plugin-audiobookshelf/main/registry.json",
     "https://raw.githubusercontent.com/youxikexue/songloft-plugin-registry/main/registry.json",
     "https://raw.githubusercontent.com/NeoHeee/songloft-plugin-registry/main/registry.json",
-    "https://gitee.com/pcyear/pcyear-songloft-plugin/raw/master/registry.json"
+    "https://raw.giteeusercontent.com/pcyear/pcyear-songloft-plugin/raw/master/registry.json"
   ],
   "plugins": [
     "https://raw.githubusercontent.com/birdstudy-nj/songloft-lyrics-cover-helper/main/plugin.json",

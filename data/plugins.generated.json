@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-03T16:02:02.407Z",
+  "generatedAt": "2026-08-03T23:09:08.768Z",
   "count": 33,
   "openCount": 29,
   "closedCount": 4,
@@ -106,7 +106,7 @@
       "id": "source",
       "name": "多源音乐桥",
       "official": false,
-      "url": "https://gitee.com/pcyear/pcyear-songloft-plugin/raw/master/registry.json",
+      "url": "https://raw.giteeusercontent.com/pcyear/pcyear-songloft-plugin/raw/master/registry.json",
       "count": 0
     }
   ],
@@ -992,7 +992,7 @@
     {
       "entryPath": "multisource-music",
       "name": "多源音乐桥",
-      "version": "1.2.41",
+      "version": "1.2.61",
       "description": "多源音乐桥：把飞牛音乐、WebDAV、Subsonic/Navidrome 统一接入 SongLoft，提供统一浏览、搜索、播放、收藏、批量入库，支持抖音方式切割、逐字歌词/桌面歌词、智能音箱投放等。",
       "author": "pcyear",
       "permissions": [
@@ -1016,7 +1016,7 @@
       "stars": null,
       "updatedAt": null,
       "license": null,
-      "logo": "icons/multisource-music.jpg",
+      "logo": "icons/multisource-music.png",
       "tags": [],
       "featured": false
     }
