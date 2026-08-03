@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-02T16:23:17.565Z",
+  "generatedAt": "2026-08-03T03:16:44.799Z",
   "count": 31,
   "openCount": 28,
   "closedCount": 3,
@@ -96,9 +96,7 @@
       "count": 1
     }
   ],
-  "warnings": [
-    "提取图标失败：go-music-dl（HTTP 404）"
-  ],
+  "warnings": [],
   "plugins": [
     {
       "entryPath": "miot",
@@ -125,7 +123,7 @@
       "origin": "official",
       "repo": "https://github.com/songloft-org/songloft-plugin-miot",
       "stars": 38,
-      "updatedAt": "2026-08-02T03:55:58Z",
+      "updatedAt": "2026-08-03T03:02:34Z",
       "license": null,
       "logo": "icons/miot.svg",
       "tags": [],
@@ -387,6 +385,33 @@
       "featured": false
     },
     {
+      "entryPath": "downloader",
+      "name": "歌曲下载",
+      "version": "2026.8.2",
+      "description": "将 WebDAV/Subsonic 等自有网络存储中的歌曲下载到服务端本地，支持自定义目录结构和元数据嵌入",
+      "author": "Songloft Team",
+      "permissions": [
+        "storage",
+        "songs.read",
+        "songs.write",
+        "playlists.read"
+      ],
+      "minHostVersion": "2.6.0",
+      "homepage": "https://github.com/songloft-org/songloft-plugin-downloader",
+      "pluginJsonUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-downloader/main/plugin.json",
+      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-downloader/releases/download/v2026.8.2/downloader.jsplugin.zip",
+      "updateUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-downloader/main/plugin.json",
+      "source": "open",
+      "origin": "official",
+      "repo": "https://github.com/songloft-org/songloft-plugin-downloader",
+      "stars": 2,
+      "updatedAt": "2026-08-03T03:02:39Z",
+      "license": null,
+      "logo": "icons/downloader.svg",
+      "tags": [],
+      "featured": false
+    },
+    {
       "entryPath": "go-music-dl",
       "name": "GoMusicDL",
       "version": "2026.8.1",
@@ -411,33 +436,6 @@
       "updatedAt": "2026-08-02T05:32:28Z",
       "license": "Apache-2.0",
       "logo": "icons/go-music-dl.svg",
-      "tags": [],
-      "featured": false
-    },
-    {
-      "entryPath": "downloader",
-      "name": "歌曲下载",
-      "version": "2026.8.2",
-      "description": "将 WebDAV/Subsonic 等自有网络存储中的歌曲下载到服务端本地，支持自定义目录结构和元数据嵌入",
-      "author": "Songloft Team",
-      "permissions": [
-        "storage",
-        "songs.read",
-        "songs.write",
-        "playlists.read"
-      ],
-      "minHostVersion": "2.6.0",
-      "homepage": "https://github.com/songloft-org/songloft-plugin-downloader",
-      "pluginJsonUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-downloader/main/plugin.json",
-      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-downloader/releases/download/v2026.8.2/downloader.jsplugin.zip",
-      "updateUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-downloader/main/plugin.json",
-      "source": "open",
-      "origin": "official",
-      "repo": "https://github.com/songloft-org/songloft-plugin-downloader",
-      "stars": 2,
-      "updatedAt": "2026-08-02T00:56:05Z",
-      "license": null,
-      "logo": "icons/downloader.svg",
       "tags": [],
       "featured": false
     },
@@ -557,7 +555,7 @@
     {
       "entryPath": "dav",
       "name": "WebDAV 音乐源",
-      "version": "1.1.3",
+      "version": "1.1.4",
       "description": "通过 WebDAV 协议接入外部音乐库",
       "author": "Songloft Team",
       "permissions": [
@@ -567,16 +565,16 @@
         "playlists.read",
         "playlists.write"
       ],
-      "minHostVersion": "1.3.0",
+      "minHostVersion": "2.9.5",
       "homepage": "https://github.com/songloft-org/songloft-plugin-dav",
       "pluginJsonUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-dav/main/plugin.json",
-      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-dav/releases/download/v1.1.3/dav.jsplugin.zip",
+      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-dav/releases/download/v1.1.4/dav.jsplugin.zip",
       "updateUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-dav/main/plugin.json",
       "source": "open",
       "origin": "official",
       "repo": "https://github.com/songloft-org/songloft-plugin-dav",
       "stars": 1,
-      "updatedAt": "2026-07-30T07:32:37Z",
+      "updatedAt": "2026-08-03T02:07:34Z",
       "license": null,
       "logo": "icons/dav.svg",
       "tags": [],
