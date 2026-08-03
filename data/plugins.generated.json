@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-08-03T10:25:47.203Z",
-  "count": 32,
+  "generatedAt": "2026-08-03T16:02:02.407Z",
+  "count": 33,
   "openCount": 29,
-  "closedCount": 3,
+  "closedCount": 4,
   "sources": [
     {
       "id": "official",
       "name": "官方",
       "official": true,
       "url": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-registry/main/registry.json",
-      "count": 17
+      "count": 18
     },
     {
       "id": "deerwan",
@@ -101,6 +101,13 @@
       "official": false,
       "url": "https://raw.githubusercontent.com/NeoHeee/songloft-plugin-registry/main/registry.json",
       "count": 1
+    },
+    {
+      "id": "source",
+      "name": "多源音乐桥",
+      "official": false,
+      "url": "https://gitee.com/pcyear/pcyear-songloft-plugin/raw/master/registry.json",
+      "count": 0
     }
   ],
   "warnings": [],
@@ -130,7 +137,7 @@
       "origin": "official",
       "repo": "https://github.com/songloft-org/songloft-plugin-miot",
       "stars": 38,
-      "updatedAt": "2026-08-03T04:35:34Z",
+      "updatedAt": "2026-08-03T11:22:03Z",
       "license": null,
       "logo": "icons/miot.svg",
       "tags": [],
@@ -979,6 +986,37 @@
       "updatedAt": "2026-07-23T06:25:19Z",
       "license": "Apache-2.0",
       "logo": "icons/songloft-now-playing.svg",
+      "tags": [],
+      "featured": false
+    },
+    {
+      "entryPath": "multisource-music",
+      "name": "多源音乐桥",
+      "version": "1.2.41",
+      "description": "多源音乐桥：把飞牛音乐、WebDAV、Subsonic/Navidrome 统一接入 SongLoft，提供统一浏览、搜索、播放、收藏、批量入库，支持抖音方式切割、逐字歌词/桌面歌词、智能音箱投放等。",
+      "author": "pcyear",
+      "permissions": [
+        "storage",
+        "songs.read",
+        "songs.write",
+        "playlists.read",
+        "playlists.write",
+        "fs:music",
+        "fs",
+        "inter-plugin"
+      ],
+      "minHostVersion": "2.11.0",
+      "homepage": "https://gitee.com/pcyear/pcyear-songloft-plugin",
+      "pluginJsonUrl": "https://gitee.com/pcyear/pcyear-songloft-plugin/raw/master/plugin.json",
+      "downloadUrl": "https://gitee.com/pcyear/pcyear-songloft-plugin/raw/master/dist/multisource-music.jsplugin.zip",
+      "updateUrl": "https://gitee.com/pcyear/pcyear-songloft-plugin/raw/master/manifest.json",
+      "source": "closed",
+      "origin": "official",
+      "repo": null,
+      "stars": null,
+      "updatedAt": null,
+      "license": null,
+      "logo": "icons/multisource-music.jpg",
       "tags": [],
       "featured": false
     }
