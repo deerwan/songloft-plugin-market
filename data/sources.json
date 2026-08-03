@@ -79,6 +79,12 @@
       "url": "https://raw.githubusercontent.com/NeoHeee/songloft-plugin-registry/main/registry.json",
       "name": "NeoHeee/songloft-plugin-registry",
       "issue": 28
+    },
+    {
+      "id": "source",
+      "url": "https://gitee.com/pcyear/pcyear-songloft-plugin/raw/master/registry.json",
+      "name": "多源音乐桥",
+      "issue": 30
     }
   ]
 }
