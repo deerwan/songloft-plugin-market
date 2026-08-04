@@ -154,6 +154,15 @@ const filtered = computed(() => {
 const featuredList = computed(() => filtered.value.filter((p) => p.featured))
 const regularList = computed(() => filtered.value.filter((p) => !p.featured))
 
+// 推荐徽章：全场 Star 数第一的插件（精选区已有「推荐」语义，徽章只出现在常规卡片）
+const topStarKey = computed(() => {
+  let best: Plugin | null = null
+  for (const p of data.value?.plugins || []) {
+    if (p.stars !== null && p.stars > 0 && (!best || p.stars > (best.stars ?? 0))) best = p
+  }
+  return best?.entryPath ?? null
+})
+
 function initials(name: string): string {
   return (name || '?').trim().charAt(0).toUpperCase()
 }
@@ -388,6 +397,11 @@ onBeforeUnmount(() => window.removeEventListener('resize', updateIndicator))
                   <span v-else>{{ initials(p.name) }}</span>
                 </div>
                 <h3 class="card__name" :title="p.name">{{ p.name }}</h3>
+                <span
+                  v-if="p.entryPath === topStarKey"
+                  class="card__badge"
+                  title="Star 数全场第一"
+                >推荐</span>
                 <button
                   class="btn card__install"
                   :class="{ 'is-copied': copiedKey === p.entryPath }"
@@ -430,7 +444,7 @@ onBeforeUnmount(() => window.removeEventListener('resize', updateIndicator))
                 </a>
                 <span v-else class="meta">{{ p.author || '未知作者' }}</span>
                 <span class="meta">v{{ p.version }}</span>
-                <span v-if="p.source === 'open' && p.stars !== null" class="meta">★ {{ p.stars }}</span>
+                <span v-if="p.stars !== null" class="meta">★ {{ p.stars }}</span>
                 <span v-if="p.updatedAt" class="meta meta--date">{{ formatDateTime(p.updatedAt) }}</span>
                 <span class="card__links">
                   <a v-if="p.repo" :href="p.repo" target="_blank" rel="noopener">仓库</a>
@@ -851,6 +865,18 @@ onBeforeUnmount(() => window.removeEventListener('resize', updateIndicator))
 
 .card__install {
   flex-shrink: 0;
+}
+
+/* 推荐徽章：Star 数全场第一的插件，暖金色区别于常规 chip */
+.card__badge {
+  flex-shrink: 0;
+  font-size: 11px;
+  padding: 2px 9px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 176, 64, 0.45);
+  background: rgba(255, 176, 64, 0.14);
+  color: #ffc46b;
+  white-space: nowrap;
 }
 
 .card__desc {
