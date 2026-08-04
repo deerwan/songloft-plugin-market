@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-03T23:09:08.768Z",
+  "generatedAt": "2026-08-04T02:45:37.839Z",
   "count": 33,
   "openCount": 29,
   "closedCount": 4,
@@ -176,7 +176,7 @@
     {
       "entryPath": "neo-lxbridge",
       "name": "Songloft LxBridge",
-      "version": "0.6.1",
+      "version": "0.8.0",
       "description": "连接洛雪自定义音源与 Songloft：动态音质、扩展音质、自动降级、搜索、播放、导入、下载管理和外部搜索",
       "author": "Neo",
       "permissions": [
@@ -191,13 +191,13 @@
       "minHostVersion": "2.9.6",
       "homepage": "https://github.com/NeoHeee/songloft-plugin-lxbridge",
       "pluginJsonUrl": "https://raw.githubusercontent.com/NeoHeee/songloft-plugin-lxbridge/main/plugin.json",
-      "downloadUrl": "https://github.com/NeoHeee/songloft-plugin-lxbridge/releases/download/v0.6.1/neo-lxbridge-v0.6.1.jsplugin.zip",
+      "downloadUrl": "https://github.com/NeoHeee/songloft-plugin-lxbridge/releases/download/v0.8.0/neo-lxbridge-v0.8.0.jsplugin.zip",
       "updateUrl": null,
       "source": "open",
       "origin": "neoheee-songloft-plugin-registry-main",
       "repo": "https://github.com/NeoHeee/songloft-plugin-lxbridge",
       "stars": 11,
-      "updatedAt": "2026-08-03T09:22:07Z",
+      "updatedAt": "2026-08-04T01:50:15Z",
       "license": null,
       "logo": "icons/neo-lxbridge.svg",
       "tags": [],
@@ -430,6 +430,34 @@
       "featured": false
     },
     {
+      "entryPath": "audiobook",
+      "name": "有声书",
+      "version": "1.1.0",
+      "description": "本地有声书管理与播放：扫描本地有声书目录，提供分类展示、搜索、章节播放、播放进度与收藏功能。",
+      "author": "MiMusic Team",
+      "permissions": [
+        "storage",
+        "fs",
+        "fs:music",
+        "fs:external",
+        "command"
+      ],
+      "minHostVersion": "2.0.0",
+      "homepage": "https://github.com/mimusic-org/mimusic-jsplugin-releases/tree/audiobook",
+      "pluginJsonUrl": "https://raw.githubusercontent.com/mimusic-org/mimusic-jsplugin-releases/audiobook/plugin.json",
+      "downloadUrl": "https://github.com/mimusic-org/mimusic-jsplugin-releases/releases/download/audiobook-v1.1.0/audiobook.jsplugin.zip",
+      "updateUrl": "https://raw.githubusercontent.com/mimusic-org/mimusic-jsplugin-releases/audiobook/plugin.json",
+      "source": "closed",
+      "origin": "official",
+      "repo": "https://github.com/mimusic-org/mimusic-jsplugin-releases",
+      "stars": 3,
+      "updatedAt": "2026-07-20T07:57:53Z",
+      "license": null,
+      "logo": "icons/audiobook.svg",
+      "tags": [],
+      "featured": false
+    },
+    {
       "entryPath": "downloader",
       "name": "歌曲下载",
       "version": "2026.8.3",
@@ -538,34 +566,6 @@
       "updatedAt": "2026-07-30T18:54:10Z",
       "license": null,
       "logo": "icons/stats.svg",
-      "tags": [],
-      "featured": false
-    },
-    {
-      "entryPath": "audiobook",
-      "name": "有声书",
-      "version": "1.1.0",
-      "description": "本地有声书管理与播放：扫描本地有声书目录，提供分类展示、搜索、章节播放、播放进度与收藏功能。",
-      "author": "MiMusic Team",
-      "permissions": [
-        "storage",
-        "fs",
-        "fs:music",
-        "fs:external",
-        "command"
-      ],
-      "minHostVersion": "2.0.0",
-      "homepage": "https://github.com/mimusic-org/mimusic-jsplugin-releases/tree/audiobook",
-      "pluginJsonUrl": "https://raw.githubusercontent.com/mimusic-org/mimusic-jsplugin-releases/audiobook/plugin.json",
-      "downloadUrl": "https://github.com/mimusic-org/mimusic-jsplugin-releases/releases/download/audiobook-v1.1.0/audiobook.jsplugin.zip",
-      "updateUrl": "https://raw.githubusercontent.com/mimusic-org/mimusic-jsplugin-releases/audiobook/plugin.json",
-      "source": "closed",
-      "origin": "official",
-      "repo": "https://github.com/mimusic-org/mimusic-jsplugin-releases",
-      "stars": 2,
-      "updatedAt": "2026-07-20T07:57:53Z",
-      "license": null,
-      "logo": "icons/audiobook.svg",
       "tags": [],
       "featured": false
     },
@@ -992,7 +992,7 @@
     {
       "entryPath": "multisource-music",
       "name": "多源音乐桥",
-      "version": "1.2.61",
+      "version": "1.2.63",
       "description": "多源音乐桥：把飞牛音乐、WebDAV、Subsonic/Navidrome 统一接入 SongLoft，提供统一浏览、搜索、播放、收藏、批量入库，支持抖音方式切割、逐字歌词/桌面歌词、智能音箱投放等。",
       "author": "pcyear",
       "permissions": [
