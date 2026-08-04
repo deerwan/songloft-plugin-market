@@ -20,6 +20,9 @@ interface Plugin {
   stars: number | null
   updatedAt: string | null
   license: string | null
+  // 作者头像直链（构建时写入）：Gitee 无约定式头像 URL，由构建脚本
+  // 从 Gitee API 取；GitHub 插件此字段为 null，前端按约定自拼
+  avatarUrl: string | null
   logo: string | null
   tags: string[]
   featured: boolean
@@ -155,15 +158,34 @@ function initials(name: string): string {
   return (name || '?').trim().charAt(0).toUpperCase()
 }
 
-// 从仓库 URL 解析 GitHub 用户名（repo owner）：作者位展示/跳转以此为准，保证名字与落地页自洽
-function ownerOf(p: Plugin): string | null {
-  const m = (p.repo || '').match(/^https?:\/\/github\.com\/([^/]+)\//)
-  return m ? m[1] : null
+// 从仓库 URL 解析托管平台与用户名（repo owner）：作者位展示/跳转以此为准，保证名字与落地页自洽
+function repoHost(p: Plugin): { platform: 'github' | 'gitee'; owner: string } | null {
+  const m = (p.repo || '').match(/^https?:\/\/(?:www\.)?(github\.com|gitee\.com)\/([^/]+)\//)
+  if (!m) return null
+  return { platform: m[1] === 'gitee.com' ? 'gitee' : 'github', owner: m[2] }
 }
 
-// 头像经 wsrv.nl 图片代理（缩放+转 webp）：直连 avatars.githubusercontent.com 国内基本不可达
-function avatarUrl(owner: string): string {
-  return `https://wsrv.nl/?url=${encodeURIComponent(`github.com/${owner}.png`)}&w=40&h=40&output=webp`
+function ownerOf(p: Plugin): string | null {
+  return repoHost(p)?.owner ?? null
+}
+
+// 作者主页：跟随仓库所在平台
+function ownerUrl(p: Plugin): string | null {
+  const h = repoHost(p)
+  if (!h) return null
+  return `https://${h.platform === 'gitee' ? 'gitee.com' : 'github.com'}/${h.owner}`
+}
+
+// 头像经 wsrv.nl 图片代理（缩放+转 webp）：直连 avatars.githubusercontent.com 国内基本不可达。
+// GitHub 按约定自拼 github.com/{owner}.png；Gitee 只能用构建时记录的 avatarUrl，
+// 没有则不显示头像（不能回退到 GitHub 约定，会拿到同名 GitHub 用户的头像）
+function authorAvatar(p: Plugin): string | null {
+  if (p.avatarUrl) {
+    return `https://wsrv.nl/?url=${encodeURIComponent(p.avatarUrl)}&w=40&h=40&output=webp`
+  }
+  const h = repoHost(p)
+  if (!h || h.platform !== 'github') return null
+  return `https://wsrv.nl/?url=${encodeURIComponent(`github.com/${h.owner}.png`)}&w=40&h=40&output=webp`
 }
 
 // 加载失败的 owner 集合：隐藏失败头像，退回纯用户名链接
@@ -391,15 +413,15 @@ onBeforeUnmount(() => window.removeEventListener('resize', updateIndicator))
                 <a
                   v-if="ownerOf(p)"
                   class="meta meta--author"
-                  :href="`https://github.com/${ownerOf(p)}`"
+                  :href="ownerUrl(p)!"
                   target="_blank"
                   rel="noopener"
-                  :title="p.author && p.author !== ownerOf(p) ? `作者署名：${p.author}` : '访问 GitHub 主页'"
+                  :title="p.author && p.author !== ownerOf(p) ? `作者署名：${p.author}` : '访问作者主页'"
                 >
                   <img
-                    v-if="!avatarFailed.has(ownerOf(p)!)"
+                    v-if="authorAvatar(p) && !avatarFailed.has(ownerOf(p)!)"
                     class="meta__avatar"
-                    :src="avatarUrl(ownerOf(p)!)"
+                    :src="authorAvatar(p)!"
                     alt=""
                     loading="lazy"
                     @error="onAvatarError(ownerOf(p)!)"

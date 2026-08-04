@@ -17,10 +17,6 @@ function submit() {
     alert('源地址必须以 registry.json 结尾。请先制作个人插件源（含 plugins 数组的 registry.json）再提交，可参考弹窗里的「插件源制作指南」。')
     return
   }
-  if (/(^|[/.])gitee(usercontent)?\.com/i.test(raw)) {
-    alert('本项目不再收录 Gitee 托管的插件源，请将仓库迁移到 GitHub 后再提交。')
-    return
-  }
   const params = new URLSearchParams({
     'source-url': raw,
   })
@@ -50,7 +46,7 @@ function onKey(e: KeyboardEvent) {
           target="_blank"
           rel="noopener"
         >插件源制作指南</a>）。每位开发者只需提交一次，新插件加入自己的源即可自动收录。
-        本项目仅收录 GitHub 托管的源，不再接受非 GitHub 源地址。
+        支持 GitHub / Gitee 托管的源。
       </p>
       <label class="field">
         <span class="field__label">插件源地址 *</span>

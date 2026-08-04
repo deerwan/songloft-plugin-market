@@ -62,29 +62,26 @@ jobs:
             echo "error_msg=源地址必须以 registry.json 结尾。请先制作个人插件源（含 plugins 数组的 registry.json）再提交，参考插件源制作指南：https://songloft.hanxi.cc/plugin_registry" >> "$GITHUB_OUTPUT"
             exit 0
           fi
-          # 早拦截：不再接受 Gitee 托管的源，建议作者迁移到 GitHub 后再提交。
-          if printf '%s' "$URL" | grep -qiE '(^|[/.])gitee(usercontent)?\.com'; then
-            echo "valid=false" >> "$GITHUB_OUTPUT"
-            echo "error_msg=本项目不再收录 Gitee 托管的插件源。请将仓库迁移到 GitHub 后再提交。" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          # 早拦截：每位开发者只收录一个个人插件源。同一 GitHub 账号已有源时，
+          # 早拦截：每位开发者只收录一个个人插件源（同平台同账号）。同一账号已有源时，
           # 引导其直接把新插件加进已有 registry.json，而不是再提交第二个源。
           DUP_NAME=$(CHECK_URL="$URL" node -e '
             const fs = require("fs");
-            const gh = (u) => (u.match(/(?:github\.com|raw\.githubusercontent\.com)\/([^\/]+)\//i) || [])[1] || "";
-            const owner = gh(process.env.CHECK_URL).toLowerCase();
+            const host = (u) => {
+              const m = u.match(/(?:github\.com|raw\.githubusercontent\.com|gitee\.com|raw\.giteeusercontent\.com)\/([^\/]+)\//i);
+              return m ? m[1].toLowerCase() : "";
+            };
+            const owner = host(process.env.CHECK_URL);
             if (!owner) process.exit(0);
             const cfg = JSON.parse(fs.readFileSync("data/sources.json", "utf8"));
             const hit = (cfg.sources || []).find((s) => {
               const u = (typeof s === "string" ? s : s.url) || "";
-              return u !== process.env.CHECK_URL && gh(u).toLowerCase() === owner;
+              return u !== process.env.CHECK_URL && host(u) === owner;
             });
             if (hit) process.stdout.write(hit.name || hit.url);
           ')
           if [ -n "$DUP_NAME" ]; then
             echo "valid=false" >> "$GITHUB_OUTPUT"
-            echo "error_msg=你的 GitHub 账号已有插件源被收录（${DUP_NAME}）。每位开发者只需提交一次源地址，新插件请直接加入你的 registry.json，下次构建会自动收录。" >> "$GITHUB_OUTPUT"
+            echo "error_msg=你的账号已有插件源被收录（${DUP_NAME}）。每位开发者只需提交一次源地址，新插件请直接加入你的 registry.json，下次构建会自动收录。" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           echo "正在校验源：$URL（展示名：${NAME:-<未填写>}）"
@@ -141,12 +138,14 @@ jobs:
             const exists = cfg.sources.some(s => (typeof s === 'string' ? s : s.url) === url);
             if (exists) { console.log('源已存在（url 去重），跳过追加'); process.exit(0); }
             const m = process.env.URL.match(/raw\.githubusercontent\.com\/([^\/]+)\/([^\/]+)(?:\/([^\/]+))?/i)
-              || process.env.URL.match(/github\.com\/([^\/]+)\/([^\/]+)(?:\/(?:raw\/)?([^\/]+))?/i);
+              || process.env.URL.match(/github\.com\/([^\/]+)\/([^\/]+)(?:\/(?:raw\/)?([^\/]+))?/i)
+              || process.env.URL.match(/raw\.giteeusercontent\.com\/([^\/]+)\/([^\/]+)(?:\/raw\/([^\/]+))?/i)
+              || process.env.URL.match(/gitee\.com\/([^\/]+)\/([^\/]+)(?:\/raw\/([^\/]+))?/i);
             const owner = m ? m[1] : '';
             const repo = m ? m[2] : '';
             const ref = (m && m[3] && m[3] !== 'raw') ? m[3] : '';
             const displayName = (process.env.DISPLAY_NAME || '').trim();
-            // 展示名：优先用户填写；否则只用 GitHub 用户名（owner），
+            // 展示名：优先用户填写；否则只用托管平台用户名（owner），
             // 前端来源分类只显示用户名；同 owner 查重已保证一人一源，不会撞名
             const name = displayName || (owner || '自定义源');
             // id 用 owner/repo（含分支），同一 owner 下的不同源也能区分，避免 origin 碰撞

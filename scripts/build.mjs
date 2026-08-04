@@ -125,6 +125,14 @@ async function githubApi(path) {
   return resp.json()
 }
 
+// Gitee v5 API：匿名可调（限频宽松），一次请求拿 stars/pushed_at/头像/license
+async function giteeApi(path) {
+  const url = `https://gitee.com/api/v5${path}`
+  const resp = await fetchWithTimeout(url, { headers: { 'User-Agent': 'songloft-plugin-market' } })
+  if (!resp.ok) throw new Error(`Gitee API ${resp.status} for ${path}`)
+  return resp.json()
+}
+
 // ——————————————————————————————————————————————
 // 版本比较（按 . 分段数值比较，去掉前导 v）
 // ——————————————————————————————————————————————
@@ -160,7 +168,7 @@ function normalizeSource(entry, index) {
   const raw = typeof entry === 'string' ? { url: entry } : { ...(entry || {}) }
   const url = String(raw.url || '').trim()
   if (!url) return null
-  const gh = parseGitHubRepo(url)
+  const gh = parseRepoHost(url)
   const owner = gh?.owner || ''
   const official = raw.official ?? owner === 'songloft-org'
   // 兜底 id：用 owner/repo（含分支），与 submit-source.yml 一致，避免同 owner 不同源碰撞
@@ -232,19 +240,34 @@ async function expandRegistry(url, { depth, visited, pluginUrls, pluginOrigin, o
 }
 
 // ——————————————————————————————————————————————
-// 开源/闭源探测：从各类 URL 中解析 GitHub owner/repo
+// 开源/闭源探测：从各类 URL 中解析托管平台与 owner/repo
 // ——————————————————————————————————————————————
 
-function parseGitHubRepo(...urls) {
+// 从 URL 解析仓库信息，返回 { platform, owner, repo, ref }。
+// 支持 GitHub（github.com / raw.githubusercontent.com）与
+// Gitee（gitee.com / raw.giteeusercontent.com）。
+function parseRepoHost(...urls) {
   for (const u of urls) {
     if (typeof u !== 'string') continue
     // raw.githubusercontent.com/owner/repo/branch/... 优先（能拿到插件自身仓库）
     let m = u.match(/raw\.githubusercontent\.com\/([^/]+)\/([^/#?]+)(?:\/([^/#?]+))?/i)
-    if (m) return { owner: m[1], repo: m[2].replace(/\.git$/, ''), ref: m[3] || null }
+    if (m) return { platform: 'github', owner: m[1], repo: m[2].replace(/\.git$/, ''), ref: m[3] || null }
     m = u.match(/github\.com\/([^/]+)\/([^/#?]+)(?:\/(?:raw\/)?([^/#?]+))?/i)
-    if (m) return { owner: m[1], repo: m[2].replace(/\.git$/, ''), ref: (m[3] && m[3] !== 'raw') ? m[3] : null }
+    if (m) return { platform: 'github', owner: m[1], repo: m[2].replace(/\.git$/, ''), ref: (m[3] && m[3] !== 'raw') ? m[3] : null }
+    // Gitee：raw 地址比 GitHub 多一段 /raw/（raw.giteeusercontent.com/o/r/raw/branch/...）
+    m = u.match(/(?:raw\.giteeusercontent\.com|gitee\.com)\/([^/]+)\/([^/#?]+)(?:\/(?:raw\/)?([^/#?]+))?/i)
+    if (m) return { platform: 'gitee', owner: m[1], repo: m[2].replace(/\.git$/, ''), ref: (m[3] && m[3] !== 'raw') ? m[3] : null }
   }
   return null
+}
+
+// 两平台 raw 文件直链格式不同，统一从这里生成：
+//   GitHub: raw.githubusercontent.com/{owner}/{repo}/{branch}/{path}
+//   Gitee:  raw.giteeusercontent.com/{owner}/{repo}/raw/{branch}/{path}
+function rawFileUrl(platform, owner, repo, branch, path) {
+  return platform === 'gitee'
+    ? `https://raw.giteeusercontent.com/${owner}/${repo}/raw/${branch}/${path}`
+    : `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${path}`
 }
 
 // 从 plugin.json 的 URL 解析其所在子目录（如 news-plugin/），用于开源探测。
@@ -257,6 +280,11 @@ function subDirFromPluginUrl(url) {
   let rest = m ? m[1] : ''
   if (!rest) {
     m = url.match(/github\.com\/[^/#?]+\/[^/#?]+\/(?:raw|blob)\/(.+)$/i)
+    rest = m ? m[1] : ''
+  }
+  if (!rest) {
+    // Gitee：gitee.com/{owner}/{repo}/raw/{branch}/... 或 raw.giteeusercontent.com/...
+    m = url.match(/(?:raw\.giteeusercontent\.com|gitee\.com)\/[^/#?]+\/[^/#?]+\/(?:raw\/)?(.+)$/i)
     rest = m ? m[1] : ''
   }
   if (!rest) return ''
@@ -272,16 +300,16 @@ function subDirFromPluginUrl(url) {
 }
 
 // 判断仓库是否真的包含源码（而非只上传打包 zip 的「发布仓库」）。
-// 用 raw.githubusercontent.com HEAD 探测标志性源码文件，不占 GitHub API 额度。
+// 用平台 raw 直链 HEAD 探测标志性源码文件，不占任何 API 额度。
 // 命中任一即视为开源：package.json / tsconfig.json / go.mod / src/index.ts
 // 探测范围：仓库根目录 + plugin.json 所在子目录（源码常放子目录）
-async function repoHasSource(owner, repo, subDir = '') {
+async function repoHasSource(owner, repo, subDir = '', platform = 'github') {
   const files = ['package.json', 'tsconfig.json', 'go.mod', 'src/index.ts']
   const dirs = ['', subDir].filter((d, i, a) => a.indexOf(d) === i)
   for (const branch of ['main', 'master']) {
     for (const dir of dirs) {
       for (const f of files) {
-        if (await headOk(`https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${dir}${f}`)) {
+        if (await headOk(rawFileUrl(platform, owner, repo, branch, dir + f))) {
           return true
         }
       }
@@ -493,6 +521,9 @@ async function processPlugin(pluginJsonUrl, prevMap) {
     stars: null,
     updatedAt: null,
     license: null,
+    // 作者头像直链：Gitee 头像无固定约定 URL，构建时从 Gitee API 的
+    // owner.avatar_url 取；GitHub 留空，前端按 github.com/{owner}.png 约定自拼
+    avatarUrl: null,
     // 仅保留作者直接提供的绝对图片 URL；相对路径的 icon 实际打包在
     // .jsplugin.zip 内（仓库根目录的同名文件一般不存在），后续由 extractIconFromZip 处理
     logo: /^https?:\/\//i.test(String(pj.logo || pj.icon || '')) ? String(pj.logo || pj.icon) : null,
@@ -521,30 +552,39 @@ async function processPlugin(pluginJsonUrl, prevMap) {
     entry.updatedAt = await fetchReleaseUpdatedAt(entry.downloadUrl)
   }
 
-  // 开源探测：优先用插件自身的 URL（下载/更新/plugin.json），homepage 最后
-  // （homepage 常指向主项目仓库，而非插件自己的仓库）
-  const gh = parseGitHubRepo(entry.downloadUrl, entry.updateUrl, pluginJsonUrl, entry.homepage)
+  // 仓库探测：优先用插件自身的 URL（下载/更新/plugin.json），homepage 最后
+  // （homepage 常指向主项目仓库，而非插件自己的仓库）；同时支持 GitHub / Gitee
+  const gh = parseRepoHost(entry.downloadUrl, entry.updateUrl, pluginJsonUrl, entry.homepage)
   if (gh) {
-    entry.repo = `https://github.com/${gh.owner}/${gh.repo}`
+    const isGitee = gh.platform === 'gitee'
+    entry.repo = isGitee ? `https://gitee.com/${gh.owner}/${gh.repo}` : `https://github.com/${gh.owner}/${gh.repo}`
     const prev = prevMap.get(entryPath)
     // 开源判定（不占 API 额度）：探测仓库是否真的包含源码（根目录 + plugin.json 子目录）。
     // 只上传打包 .jsplugin.zip / plugin.json 的「发布仓库」不算开源。
-    const hasSource = await repoHasSource(gh.owner, gh.repo, subDirFromPluginUrl(pluginJsonUrl))
+    const hasSource = await repoHasSource(gh.owner, gh.repo, subDirFromPluginUrl(pluginJsonUrl), gh.platform)
     entry.source = hasSource ? 'open' : 'closed'
     try {
-      const info = await githubApi(`/repos/${gh.owner}/${gh.repo}`)
+      const info = isGitee
+        ? await giteeApi(`/repos/${gh.owner}/${gh.repo}`)
+        : await githubApi(`/repos/${gh.owner}/${gh.repo}`)
       // API 能访问时，用主编程语言作二次校正（补探测未命中的源码布局）
       if (info.language) entry.source = 'open'
       entry.stars = info.stargazers_count ?? null
       entry.updatedAt = info.pushed_at || info.updated_at || entry.updatedAt || null
-      entry.license = info.license?.spdx_id && info.license.spdx_id !== 'NOASSERTION'
-        ? info.license.spdx_id
-        : null
+      // license：GitHub 返回 { spdx_id }；Gitee v5 可能是字符串或对象，兼容处理
+      const spdx = typeof info.license === 'string' ? info.license : info.license?.spdx_id
+      entry.license = spdx && spdx !== 'NOASSERTION' ? spdx : null
+      // Gitee 头像：取 API 的 owner.avatar_url，前端经 wsrv.nl 代理展示；
+      // no_portrait 是 Gitee 默认占位图，视为无头像
+      if (isGitee) {
+        const avatar = info.owner?.avatar_url || null
+        entry.avatarUrl = avatar && !avatar.includes('no_portrait') ? avatar : null
+      }
       // logo 兜底：仓库根目录 logo.png / icon.png（仅开源仓库才有意义）
       if (!entry.logo && entry.source === 'open') {
         const branch = info.default_branch || 'main'
         for (const name of ['logo.png', 'icon.png']) {
-          const raw = `https://raw.githubusercontent.com/${gh.owner}/${gh.repo}/${branch}/${name}`
+          const raw = rawFileUrl(gh.platform, gh.owner, gh.repo, branch, name)
           if (await headOk(raw)) {
             entry.logo = raw
             break
@@ -552,14 +592,15 @@ async function processPlugin(pluginJsonUrl, prevMap) {
         }
       }
     } catch (e) {
-      // GitHub API 失败（限额/网络）：开源判定已由 raw 探测完成，
-      // 仅 stars/license 等增强字段回退到上次缓存。
-      warn(`GitHub 增强失败，回退缓存：${entry.repo}（${e.message}）`)
+      // 平台 API 失败（限额/网络）：开源判定已由 raw 探测完成，
+      // 仅 stars/license/头像等增强字段回退到上次缓存。
+      warn(`${isGitee ? 'Gitee' : 'GitHub'} 增强失败，回退缓存：${entry.repo}（${e.message}）`)
       if (prev) {
         entry.stars = prev.stars ?? null
         entry.updatedAt = entry.updatedAt || prev.updatedAt || null
         entry.license = prev.license ?? null
         entry.logo = entry.logo || prev.logo || null
+        entry.avatarUrl = prev.avatarUrl ?? null
       }
     }
   }

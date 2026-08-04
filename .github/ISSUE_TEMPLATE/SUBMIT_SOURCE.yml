@@ -8,9 +8,7 @@ body:
       value: |
         提交你的**个人插件源**（`registry.json`）地址。每位开发者只需提交一次：之后新插件直接加入自己的 registry.json，下次构建即自动收录，无需重复提交。
 
-        注意：源地址必须**公开可访问**（建议用 `raw.githubusercontent.com` 的链接）。若还没有源，请先参考[插件源制作指南](https://songloft.hanxi.cc/plugin_registry)制作。
-
-        本项目仅收录 **GitHub 托管**的源，不再接受 Gitee（如托管在 Gitee 请先迁移）。
+        注意：源地址必须**公开可访问**（GitHub 建议用 `raw.githubusercontent.com` 链接，Gitee 用 `raw.giteeusercontent.com` 链接）。若还没有源，请先参考[插件源制作指南](https://songloft.hanxi.cc/plugin_registry)制作。
   - type: input
     id: source-url
     attributes:
