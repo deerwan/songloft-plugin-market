@@ -166,7 +166,7 @@ function normalizeSource(entry, index) {
   // 兜底 id：用 owner/repo（含分支），与 submit-source.yml 一致，避免同 owner 不同源碰撞
   const idBase = raw.id || (gh ? `${gh.owner}-${gh.repo}${gh.ref ? '-' + gh.ref : ''}` : `source-${index + 1}`)
   const id = String(idBase).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || `source-${index + 1}`
-  const name = String(raw.name || (official ? '官方' : (gh ? `${gh.owner}/${gh.repo}` : `源 ${index + 1}`)))
+  const name = String(raw.name || (official ? '官方' : (gh ? gh.owner : `源 ${index + 1}`)))
   return { id, url, name, official: Boolean(official) }
 }
 
@@ -186,9 +186,13 @@ async function expandRegistry(url, { depth, visited, pluginUrls, pluginOrigin, o
     return
   }
 
-  // 记录插件来源（首次命中的顶层源胜出）
+  // 记录插件来源：首次命中的顶层源胜出；但官方源只算「收录」，
+  // 若社区源也收录了同一插件，归属改判给社区源（原始提交者），
+  // 避免官方 registry 转发第三方插件后原作者来源不可见。
   const tag = (pluginUrl) => {
-    if (origin && !pluginOrigin.has(pluginUrl)) pluginOrigin.set(pluginUrl, origin.id)
+    if (!origin) return
+    const prev = pluginOrigin.get(pluginUrl)
+    if (!prev || (prev.official && !origin.official)) pluginOrigin.set(pluginUrl, origin)
   }
 
   // 容错：若直接贴的是单个 plugin.json（没有 plugins/includes，却有 entryPath/name+version），
@@ -243,15 +247,43 @@ function parseGitHubRepo(...urls) {
   return null
 }
 
+// 从 plugin.json 的 URL 解析其所在子目录（如 news-plugin/），用于开源探测。
+// 不少插件把源码放在仓库子目录而非根目录，只探根目录会误判为闭源。
+function subDirFromPluginUrl(url) {
+  if (typeof url !== 'string') return ''
+  // 取仓库路径之后的部分：raw.githubusercontent.com/{owner}/{repo}/<rest>
+  // 或 github.com/{owner}/{repo}/raw|blob/<rest>
+  let m = url.match(/raw\.githubusercontent\.com\/[^/#?]+\/[^/#?]+\/(.+)$/i)
+  let rest = m ? m[1] : ''
+  if (!rest) {
+    m = url.match(/github\.com\/[^/#?]+\/[^/#?]+\/(?:raw|blob)\/(.+)$/i)
+    rest = m ? m[1] : ''
+  }
+  if (!rest) return ''
+  const segs = String(rest).split('/').filter(Boolean)
+  if (segs.length < 2) return '' // 至少要有分支 + 文件名
+  let i = 0
+  // 容错：raw.githubusercontent.com 偶见多余的 raw/ 段（如 …/raw/refs/heads/master/…）
+  if (segs[0] === 'raw' || segs[0] === 'blob') i = 1
+  // 分支：refs/heads/xxx、refs/tags/xxx 占 3 段，普通分支名占 1 段
+  i += segs[i] === 'refs' ? 3 : 1
+  const dirSegs = segs.slice(i, -1) // 去掉末尾文件名，剩下子目录
+  return dirSegs.length ? dirSegs.join('/') + '/' : ''
+}
+
 // 判断仓库是否真的包含源码（而非只上传打包 zip 的「发布仓库」）。
 // 用 raw.githubusercontent.com HEAD 探测标志性源码文件，不占 GitHub API 额度。
 // 命中任一即视为开源：package.json / tsconfig.json / go.mod / src/index.ts
-async function repoHasSource(owner, repo) {
+// 探测范围：仓库根目录 + plugin.json 所在子目录（源码常放子目录）
+async function repoHasSource(owner, repo, subDir = '') {
   const files = ['package.json', 'tsconfig.json', 'go.mod', 'src/index.ts']
+  const dirs = ['', subDir].filter((d, i, a) => a.indexOf(d) === i)
   for (const branch of ['main', 'master']) {
-    for (const f of files) {
-      if (await headOk(`https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${f}`)) {
-        return true
+    for (const dir of dirs) {
+      for (const f of files) {
+        if (await headOk(`https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${dir}${f}`)) {
+          return true
+        }
       }
     }
   }
@@ -495,9 +527,9 @@ async function processPlugin(pluginJsonUrl, prevMap) {
   if (gh) {
     entry.repo = `https://github.com/${gh.owner}/${gh.repo}`
     const prev = prevMap.get(entryPath)
-    // 开源判定（不占 API 额度）：探测仓库是否真的包含源码。
+    // 开源判定（不占 API 额度）：探测仓库是否真的包含源码（根目录 + plugin.json 子目录）。
     // 只上传打包 .jsplugin.zip / plugin.json 的「发布仓库」不算开源。
-    const hasSource = await repoHasSource(gh.owner, gh.repo)
+    const hasSource = await repoHasSource(gh.owner, gh.repo, subDirFromPluginUrl(pluginJsonUrl))
     entry.source = hasSource ? 'open' : 'closed'
     try {
       const info = await githubApi(`/repos/${gh.owner}/${gh.repo}`)
@@ -596,7 +628,7 @@ async function main() {
 
   // 1) 展开所有 plugin.json URL（并记录每个插件的顶层来源）
   const pluginUrls = new Set()
-  const pluginOrigin = new Map() // pluginJsonUrl -> source.id
+  const pluginOrigin = new Map() // pluginJsonUrl -> 源描述符 { id, official, ... }
   const visited = new Set()
   for (const src of sourceDescriptors) {
     await expandRegistry(src.url, { depth: 0, visited, pluginUrls, pluginOrigin, origin: src })
@@ -608,7 +640,7 @@ async function main() {
   for (const url of pluginUrls) {
     const entry = await processPlugin(url, prevMap)
     if (!entry) continue
-    entry.origin = pluginOrigin.get(url) || entry.origin || null
+    entry.origin = pluginOrigin.get(url)?.id || entry.origin || null
     // 3) 按 entryPath 去重，保留高版本
     const existing = byEntry.get(entry.entryPath)
     if (!existing || compareVersion(entry.version, existing.version) > 0) {

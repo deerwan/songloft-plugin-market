@@ -1,33 +1,24 @@
 name: 提交插件源
-description: 提交一个新的插件源（registry.json）地址，审核通过后自动收录进本仓库
+description: 提交你的个人插件源（registry.json）地址，每位开发者只需提交一次，审核通过后自动收录
 title: "[Source] 插件源名称"
 labels: ["source-submit"]
 body:
   - type: markdown
     attributes:
       value: |
-        提交一个插件源（`registry.json`，或单个 `plugin.json`）地址。维护者审核通过后会自动把该地址加入 `data/sources.json`，下次构建即自动收录其下的所有插件。
+        提交你的**个人插件源**（`registry.json`）地址。每位开发者只需提交一次：之后新插件直接加入自己的 registry.json，下次构建即自动收录，无需重复提交。
 
-        注意：源地址必须**公开可访问**（建议用 `raw.githubusercontent.com` 的链接）。
+        注意：源地址必须**公开可访问**（建议用 `raw.githubusercontent.com` 的链接）。若还没有源，请先参考[插件源制作指南](https://songloft.hanxi.cc/plugin_registry)制作。
+
+        本项目仅收录 **GitHub 托管**的源，不再接受 Gitee（如托管在 Gitee 请先迁移）。
   - type: input
     id: source-url
     attributes:
       label: 插件源地址（必填）
-      description: 一个公开的 registry.json（或单个 plugin.json）URL，需为 https 且可访问。
+      description: 你的个人插件源 registry.json URL，需为 https 且可访问。
       placeholder: https://raw.githubusercontent.com/your/repo/main/registry.json
     validations:
       required: true
-  - type: input
-    id: display-name
-    attributes:
-      label: 展示名（选填）
-      description: 在市场「来源」筛选里显示的名称，默认取 URL 中的仓库名。
-      placeholder: 我的插件源
-  - type: textarea
-    id: note
-    attributes:
-      label: 备注（选填）
-      description: 简单介绍这个源包含哪些插件、适用场景等。
   - type: checkboxes
     id: checks
     attributes:

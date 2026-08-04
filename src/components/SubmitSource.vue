@@ -6,8 +6,6 @@ const props = defineProps<{ visible: boolean }>()
 const emit = defineEmits<{ close: [] }>()
 
 const url = ref('')
-const name = ref('')
-const note = ref('')
 
 function submit() {
   const raw = url.value.trim()
@@ -16,13 +14,15 @@ function submit() {
     return
   }
   if (!/registry\.json([?#].*)?$/i.test(raw)) {
-    alert('源地址必须以 registry.json 结尾（如 https://.../main/registry.json）。若只有一个 plugin.json，请先包一层含 plugins 数组的 registry.json 再提交。')
+    alert('源地址必须以 registry.json 结尾。请先制作个人插件源（含 plugins 数组的 registry.json）再提交，可参考弹窗里的「插件源制作指南」。')
+    return
+  }
+  if (/(^|[/.])gitee(usercontent)?\.com/i.test(raw)) {
+    alert('本项目不再收录 Gitee 托管的插件源，请将仓库迁移到 GitHub 后再提交。')
     return
   }
   const params = new URLSearchParams({
     'source-url': raw,
-    'display-name': name.value.trim(),
-    note: note.value.trim(),
   })
   const issueUrl = `${GITHUB_SUBMIT_PLUGIN_URL}&${params.toString()}`
   window.open(issueUrl, '_blank', 'noopener')
@@ -43,10 +43,14 @@ function onKey(e: KeyboardEvent) {
         <button class="modal__close" aria-label="关闭" @click="emit('close')">×</button>
       </header>
       <p class="modal__hint">
-        提交一个可公开访问的 <code>registry.json</code> 源地址（URL 须以
-        <code>registry.json</code> 结尾，可附加 <code>?token=</code> 等查询参数）。
-        若只有一个 plugin.json，请先包一层含 plugins 数组的 registry.json 再提交。
-        确认后会跳转到 GitHub 的 <strong>SUBMIT_SOURCE</strong> Issue 模板，预填你已填写的内容。
+        提交你的<strong>个人插件源</strong>地址（可公开访问的 <code>registry.json</code>，URL 须以
+        <code>registry.json</code> 结尾，若只有一个 plugin.json，请先包一层含 plugins 数组的
+        registry.json 再提交，查看<a
+          href="https://songloft.hanxi.cc/plugin_registry"
+          target="_blank"
+          rel="noopener"
+        >插件源制作指南</a>）。每位开发者只需提交一次，新插件加入自己的源即可自动收录。
+        本项目仅收录 GitHub 托管的源，不再接受非 GitHub 源地址。
       </p>
       <label class="field">
         <span class="field__label">插件源地址 *</span>
@@ -57,14 +61,6 @@ function onKey(e: KeyboardEvent) {
           placeholder="https://raw.githubusercontent.com/your/repo/main/registry.json"
           @keydown.enter="submit"
         />
-      </label>
-      <label class="field">
-        <span class="field__label">展示名（选填）</span>
-        <input v-model="name" class="field__input" type="text" placeholder="如：我的插件源" />
-      </label>
-      <label class="field">
-        <span class="field__label">备注（选填）</span>
-        <textarea v-model="note" class="field__input field__input--area" rows="3" placeholder="可选填一些补充说明" />
       </label>
       <footer class="modal__foot">
         <button class="btn" @click="emit('close')">取消</button>
@@ -166,6 +162,15 @@ function onKey(e: KeyboardEvent) {
   padding: 1px 5px;
   border-radius: 4px;
 }
+.modal__hint a {
+  color: var(--slm-text);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: opacity 0.2s;
+}
+.modal__hint a:hover {
+  opacity: 0.75;
+}
 .field {
   display: block;
   margin-bottom: 14px;
@@ -195,11 +200,6 @@ function onKey(e: KeyboardEvent) {
   border-color: rgba(255, 255, 255, 0.25);
   background: rgba(255, 255, 255, 0.06);
   box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.05);
-}
-.field__input--area {
-  resize: vertical;
-  min-height: 72px;
-  line-height: 1.5;
 }
 .modal__foot {
   display: flex;

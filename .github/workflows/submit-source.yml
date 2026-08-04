@@ -59,7 +59,32 @@ jobs:
             echo "源地址以 registry.json 结尾，进入校验：$URL"
           else
             echo "valid=false" >> "$GITHUB_OUTPUT"
-            echo "error_msg=源地址必须以 registry.json 结尾（可在 URL 后附加 ?token= 等查询参数）。请提交公开可访问的 registry.json 源地址，而非 HTML/Markdown 文档页；若只有一个 plugin.json，请先包一层 registry.json（含 plugins 数组）再提交。" >> "$GITHUB_OUTPUT"
+            echo "error_msg=源地址必须以 registry.json 结尾。请先制作个人插件源（含 plugins 数组的 registry.json）再提交，参考插件源制作指南：https://songloft.hanxi.cc/plugin_registry" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          # 早拦截：不再接受 Gitee 托管的源，建议作者迁移到 GitHub 后再提交。
+          if printf '%s' "$URL" | grep -qiE '(^|[/.])gitee(usercontent)?\.com'; then
+            echo "valid=false" >> "$GITHUB_OUTPUT"
+            echo "error_msg=本项目不再收录 Gitee 托管的插件源。请将仓库迁移到 GitHub 后再提交。" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          # 早拦截：每位开发者只收录一个个人插件源。同一 GitHub 账号已有源时，
+          # 引导其直接把新插件加进已有 registry.json，而不是再提交第二个源。
+          DUP_NAME=$(CHECK_URL="$URL" node -e '
+            const fs = require("fs");
+            const gh = (u) => (u.match(/(?:github\.com|raw\.githubusercontent\.com)\/([^\/]+)\//i) || [])[1] || "";
+            const owner = gh(process.env.CHECK_URL).toLowerCase();
+            if (!owner) process.exit(0);
+            const cfg = JSON.parse(fs.readFileSync("data/sources.json", "utf8"));
+            const hit = (cfg.sources || []).find((s) => {
+              const u = (typeof s === "string" ? s : s.url) || "";
+              return u !== process.env.CHECK_URL && gh(u).toLowerCase() === owner;
+            });
+            if (hit) process.stdout.write(hit.name || hit.url);
+          ')
+          if [ -n "$DUP_NAME" ]; then
+            echo "valid=false" >> "$GITHUB_OUTPUT"
+            echo "error_msg=你的 GitHub 账号已有插件源被收录（${DUP_NAME}）。每位开发者只需提交一次源地址，新插件请直接加入你的 registry.json，下次构建会自动收录。" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           echo "正在校验源：$URL（展示名：${NAME:-<未填写>}）"
@@ -121,8 +146,9 @@ jobs:
             const repo = m ? m[2] : '';
             const ref = (m && m[3] && m[3] !== 'raw') ? m[3] : '';
             const displayName = (process.env.DISPLAY_NAME || '').trim();
-            // 展示名：优先用户填写；否则用 owner/repo，避免同 owner 不同源时标签雷同
-            const name = displayName || (owner ? (owner + '/' + repo) : '自定义源');
+            // 展示名：优先用户填写；否则只用 GitHub 用户名（owner），
+            // 前端来源分类只显示用户名；同 owner 查重已保证一人一源，不会撞名
+            const name = displayName || (owner || '自定义源');
             // id 用 owner/repo（含分支），同一 owner 下的不同源也能区分，避免 origin 碰撞
             const idBase = owner ? (owner + '-' + repo + (ref ? '-' + ref : '')) : (displayName || 'source');
             const id = idBase.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || 'source';

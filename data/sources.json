@@ -63,12 +63,6 @@
       "issue": 20
     },
     {
-      "id": "neoheee-songloft-plugin-audiobookshelf-main",
-      "url": "https://raw.githubusercontent.com/NeoHeee/songloft-plugin-audiobookshelf/main/registry.json",
-      "name": "NeoHeee/songloft-plugin-audiobookshelf",
-      "issue": 22
-    },
-    {
       "id": "youxikexue-songloft-plugin-registry-main",
       "url": "https://raw.githubusercontent.com/youxikexue/songloft-plugin-registry/main/registry.json",
       "name": "soundforge",
@@ -77,13 +71,13 @@
     {
       "id": "neoheee-songloft-plugin-registry-main",
       "url": "https://raw.githubusercontent.com/NeoHeee/songloft-plugin-registry/main/registry.json",
-      "name": "NeoHeee/songloft-plugin-registry",
+      "name": "NeoHeee",
       "issue": 28
     },
     {
       "id": "source",
       "url": "https://raw.giteeusercontent.com/pcyear/pcyear-songloft-plugin/raw/master/registry.json",
-      "name": "多源音乐桥",
+      "name": "pcyear",
       "issue": 30
     }
   ]
