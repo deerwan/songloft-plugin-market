@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-04T12:52:37.702Z",
+  "generatedAt": "2026-08-05T02:44:01.580Z",
   "count": 33,
   "openCount": 29,
   "closedCount": 4,
@@ -171,7 +171,7 @@
     {
       "entryPath": "neo-lxbridge",
       "name": "Songloft LxBridge",
-      "version": "0.9.2",
+      "version": "1.0.1",
       "description": "连接洛雪自定义音源与 Songloft：动态音质、扩展音质、自动降级、搜索、播放、导入、下载管理和外部搜索",
       "author": "Neo",
       "permissions": [
@@ -182,18 +182,19 @@
         "playlists.read",
         "playlists.write",
         "jsenv",
-        "command"
+        "command",
+        "websocket"
       ],
       "minHostVersion": "2.9.6",
       "homepage": "https://github.com/NeoHeee/songloft-plugin-lxbridge",
       "pluginJsonUrl": "https://raw.githubusercontent.com/NeoHeee/songloft-plugin-lxbridge/main/plugin.json",
-      "downloadUrl": "https://github.com/NeoHeee/songloft-plugin-lxbridge/releases/download/v0.9.2/neo-lxbridge-v0.9.2.jsplugin.zip",
+      "downloadUrl": "https://github.com/NeoHeee/songloft-plugin-lxbridge/releases/download/v1.0.1/neo-lxbridge-v1.0.1.jsplugin.zip",
       "updateUrl": null,
       "source": "open",
       "origin": "neoheee-songloft-plugin-registry-main",
       "repo": "https://github.com/NeoHeee/songloft-plugin-lxbridge",
       "stars": 12,
-      "updatedAt": "2026-08-04T05:44:31Z",
+      "updatedAt": "2026-08-04T15:51:39Z",
       "license": null,
       "avatarUrl": null,
       "logo": "icons/neo-lxbridge.svg",
@@ -466,7 +467,7 @@
     {
       "entryPath": "downloader",
       "name": "歌曲下载",
-      "version": "2026.8.4",
+      "version": "2026.8.5",
       "description": "将 WebDAV/Subsonic 等自有网络存储中的歌曲下载到服务端本地，支持自定义目录结构和元数据嵌入",
       "author": "Songloft Team",
       "permissions": [
@@ -478,13 +479,13 @@
       "minHostVersion": "2.6.0",
       "homepage": "https://github.com/songloft-org/songloft-plugin-downloader",
       "pluginJsonUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-downloader/main/plugin.json",
-      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-downloader/releases/download/v2026.8.4/downloader.jsplugin.zip",
+      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-downloader/releases/download/v2026.8.5/downloader.jsplugin.zip",
       "updateUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-downloader/main/plugin.json",
       "source": "open",
       "origin": "official",
       "repo": "https://github.com/songloft-org/songloft-plugin-downloader",
       "stars": 2,
-      "updatedAt": "2026-08-04T08:25:57Z",
+      "updatedAt": "2026-08-05T00:59:46Z",
       "license": null,
       "avatarUrl": null,
       "logo": "icons/downloader.svg",
