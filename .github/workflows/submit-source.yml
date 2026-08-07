@@ -3,12 +3,13 @@ name: Submit Source
 # 维护者在提交 Issue 上打 `approved` 标签后触发：
 #   1. 解析 Issue 正文里的源地址
 #   2. 用 `npm run validate:source` 校验（复用现有构建管线的 dry-run）
-#   3. 校验通过 → 追加进 data/sources.json（同一 Issue 重复提交会先移除旧条目再追加，
-#      实现改地址即更新）并开 PR；失败 → 在 Issue 留言报错
+#   3. 校验通过 → 追加进 data/sources.json 并直接提交到 main（不带 [skip ci]，
+#      触发 build.yml 自动构建 + 部署，前端自动收录该源下的全部插件）；
+#      失败 → 在 Issue 留言报错。
 #
 # 触发条件：仅认 `approved` 标签（无论 Issue 是否带 source-submit，
 # 这样手动建的 Issue 也能走通流程；用模板提交的会自动带 source-submit，无害）。
-# 需要仓库 Secrets: PAT_TOKEN（含 contents:write + pull-requests:write）
+# 需要仓库 Secrets: PAT_TOKEN（含 contents:write，用于直接向 main 推送）
 
 on:
   issues:
@@ -25,7 +26,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      pull-requests: write
       issues: write
     steps:
       - uses: actions/checkout@v4
@@ -158,20 +158,35 @@ jobs:
             console.log('已追加源：' + url + '（展示名：' + name + '）');
           "
 
-      # 校验通过：开 PR
-      - name: Open PR
+      # 校验通过：直接提交到 main（不带 [skip ci]，触发 build.yml 自动构建 + 部署）
+      - name: Commit source to main
         if: steps.validate.outputs.valid == 'true'
-        uses: peter-evans/create-pull-request@v7
+        env:
+          URL: ${{ steps.validate.outputs.url }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/sources.json
+          if [ -n "$(git status --porcelain data/sources.json)" ]; then
+            git commit -m "feat(source): 收录新插件源 $URL
+
+由 #$ISSUE_NUMBER 提交，审核通过（approved）后自动收录。"
+            git push "https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}.git" HEAD:main
+            echo "已提交到 main，触发构建自动收录。"
+          else
+            echo "sources.json 无变化（可能已存在，url 去重），跳过提交。"
+          fi
+
+      # 校验通过：在 Issue 留言通知（构建会自动收录）
+      - name: Comment success
+        if: steps.validate.outputs.valid == 'true'
+        uses: actions/github-script@v7
         with:
-          token: ${{ secrets.PAT_TOKEN }}
-          commit-message: "feat(source): 收录新插件源 ${{ steps.validate.outputs.url }}"
-          branch: source/${{ github.event.issue.number }}
-          delete-branch: true
-          title: "收录插件源：${{ steps.validate.outputs.url }}"
-          body: |
-            由 #${{ github.event.issue.number }} 提交，审核通过（approved）后自动创建。
-
-            源地址：${{ steps.validate.outputs.url }}
-
-            合并后下次构建自动收录该源下的所有插件。
-          labels: source-submit
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `✅ 源校验通过，已自动收录并提交到 main。\n\n构建流水线会自动展开该源下的全部插件并重新部署前端，稍后在站点即可看到。无需再手动合 PR。`,
+            })
