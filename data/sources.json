@@ -73,6 +73,12 @@
       "url": "https://raw.githubusercontent.com/NeoHeee/songloft-plugin-registry/main/registry.json",
       "name": "NeoHeee",
       "issue": 28
+    },
+    {
+      "id": "pcyear-pcyear-bridge-release-master",
+      "url": "https://gitee.com/pcyear/pcyear-bridge-release/raw/master/plugin/songloft/registry.json",
+      "name": "pcyear",
+      "issue": 33
     }
   ]
 }
