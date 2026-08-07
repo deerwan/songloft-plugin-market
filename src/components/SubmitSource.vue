@@ -6,6 +6,7 @@ const props = defineProps<{ visible: boolean }>()
 const emit = defineEmits<{ close: [] }>()
 
 const url = ref('')
+const confirmed = ref(false)
 
 function submit() {
   const raw = url.value.trim()
@@ -15,6 +16,10 @@ function submit() {
   }
   if (!/registry\.json([?#].*)?$/i.test(raw)) {
     alert('源地址必须以 registry.json 结尾。请先制作个人插件源（含 plugins 数组的 registry.json）再提交，可参考弹窗里的「插件源制作指南」。')
+    return
+  }
+  if (!confirmed.value) {
+    alert('请先勾选确认框：确认已制作个人插件源仓库且插件不含恶意代码。')
     return
   }
   const params = new URLSearchParams({
@@ -57,6 +62,12 @@ function onKey(e: KeyboardEvent) {
           placeholder="https://raw.githubusercontent.com/your/repo/main/registry.json"
           @keydown.enter="submit"
         />
+      </label>
+      <label class="field field--row">
+        <input v-model="confirmed" type="checkbox" />
+        <span>
+          我已制作个人插件源仓库（含 plugins 数组的 registry.json），并确认该源可公开访问、其中插件不含恶意代码。
+        </span>
       </label>
       <footer class="modal__foot">
         <button class="btn" @click="emit('close')">取消</button>
@@ -170,6 +181,23 @@ function onKey(e: KeyboardEvent) {
 .field {
   display: block;
   margin-bottom: 14px;
+}
+.field--row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--slm-text-2);
+  cursor: pointer;
+  margin: 16px 0 6px;
+}
+.field--row input[type="checkbox"] {
+  margin-top: 2px;
+  width: 16px;
+  height: 16px;
+  accent-color: var(--slm-primary);
+  flex-shrink: 0;
 }
 .field__label {
   display: block;

@@ -17,11 +17,17 @@ body:
       placeholder: https://raw.githubusercontent.com/your/repo/main/registry.json
     validations:
       required: true
+  - type: markdown
+    attributes:
+      value: |
+        提交前请确认：你已创建好**个人插件源仓库**（含 `registry.json`，参考[插件源制作指南](https://songloft.hanxi.cc/plugin_registry)），地址填写在上方。每位开发者只需提交一次。
   - type: checkboxes
     id: checks
     attributes:
-      label: 确认项
+      label: 确认项（全部必填，缺一不可提交）
       options:
+        - label: 我已制作好个人插件源仓库（含 registry.json，plugins 字段已填写正确）。
+          required: true
         - label: 该源可公开访问，且我已自测能正常解析。
           required: true
         - label: 该源中的插件不含恶意代码。
