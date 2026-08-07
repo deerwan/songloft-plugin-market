@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-07T14:19:17.832Z",
+  "generatedAt": "2026-08-07T14:27:29.429Z",
   "count": 34,
   "openCount": 30,
   "closedCount": 4,
@@ -9,7 +9,7 @@
       "name": "官方",
       "official": true,
       "url": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-registry/main/registry.json",
-      "count": 18
+      "count": 17
     },
     {
       "id": "deerwan",
@@ -94,11 +94,16 @@
       "official": false,
       "url": "https://raw.githubusercontent.com/NeoHeee/songloft-plugin-registry/main/registry.json",
       "count": 2
+    },
+    {
+      "id": "pcyear-pcyear-bridge-release-master",
+      "name": "pcyear",
+      "official": false,
+      "url": "https://gitee.com/pcyear/pcyear-bridge-release/raw/master/plugin/songloft/registry.json",
+      "count": 1
     }
   ],
-  "warnings": [
-    "拉取 plugin.json 失败：https://gitee.com/pcyear/pcyear-bridge-release/raw/master/plugin/songloft/plugin.json（fetch failed）"
-  ],
+  "warnings": [],
   "plugins": [
     {
       "entryPath": "miot",
@@ -988,7 +993,7 @@
       "downloadUrl": "https://gitee.com/pcyear/pcyear-bridge-release/raw/master/plugin/songloft/dist/multisource-music.jsplugin.zip",
       "updateUrl": "https://gitee.com/pcyear/pcyear-bridge-release/raw/master/plugin/songloft/manifest.json",
       "source": "closed",
-      "origin": "official",
+      "origin": "pcyear-pcyear-bridge-release-master",
       "repo": "https://gitee.com/pcyear/pcyear-bridge-release",
       "stars": 0,
       "updatedAt": "2026-08-07T21:59:19+08:00",
