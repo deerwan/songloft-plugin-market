@@ -18,9 +18,10 @@
       "name": "fanliu-yi"
     },
     {
-      "id": "birdstudy-nj",
-      "url": "https://raw.githubusercontent.com/birdstudy-nj/songloft-lyrics-cover-helper/refs/heads/main/plugin.json",
-      "name": "歌词封面助手"
+      "id": "birdstudy-nj-songloft-miot-helper-refs",
+      "url": "https://raw.githubusercontent.com/birdstudy-nj/songloft-miot-helper/refs/heads/main/registry.json",
+      "name": "birdstudy-nj",
+      "issue": 35
     },
     {
       "id": "moonbai",
