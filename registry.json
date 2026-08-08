@@ -6,6 +6,7 @@
     "https://raw.githubusercontent.com/songloft-org/songloft-plugin-registry/main/registry.json",
     "https://raw.githubusercontent.com/deerwan/songloft-plugin-registry/main/registry.json",
     "https://raw.githubusercontent.com/fanliu-yi/songloft-plugin-registry/main/registry.json",
+    "https://raw.githubusercontent.com/birdstudy-nj/songloft-miot-helper/main/registry.json",
     "https://raw.githubusercontent.com/snakeJohn/starlight/main/registry.json",
     "https://raw.githubusercontent.com/hanxi/songloft-plugin-ytdlp/main/registry.json",
     "https://raw.githubusercontent.com/hanxi/songloft-plugin-bili/main/registry.json",
@@ -17,7 +18,6 @@
     "https://gitee.com/pcyear/pcyear-bridge-release/raw/master/plugin/songloft/registry.json"
   ],
   "plugins": [
-    "https://raw.githubusercontent.com/birdstudy-nj/songloft-lyrics-cover-helper/main/plugin.json",
     "https://raw.githubusercontent.com/moonbai/songloft-plugin-news/main/news-plugin/plugin.json"
   ]
 }

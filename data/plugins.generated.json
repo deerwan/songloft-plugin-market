@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-08-08T01:49:38.438Z",
-  "count": 34,
-  "openCount": 30,
+  "generatedAt": "2026-08-08T04:09:48.185Z",
+  "count": 35,
+  "openCount": 31,
   "closedCount": 4,
   "sources": [
     {
@@ -26,11 +26,11 @@
       "count": 1
     },
     {
-      "id": "birdstudy-nj",
-      "name": "歌词封面助手",
+      "id": "birdstudy-nj-songloft-miot-helper-refs",
+      "name": "birdstudy-nj",
       "official": false,
-      "url": "https://raw.githubusercontent.com/birdstudy-nj/songloft-lyrics-cover-helper/refs/heads/main/plugin.json",
-      "count": 1
+      "url": "https://raw.githubusercontent.com/birdstudy-nj/songloft-miot-helper/refs/heads/main/registry.json",
+      "count": 2
     },
     {
       "id": "moonbai",
@@ -108,7 +108,7 @@
     {
       "entryPath": "miot",
       "name": "智能音箱",
-      "version": "2026.8.6",
+      "version": "2026.8.8",
       "description": "通过 MIoT 协议把歌曲投放到智能音箱设备",
       "author": "Songloft Team",
       "permissions": [
@@ -124,13 +124,13 @@
       "minHostVersion": "2.9.5",
       "homepage": "https://github.com/songloft-org/songloft",
       "pluginJsonUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-miot/main/plugin.json",
-      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-miot/releases/download/v2026.8.6/miot.jsplugin.zip",
+      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-miot/releases/download/v2026.8.8/miot.jsplugin.zip",
       "updateUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-miot/main/plugin.json",
       "source": "open",
       "origin": "official",
       "repo": "https://github.com/songloft-org/songloft-plugin-miot",
       "stars": 41,
-      "updatedAt": "2026-08-07T09:53:28Z",
+      "updatedAt": "2026-08-08T02:23:37Z",
       "license": null,
       "avatarUrl": null,
       "logo": "icons/miot.svg",
@@ -880,7 +880,7 @@
       "downloadUrl": "https://github.com/birdstudy-nj/songloft-lyrics-cover-helper/releases/download/v1.0.0/lyrics-cover-helper.jsplugin.zip",
       "updateUrl": "https://raw.githubusercontent.com/birdstudy-nj/songloft-lyrics-cover-helper/main/plugin.json",
       "source": "open",
-      "origin": "birdstudy-nj",
+      "origin": "birdstudy-nj-songloft-miot-helper-refs",
       "repo": "https://github.com/birdstudy-nj/songloft-lyrics-cover-helper",
       "stars": 1,
       "updatedAt": "2026-07-16T10:36:39Z",
@@ -996,10 +996,42 @@
       "origin": "pcyear-pcyear-bridge-release-master",
       "repo": "https://gitee.com/pcyear/pcyear-bridge-release",
       "stars": 0,
-      "updatedAt": "2026-08-08T09:20:34+08:00",
+      "updatedAt": "2026-08-08T10:56:39+08:00",
       "license": null,
       "avatarUrl": null,
       "logo": "icons/multisource-music.png",
+      "tags": [],
+      "featured": false
+    },
+    {
+      "entryPath": "miot-helper",
+      "name": "小爱语音助手",
+      "version": "0.2.0",
+      "description": "小爱音箱语音口令扩展，自定义语音搜索，播放LXMusic、WebDAV中歌单和歌曲",
+      "author": "birdstudy-nj",
+      "permissions": [
+        "storage",
+        "songs.read",
+        "songs.write",
+        "playlists.read",
+        "playlists.write",
+        "inter-plugin",
+        "command",
+        "websocket"
+      ],
+      "minHostVersion": "1.3.0",
+      "homepage": null,
+      "pluginJsonUrl": "https://raw.githubusercontent.com/birdstudy-nj/songloft-miot-helper/main/plugin.json",
+      "downloadUrl": "https://github.com/birdstudy-nj/songloft-miot-helper/releases/download/v0.2.0/miot-helper.jsplugin.zip",
+      "updateUrl": "https://raw.githubusercontent.com/birdstudy-nj/songloft-miot-helper/main/plugin.json",
+      "source": "open",
+      "origin": "birdstudy-nj-songloft-miot-helper-refs",
+      "repo": "https://github.com/birdstudy-nj/songloft-miot-helper",
+      "stars": 0,
+      "updatedAt": "2026-08-08T03:38:26Z",
+      "license": "Apache-2.0",
+      "avatarUrl": null,
+      "logo": "icons/miot-helper.svg",
       "tags": [],
       "featured": false
     },
