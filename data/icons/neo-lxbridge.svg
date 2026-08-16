@@ -1,14 +1,10 @@
 <svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="128" height="128" rx="24" fill="#10141C"/>
-  <rect x="0" y="0" width="34" height="128" fill="#0C1118" fill-opacity="0.95"/>
-  <circle cx="64" cy="46" r="24" fill="url(#g)"/>
-  <path d="M54.5 34.5C51.4624 34.5 49 36.9624 49 40V46.5H42.5C39.4624 46.5 37 48.9624 37 52V58C37 61.0376 39.4624 63.5 42.5 63.5H49V70C49 73.0376 51.4624 75.5 54.5 75.5H60.5C63.5376 75.5 66 73.0376 66 70V63.5H72.5C75.5376 63.5 78 61.0376 78 58V52C78 48.9624 75.5376 46.5 72.5 46.5H66V40C66 36.9624 63.5376 34.5 60.5 34.5H54.5Z" fill="#D9CCFF"/>
-  <path d="M39 93.5H89" stroke="#FFFFFF" stroke-opacity="0.9" stroke-width="6" stroke-linecap="round"/>
-  <path d="M47 103.5H81" stroke="#FFFFFF" stroke-opacity="0.45" stroke-width="4" stroke-linecap="round"/>
-  <defs>
-    <linearGradient id="g" x1="40" y1="22" x2="88" y2="70" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#8B4DFF"/>
-      <stop offset="1" stop-color="#5F2EEA"/>
-    </linearGradient>
-  </defs>
+  <path d="M16 103Q64 52 112 103"
+        stroke="#858891" stroke-width="11" stroke-linecap="round"/>
+  <circle cx="16" cy="103" r="10" stroke="#858891" stroke-width="8"/>
+  <circle cx="112" cy="103" r="10" stroke="#858891" stroke-width="8"/>
+  <path d="M53 66V24L91 16V58"
+        stroke="#858891" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+  <ellipse cx="43" cy="68" rx="14" ry="10" transform="rotate(-12 43 68)" fill="#858891"/>
+  <ellipse cx="81" cy="60" rx="14" ry="10" transform="rotate(-12 81 60)" fill="#858891"/>
 </svg>
