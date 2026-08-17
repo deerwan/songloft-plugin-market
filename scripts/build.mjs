@@ -552,9 +552,9 @@ async function processPlugin(pluginJsonUrl, prevMap) {
     entry.updatedAt = await fetchReleaseUpdatedAt(entry.downloadUrl)
   }
 
-  // 仓库探测：优先用插件自身的 URL（下载/更新/plugin.json），homepage 最后
-  // （homepage 常指向主项目仓库，而非插件自己的仓库）；同时支持 GitHub / Gitee
-  const gh = parseRepoHost(entry.downloadUrl, entry.updateUrl, pluginJsonUrl, entry.homepage)
+  // 仓库探测：homepage 优先（它指向作者/仓库主页，且多为公开仓库，能正确判定平台与拿头像），
+  // 其余下载/更新/plugin.json 仅作兜底（发布仓库可能托管在 Gitee 私仓，会误判平台）。
+  const gh = parseRepoHost(entry.homepage, entry.downloadUrl, entry.updateUrl, pluginJsonUrl)
   if (gh) {
     const isGitee = gh.platform === 'gitee'
     entry.repo = isGitee ? `https://gitee.com/${gh.owner}/${gh.repo}` : `https://github.com/${gh.owner}/${gh.repo}`
@@ -574,12 +574,10 @@ async function processPlugin(pluginJsonUrl, prevMap) {
       // license：GitHub 返回 { spdx_id }；Gitee v5 可能是字符串或对象，兼容处理
       const spdx = typeof info.license === 'string' ? info.license : info.license?.spdx_id
       entry.license = spdx && spdx !== 'NOASSERTION' ? spdx : null
-      // Gitee 头像：取 API 的 owner.avatar_url，前端经 wsrv.nl 代理展示；
-      // no_portrait 是 Gitee 默认占位图，视为无头像
-      if (isGitee) {
-        const avatar = info.owner?.avatar_url || null
-        entry.avatarUrl = avatar && !avatar.includes('no_portrait') ? avatar : null
-      }
+      // 头像：GitHub / Gitee 都从 API 的 owner.avatar_url 取，前端经 wsrv.nl 代理展示。
+      // Gitee 的 no_portrait 是默认占位图，视为无头像；GitHub 无此类占位，直接取。
+      const avatar = info.owner?.avatar_url || null
+      entry.avatarUrl = avatar && (!isGitee || !avatar.includes('no_portrait')) ? avatar : null
       // logo 兜底：仓库根目录 logo.png / icon.png（仅开源仓库才有意义）
       if (!entry.logo && entry.source === 'open') {
         const branch = info.default_branch || 'main'
