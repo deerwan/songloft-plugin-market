@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-17T01:25:06.402Z",
+  "generatedAt": "2026-08-17T07:47:13.322Z",
   "count": 36,
   "openCount": 32,
   "closedCount": 4,
@@ -94,13 +94,6 @@
       "official": false,
       "url": "https://raw.githubusercontent.com/NeoHeee/songloft-plugin-registry/main/registry.json",
       "count": 2
-    },
-    {
-      "id": "pcyear-pcyear-bridge-release-master",
-      "name": "pcyear",
-      "official": false,
-      "url": "https://gitee.com/pcyear/pcyear-bridge-release/raw/master/plugin/songloft/registry.json",
-      "count": 0
     }
   ],
   "warnings": [],
@@ -130,7 +123,7 @@
       "origin": "official",
       "repo": "https://github.com/songloft-org/songloft-plugin-miot",
       "stars": 45,
-      "updatedAt": "2026-08-16T02:56:45Z",
+      "updatedAt": "2026-08-17T03:34:11Z",
       "license": null,
       "avatarUrl": null,
       "logo": "icons/miot.svg",
@@ -171,7 +164,7 @@
     {
       "entryPath": "neo-lxbridge",
       "name": "音桥",
-      "version": "1.1.0",
+      "version": "1.1.4",
       "description": "连接洛雪自定义音源与 Songloft：动态音质、扩展音质、自动降级、搜索、播放、导入、下载管理和外部搜索",
       "author": "Neo",
       "permissions": [
@@ -189,13 +182,13 @@
       "minHostVersion": "2.9.6",
       "homepage": "https://github.com/NeoHeee/songloft-plugin-lxbridge",
       "pluginJsonUrl": "https://raw.githubusercontent.com/NeoHeee/songloft-plugin-lxbridge/main/plugin.json",
-      "downloadUrl": "https://github.com/NeoHeee/songloft-plugin-lxbridge/releases/download/v1.1.0/neo-lxbridge-v1.1.0.jsplugin.zip",
+      "downloadUrl": "https://github.com/NeoHeee/songloft-plugin-lxbridge/releases/download/v1.1.4/neo-lxbridge-v1.1.4.jsplugin.zip",
       "updateUrl": null,
       "source": "open",
       "origin": "neoheee-songloft-plugin-registry-main",
       "repo": "https://github.com/NeoHeee/songloft-plugin-lxbridge",
       "stars": 15,
-      "updatedAt": "2026-08-15T13:45:59Z",
+      "updatedAt": "2026-08-17T04:50:42Z",
       "license": null,
       "avatarUrl": null,
       "logo": "icons/neo-lxbridge.svg",
@@ -1034,7 +1027,7 @@
     {
       "entryPath": "multisource-music",
       "name": "多源音乐桥",
-      "version": "1.4.58",
+      "version": "1.4.59",
       "description": "多源音乐桥：把飞牛音乐、WebDAV、Subsonic/Navidrome 统一接入 SongLoft，提供统一浏览、搜索、播放、收藏、批量入库，支持抖音方式切割、逐字歌词/桌面歌词、智能音箱投放等。",
       "author": "pcyear",
       "permissions": [
@@ -1051,14 +1044,14 @@
       ],
       "minHostVersion": "2.11.0",
       "homepage": "https://github.com/pcyear/pcyear-bridge-release",
-      "pluginJsonUrl": "https://gitee.com/pcyear/pcyear-bridge-release/raw/master/plugin/songloft/plugin.json",
+      "pluginJsonUrl": "https://raw.githubusercontent.com/pcyear/pcyear-bridge-release/master/plugin/songloft/plugin.json",
       "downloadUrl": "https://raw.giteeusercontent.com/pcyear/pcyear-bridge-release/raw/master/plugin/songloft/dist/multisource-music.jsplugin.zip",
       "updateUrl": "https://raw.githubusercontent.com/pcyear/pcyear-bridge-release/master/plugin/songloft/manifest.json",
       "source": "closed",
       "origin": "official",
       "repo": "https://gitee.com/pcyear/pcyear-bridge-release",
       "stars": 0,
-      "updatedAt": "2026-08-16T13:08:11+08:00",
+      "updatedAt": "2026-08-17T10:58:29+08:00",
       "license": null,
       "avatarUrl": null,
       "logo": "icons/multisource-music.png",
