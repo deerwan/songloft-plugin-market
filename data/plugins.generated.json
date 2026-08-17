@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-17T07:47:13.322Z",
+  "generatedAt": "2026-08-17T08:36:10.522Z",
   "count": 36,
   "openCount": 32,
   "closedCount": 4,
@@ -121,11 +121,11 @@
       "updateUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-miot/main/plugin.json",
       "source": "open",
       "origin": "official",
-      "repo": "https://github.com/songloft-org/songloft-plugin-miot",
-      "stars": 45,
-      "updatedAt": "2026-08-17T03:34:11Z",
-      "license": null,
-      "avatarUrl": null,
+      "repo": "https://github.com/songloft-org/songloft",
+      "stars": 1472,
+      "updatedAt": "2026-08-17T05:08:03Z",
+      "license": "Apache-2.0",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/288701258?v=4",
       "logo": "icons/miot.svg",
       "tags": [],
       "featured": false
@@ -156,7 +156,7 @@
       "stars": 23,
       "updatedAt": "2026-08-15T14:58:44Z",
       "license": null,
-      "avatarUrl": null,
+      "avatarUrl": "https://avatars.githubusercontent.com/u/34331927?v=4",
       "logo": "https://raw.githubusercontent.com/fly818/lxmusic-plugin-release/main/static/icon.svg",
       "tags": [],
       "featured": false
@@ -190,7 +190,7 @@
       "stars": 15,
       "updatedAt": "2026-08-17T04:50:42Z",
       "license": null,
-      "avatarUrl": null,
+      "avatarUrl": "https://avatars.githubusercontent.com/u/40708633?v=4",
       "logo": "icons/neo-lxbridge.svg",
       "tags": [],
       "featured": false
@@ -218,7 +218,7 @@
       "stars": 9,
       "updatedAt": "2026-08-16T02:57:33Z",
       "license": null,
-      "avatarUrl": null,
+      "avatarUrl": "https://avatars.githubusercontent.com/u/1185757?v=4",
       "logo": "icons/bili.svg",
       "tags": [],
       "featured": false
@@ -244,7 +244,7 @@
       "stars": 8,
       "updatedAt": "2026-07-21T18:21:57Z",
       "license": "Apache-2.0",
-      "avatarUrl": null,
+      "avatarUrl": "https://avatars.githubusercontent.com/u/288701258?v=4",
       "logo": "icons/tag.svg",
       "tags": [],
       "featured": false
@@ -275,7 +275,7 @@
       "stars": 7,
       "updatedAt": "2026-07-30T08:16:42Z",
       "license": null,
-      "avatarUrl": null,
+      "avatarUrl": "https://avatars.githubusercontent.com/u/288701258?v=4",
       "logo": "icons/subsonic.svg",
       "tags": [],
       "featured": false
@@ -308,7 +308,7 @@
       "stars": 5,
       "updatedAt": "2026-08-15T13:10:31Z",
       "license": null,
-      "avatarUrl": null,
+      "avatarUrl": "https://avatars.githubusercontent.com/u/40481500?v=4",
       "logo": "icons/starlight.webp",
       "tags": [],
       "featured": false
@@ -340,7 +340,7 @@
       "stars": 5,
       "updatedAt": "2026-08-14T08:48:56Z",
       "license": "Apache-2.0",
-      "avatarUrl": null,
+      "avatarUrl": "https://avatars.githubusercontent.com/u/252813171?v=4",
       "logo": "icons/miot-helper.svg",
       "tags": [],
       "featured": false
@@ -369,7 +369,7 @@
       "stars": 5,
       "updatedAt": "2026-07-23T06:42:23Z",
       "license": "Apache-2.0",
-      "avatarUrl": null,
+      "avatarUrl": "https://avatars.githubusercontent.com/u/288701258?v=4",
       "logo": "icons/karaoke-lyric.svg",
       "tags": [],
       "featured": false
@@ -398,8 +398,36 @@
       "stars": 5,
       "updatedAt": "2026-07-21T03:05:38Z",
       "license": "Apache-2.0",
-      "avatarUrl": null,
+      "avatarUrl": "https://avatars.githubusercontent.com/u/1185757?v=4",
       "logo": "icons/ytdlp.svg",
+      "tags": [],
+      "featured": false
+    },
+    {
+      "entryPath": "iwebplayer",
+      "name": "iWebPlayer",
+      "version": "1.1.5",
+      "description": "适配iPhone的Web播放器，PWA模式下媲美原生APP。新增推送小爱音箱。iPhone锁屏界面，锁屏歌词，灵动岛，耳机线控，平板模式，封面、歌词刮削展示，倍速播放，记忆续播，自建歌单，调用LXMusic插件、WebDAV插件……",
+      "author": "birdstudy-nj",
+      "permissions": [
+        "songs.read",
+        "playlists.*",
+        "storage",
+        "inter-plugin"
+      ],
+      "minHostVersion": "2.6.3",
+      "homepage": "https://github.com/songloft-org/songloft-plugin-iwebplayer",
+      "pluginJsonUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-iwebplayer/main/plugin.json",
+      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-iwebplayer/releases/download/v1.1.5/iwebplayer.jsplugin.zip",
+      "updateUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-iwebplayer/main/plugin.json",
+      "source": "open",
+      "origin": "official",
+      "repo": "https://github.com/songloft-org/songloft-plugin-iwebplayer",
+      "stars": 4,
+      "updatedAt": "2026-08-17T08:11:52Z",
+      "license": "Apache-2.0",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/288701258?v=4",
+      "logo": "icons/iwebplayer.svg",
       "tags": [],
       "featured": false
     },
@@ -428,36 +456,8 @@
       "stars": 4,
       "updatedAt": "2026-08-13T09:01:56Z",
       "license": null,
-      "avatarUrl": null,
+      "avatarUrl": "https://avatars.githubusercontent.com/u/20805900?v=4",
       "logo": "icons/musicfree-adapter.svg",
-      "tags": [],
-      "featured": false
-    },
-    {
-      "entryPath": "iwebplayer",
-      "name": "iWebPlayer",
-      "version": "1.1.3",
-      "description": "适配iPhone的Web播放器，PWA模式下媲美原生APP。新增推送小爱音箱。iPhone锁屏界面，锁屏歌词，灵动岛，耳机线控，平板模式，封面、歌词刮削展示，倍速播放，记忆续播，自建歌单，调用LXMusic插件、WebDAV插件……",
-      "author": "birdstudy-nj",
-      "permissions": [
-        "songs.read",
-        "playlists.*",
-        "storage",
-        "inter-plugin"
-      ],
-      "minHostVersion": "2.6.3",
-      "homepage": null,
-      "pluginJsonUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-iwebplayer/main/plugin.json",
-      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-iwebplayer/releases/download/v1.1.3/iwebplayer.jsplugin.zip",
-      "updateUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-iwebplayer/main/plugin.json",
-      "source": "open",
-      "origin": "official",
-      "repo": "https://github.com/songloft-org/songloft-plugin-iwebplayer",
-      "stars": 4,
-      "updatedAt": "2026-08-12T01:04:40Z",
-      "license": "Apache-2.0",
-      "avatarUrl": null,
-      "logo": "icons/iwebplayer.svg",
       "tags": [],
       "featured": false
     },
@@ -485,7 +485,7 @@
       "stars": 4,
       "updatedAt": "2026-08-11T14:12:29Z",
       "license": null,
-      "avatarUrl": null,
+      "avatarUrl": "https://avatars.githubusercontent.com/u/5642921?v=4",
       "logo": "icons/lxbridge.svg",
       "tags": [],
       "featured": false
@@ -511,7 +511,7 @@
       "stars": 3,
       "updatedAt": "2026-08-12T16:39:23Z",
       "license": null,
-      "avatarUrl": null,
+      "avatarUrl": "https://avatars.githubusercontent.com/u/40459801?v=4",
       "logo": "icons/tv-helper.svg",
       "tags": [],
       "featured": false
@@ -540,7 +540,7 @@
       "stars": 3,
       "updatedAt": "2026-08-09T01:47:43Z",
       "license": "Apache-2.0",
-      "avatarUrl": null,
+      "avatarUrl": "https://avatars.githubusercontent.com/u/288701258?v=4",
       "logo": "icons/go-music-dl.svg",
       "tags": [],
       "featured": false
@@ -571,7 +571,7 @@
       "stars": 3,
       "updatedAt": "2026-08-07T11:59:44Z",
       "license": null,
-      "avatarUrl": null,
+      "avatarUrl": "https://avatars.githubusercontent.com/u/288701258?v=4",
       "logo": "icons/mpd-player.svg",
       "tags": [],
       "featured": false
@@ -601,7 +601,7 @@
       "stars": 3,
       "updatedAt": "2026-08-03T04:51:06Z",
       "license": null,
-      "avatarUrl": null,
+      "avatarUrl": "https://avatars.githubusercontent.com/u/40708633?v=4",
       "logo": null,
       "tags": [],
       "featured": false
@@ -630,7 +630,7 @@
       "stars": 3,
       "updatedAt": "2026-07-27T07:53:28Z",
       "license": null,
-      "avatarUrl": null,
+      "avatarUrl": "https://avatars.githubusercontent.com/u/226945675?v=4",
       "logo": "icons/go-music-js.svg",
       "tags": [],
       "featured": false
@@ -659,7 +659,7 @@
       "stars": 3,
       "updatedAt": "2026-07-20T07:57:53Z",
       "license": null,
-      "avatarUrl": null,
+      "avatarUrl": "https://avatars.githubusercontent.com/u/259799741?v=4",
       "logo": "icons/audiobook.svg",
       "tags": [],
       "featured": false
@@ -684,7 +684,7 @@
       "stars": 2,
       "updatedAt": "2026-08-11T06:07:48Z",
       "license": "Apache-2.0",
-      "avatarUrl": null,
+      "avatarUrl": "https://avatars.githubusercontent.com/u/252813171?v=4",
       "logo": "icons/lyrics-cover-helper.svg",
       "tags": [],
       "featured": false
@@ -713,7 +713,7 @@
       "stars": 2,
       "updatedAt": "2026-08-08T07:30:38Z",
       "license": null,
-      "avatarUrl": null,
+      "avatarUrl": "https://avatars.githubusercontent.com/u/70961031?v=4",
       "logo": "icons/openlist.svg",
       "tags": [],
       "featured": false
@@ -741,7 +741,7 @@
       "stars": 2,
       "updatedAt": "2026-08-07T16:46:47Z",
       "license": null,
-      "avatarUrl": null,
+      "avatarUrl": "https://avatars.githubusercontent.com/u/288701258?v=4",
       "logo": "icons/downloader.svg",
       "tags": [],
       "featured": false
@@ -769,7 +769,7 @@
       "stars": 2,
       "updatedAt": "2026-07-30T18:54:10Z",
       "license": null,
-      "avatarUrl": null,
+      "avatarUrl": "https://avatars.githubusercontent.com/u/288701258?v=4",
       "logo": "icons/stats.svg",
       "tags": [],
       "featured": false
@@ -798,7 +798,7 @@
       "stars": 2,
       "updatedAt": "2026-07-23T04:07:53Z",
       "license": "Apache-2.0",
-      "avatarUrl": null,
+      "avatarUrl": "https://avatars.githubusercontent.com/u/25284381?v=4",
       "logo": "icons/library-plus.svg",
       "tags": [],
       "featured": false
@@ -827,7 +827,7 @@
       "stars": 2,
       "updatedAt": "2026-07-20T03:45:15Z",
       "license": "MIT",
-      "avatarUrl": null,
+      "avatarUrl": "https://avatars.githubusercontent.com/u/34854875?v=4",
       "logo": null,
       "tags": [],
       "featured": false
@@ -855,7 +855,7 @@
       "stars": 2,
       "updatedAt": "2026-07-15T05:18:09Z",
       "license": null,
-      "avatarUrl": null,
+      "avatarUrl": "https://avatars.githubusercontent.com/u/25284381?v=4",
       "logo": "icons/folder-browser.svg",
       "tags": [],
       "featured": false
@@ -881,7 +881,7 @@
       "stars": 2,
       "updatedAt": "2026-07-14T02:05:51Z",
       "license": "Apache-2.0",
-      "avatarUrl": null,
+      "avatarUrl": "https://avatars.githubusercontent.com/u/288701258?v=4",
       "logo": "icons/radio.svg",
       "tags": [],
       "featured": false
@@ -910,7 +910,7 @@
       "stars": 1,
       "updatedAt": "2026-08-12T13:52:13Z",
       "license": null,
-      "avatarUrl": null,
+      "avatarUrl": "https://avatars.githubusercontent.com/u/288701258?v=4",
       "logo": "icons/dav.svg",
       "tags": [],
       "featured": false
@@ -938,7 +938,7 @@
       "stars": 1,
       "updatedAt": "2026-08-11T15:29:27Z",
       "license": null,
-      "avatarUrl": null,
+      "avatarUrl": "https://avatars.githubusercontent.com/u/70961031?v=4",
       "logo": "icons/coco-downloader.svg",
       "tags": [],
       "featured": false
@@ -965,7 +965,7 @@
       "stars": 1,
       "updatedAt": "2026-08-10T08:44:34Z",
       "license": null,
-      "avatarUrl": null,
+      "avatarUrl": "https://avatars.githubusercontent.com/u/288701258?v=4",
       "logo": null,
       "tags": [],
       "featured": false
@@ -993,7 +993,7 @@
       "stars": 1,
       "updatedAt": "2026-07-31T04:21:55Z",
       "license": "Apache-2.0",
-      "avatarUrl": null,
+      "avatarUrl": "https://avatars.githubusercontent.com/u/25284381?v=4",
       "logo": "icons/music-feed.svg",
       "tags": [],
       "featured": false
@@ -1019,7 +1019,7 @@
       "stars": 1,
       "updatedAt": "2026-07-05T10:36:57Z",
       "license": "Apache-2.0",
-      "avatarUrl": null,
+      "avatarUrl": "https://avatars.githubusercontent.com/u/288701258?v=4",
       "logo": null,
       "tags": [],
       "featured": false
@@ -1049,11 +1049,11 @@
       "updateUrl": "https://raw.githubusercontent.com/pcyear/pcyear-bridge-release/master/plugin/songloft/manifest.json",
       "source": "closed",
       "origin": "official",
-      "repo": "https://gitee.com/pcyear/pcyear-bridge-release",
+      "repo": "https://github.com/pcyear/pcyear-bridge-release",
       "stars": 0,
-      "updatedAt": "2026-08-17T10:58:29+08:00",
+      "updatedAt": "2026-08-17T06:05:14Z",
       "license": null,
-      "avatarUrl": null,
+      "avatarUrl": "https://avatars.githubusercontent.com/u/38907588?v=4",
       "logo": "icons/multisource-music.png",
       "tags": [],
       "featured": false
@@ -1078,7 +1078,7 @@
       "stars": 0,
       "updatedAt": "2026-08-04T08:26:03Z",
       "license": "Apache-2.0",
-      "avatarUrl": null,
+      "avatarUrl": "https://avatars.githubusercontent.com/u/288701258?v=4",
       "logo": "icons/lyrics.svg",
       "tags": [],
       "featured": false
@@ -1104,7 +1104,7 @@
       "stars": 0,
       "updatedAt": "2026-07-24T12:56:55Z",
       "license": null,
-      "avatarUrl": null,
+      "avatarUrl": "https://avatars.githubusercontent.com/u/70961031?v=4",
       "logo": "icons/bridge.svg",
       "tags": [],
       "featured": false
@@ -1127,7 +1127,7 @@
       "stars": 0,
       "updatedAt": "2026-07-23T06:25:19Z",
       "license": "Apache-2.0",
-      "avatarUrl": null,
+      "avatarUrl": "https://avatars.githubusercontent.com/u/25284381?v=4",
       "logo": "icons/songloft-now-playing.svg",
       "tags": [],
       "featured": false
