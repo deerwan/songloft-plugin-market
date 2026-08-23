@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-22T01:21:15.049Z",
+  "generatedAt": "2026-08-23T01:28:39.126Z",
   "count": 36,
   "openCount": 32,
   "closedCount": 4,
@@ -122,7 +122,7 @@
       "source": "open",
       "origin": "official",
       "repo": "https://github.com/songloft-org/songloft",
-      "stars": 1520,
+      "stars": 1528,
       "updatedAt": "2026-08-21T04:49:34Z",
       "license": "Apache-2.0",
       "avatarUrl": "https://avatars.githubusercontent.com/u/288701258?v=4",
@@ -1027,7 +1027,7 @@
     {
       "entryPath": "multisource-music",
       "name": "多源音乐桥",
-      "version": "1.4.60",
+      "version": "1.4.61",
       "description": "多源音乐桥：把飞牛音乐、WebDAV、Subsonic/Navidrome 统一接入 SongLoft，提供统一浏览、搜索、播放、收藏、批量入库，支持抖音方式切割、逐字歌词/桌面歌词、智能音箱投放等。",
       "author": "pcyear",
       "permissions": [
@@ -1051,7 +1051,7 @@
       "origin": "official",
       "repo": "https://github.com/pcyear/pcyear-bridge-release",
       "stars": 0,
-      "updatedAt": "2026-08-19T01:39:02Z",
+      "updatedAt": "2026-08-22T18:25:45Z",
       "license": null,
       "avatarUrl": "https://avatars.githubusercontent.com/u/38907588?v=4",
       "logo": "icons/multisource-music.png",
