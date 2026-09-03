@@ -7,13 +7,19 @@ name: Submit Source
 #      触发 build.yml 自动构建 + 部署，前端自动收录该源下的全部插件）；
 #      失败 → 在 Issue 留言报错。
 #
-# 触发条件：仅认 `approved` 标签（无论 Issue 是否带 source-submit，
-# 这样手动建的 Issue 也能走通流程；用模板提交的会自动带 source-submit，无害）。
+# 触发条件：`approved` 标签（无论 Issue 是否带 source-submit，
+# 这样手动建的 Issue 也能走通流程；用模板提交的会自动带 source-submit，无害）；
+# 另支持 workflow_dispatch 手动触发（填 source_url 可绕过 Issue 解析）。
 # 需要仓库 Secrets: PAT_TOKEN（含 contents:write，用于直接向 main 推送）
 
 on:
   issues:
     types: [labeled]
+  workflow_dispatch:
+    inputs:
+      source_url:
+        description: '插件源 URL（registry.json，手动触发时填写，可选）'
+        required: false
 
 permissions:
   contents: read
@@ -21,8 +27,8 @@ permissions:
 
 jobs:
   submit-source:
-    # 仅在「打 approved 标签」时执行
-    if: github.event.label.name == 'approved'
+    # 仅在「打 approved 标签」或手动触发时执行
+    if: github.event_name == 'workflow_dispatch' || github.event.label.name == 'approved'
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -42,13 +48,18 @@ jobs:
         id: validate
         env:
           BODY: ${{ github.event.issue.body }}
+          MANUAL_URL: ${{ github.event.inputs.source_url }}
         run: |
-          printf '%s' "$BODY" > /tmp/issue_body.txt
-          OUT=$(node scripts/parse_submission.mjs /tmp/issue_body.txt) || {
-            echo "valid=false" >> "$GITHUB_OUTPUT"
-            echo "error_msg=无法从 Issue 解析出源地址（URL），请检查是否填写了合法的 http(s) 链接。" >> "$GITHUB_OUTPUT"
-            exit 0
-          }
+          if [ -n "$MANUAL_URL" ]; then
+            OUT="$MANUAL_URL"
+          else
+            printf '%s' "$BODY" > /tmp/issue_body.txt
+            OUT=$(node scripts/parse_submission.mjs /tmp/issue_body.txt) || {
+              echo "valid=false" >> "$GITHUB_OUTPUT"
+              echo "error_msg=无法从 Issue 解析出源地址（URL），请检查是否填写了合法的 http(s) 链接。" >> "$GITHUB_OUTPUT"
+              exit 0
+            }
+          fi
           URL=$(printf '%s' "$OUT" | sed -n '1p')
           NAME=$(printf '%s' "$OUT" | sed -n '2p')
           echo "url=$URL" >> "$GITHUB_OUTPUT"
@@ -92,9 +103,9 @@ jobs:
             echo "error_msg=源校验未通过：无法解析到任何插件。请确认 URL 是公开可访问的 registry.json / plugin.json。" >> "$GITHUB_OUTPUT"
           fi
 
-      # 校验失败：留言并移除 approved，便于修正后重新打标
+      # 校验失败：留言并移除 approved，便于修正后重新打标（手动触发无 Issue 上下文，跳过留言）
       - name: Comment failure
-        if: steps.validate.outputs.valid != 'true'
+        if: steps.validate.outputs.valid != 'true' && github.event_name != 'workflow_dispatch'
         uses: actions/github-script@v7
         with:
           script: |
@@ -169,18 +180,16 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/sources.json
           if [ -n "$(git status --porcelain data/sources.json)" ]; then
-            git commit -m "feat(source): 收录新插件源 $URL
-
-由 #$ISSUE_NUMBER 提交，审核通过（approved）后自动收录。"
+            git commit -m "feat(source): 收录新插件源 $URL" -m "由 #$ISSUE_NUMBER 提交，审核通过（approved）后自动收录。"
             git push "https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}.git" HEAD:main
             echo "已提交到 main，触发构建自动收录。"
           else
             echo "sources.json 无变化（可能已存在，url 去重），跳过提交。"
           fi
 
-      # 校验通过：在 Issue 留言通知（构建会自动收录）
+      # 校验通过：在 Issue 留言通知（构建会自动收录；手动触发无 Issue 上下文，跳过留言）
       - name: Comment success
-        if: steps.validate.outputs.valid == 'true'
+        if: steps.validate.outputs.valid == 'true' && github.event_name != 'workflow_dispatch'
         uses: actions/github-script@v7
         with:
           script: |
