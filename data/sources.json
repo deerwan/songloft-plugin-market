@@ -74,6 +74,12 @@
       "url": "https://raw.githubusercontent.com/NeoHeee/songloft-plugin-registry/main/registry.json",
       "name": "NeoHeee",
       "issue": 28
+    },
+    {
+      "id": "0klaus0-songloft-plugin-playlist-importer-main",
+      "url": "https://raw.githubusercontent.com/0klaus0/songloft-plugin-playlist-importer/main/registry.json",
+      "name": "0klaus0",
+      "issue": 39
     }
   ]
 }
