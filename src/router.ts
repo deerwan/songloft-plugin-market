@@ -8,7 +8,6 @@
  *   拆包收益不抵额外请求，保持简单。
  */
 import { createRouter, createWebHashHistory } from 'vue-router'
-import HomeView from './views/HomeView.vue'
 import PluginMarket from './components/PluginMarket.vue'
 import IssuesView from './views/IssuesView.vue'
 import DiscussionsView from './views/DiscussionsView.vue'
@@ -16,8 +15,9 @@ import DiscussionsView from './views/DiscussionsView.vue'
 const router = createRouter({
   history: createWebHashHistory(),
   routes: [
-    { path: '/', name: 'home', component: HomeView, meta: { title: '首页' } },
-    { path: '/market', name: 'market', component: PluginMarket, meta: { title: '插件市场' } },
+    // 插件市场即首页：根路径直接渲染市场列表。
+    // /market 保留为 alias，兼容站内旧链接、README 与 Issue 中已分享的地址
+    { path: '/', name: 'market', component: PluginMarket, alias: ['/market'], meta: { title: '插件市场' } },
     { path: '/issues', name: 'issues', component: IssuesView, meta: { title: 'Issues' } },
     {
       path: '/discussions',
@@ -25,7 +25,7 @@ const router = createRouter({
       component: DiscussionsView,
       meta: { title: '讨论' },
     },
-    // 未知路径一律回首页，避免出现空白视图
+    // 未知路径一律回市场页，避免出现空白视图
     { path: '/:pathMatch(.*)*', redirect: '/' },
   ],
   scrollBehavior() {

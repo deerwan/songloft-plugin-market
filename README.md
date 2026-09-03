@@ -41,5 +41,4 @@ https://raw.githubusercontent.com/deerwan/songloft-plugin-market/main/registry.j
 
 ## 鸣谢
 
-- 首页 WebGL 持续流动光球背景组件（`src/components/OrbBackground.vue`）移植自 [vuepress-theme-plume](https://github.com/pengzhanbo/vuepress-theme-plume) 的 `Orb` 背景，其最初 fork 自 [vue-bits](https://github.com/DavidHDev/vue-bits)（MIT License）。
-- WebGL 渲染依赖 [ogl](https://github.com/oframe/ogl)。
+- 感谢所有提交插件源的社区开发者。

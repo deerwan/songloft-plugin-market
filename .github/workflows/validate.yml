@@ -45,10 +45,11 @@ jobs:
             echo "data_changed=true" >> "$GITHUB_OUTPUT"
           fi
 
-      # 跑通数据构建（可达性 + 探测逻辑）
+      # 跑通数据构建（可达性 + 探测逻辑）。用 test:source（--dry-run）而非 build:data：
+      # PR 里不需要写盘，包校验下一步会再做一次完整构建，避免重复落盘。
       - name: Dry-run data build
         if: steps.changed.outputs.data_changed == 'true'
-        run: npm run build:data
+        run: npm run test:source
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
