@@ -17,7 +17,7 @@
 //
 // 退出码：0 成功；1 致命错误（写盘失败等）。单个插件拉取失败不影响整体。
 
-import { existsSync, mkdirSync, readFileSync, writeFileSync, copyFileSync } from 'node:fs'
+import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync, copyFileSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { unzipSync, strFromU8 } from 'fflate'
@@ -50,10 +50,12 @@ const GITHUB_PROXY = process.env.GITHUB_PROXY || ''
 //   node scripts/build.mjs https://.../registry.json
 //   node scripts/build.mjs https://.../plugin.json   （单插件也行）
 const CLI_TEST_URL = process.argv.slice(2).find((a) => /^https?:\/\//i.test(a)) || ''
-const DRY_RUN = Boolean(CLI_TEST_URL) || process.argv.includes('--dry-run')
-// 包校验：在 DRY_RUN 基础上，额外下载 .jsplugin.zip 做结构/语法静态校验。
+// 包校验：额外下载 .jsplugin.zip 做结构/语法静态校验。
 // 用于 submit-source.yml 与 validate.yml（PR 拦截坏包）。不影响正常的生产数据构建。
 const CHECK_PACKAGES = process.argv.includes('--check-packages')
+// 包校验属于「只读检查」：它跑完整条管线，但绝不该改写 data/ 与 public/。
+// 否则 validate.yml 在 PR 上一次执行就写两遍盘（build:data 一遍、validate:source 一遍）。
+const DRY_RUN = Boolean(CLI_TEST_URL) || CHECK_PACKAGES || process.argv.includes('--dry-run')
 
 const warnings = []
 // 包校验错误：entryPath -> string[]。仅 --check-packages 时填充，用于 CI 拦截。
@@ -134,25 +136,64 @@ async function giteeApi(path) {
 }
 
 // ——————————————————————————————————————————————
-// 版本比较（按 . 分段数值比较，去掉前导 v）
+// 版本比较（语义化版本：主版本按段数值比较，预发布低于正式版）
+//
+// 注意两点历史坑：
+//   1) 版本号前缀既有 `v1.2.3`，也有 `V-2026.08.29.12.07` 这类写法。只去掉 v/V
+//      会留下前导 `-`，导致分段后首段是空串、比较结果反转，所以前导分隔符要一并去掉。
+//   2) 不能简单按 [.\-+] 通切后逐段比。那样 `1.0.0-beta` 会因为多出一段 beta
+//      而被判为高于 `1.0.0`，语义化版本里正好相反：预发布低于正式版。
 // ——————————————————————————————————————————————
 
 function normalizeVersion(v) {
-  return String(v || '').replace(/^v/i, '').trim()
+  return String(v || '')
+    .replace(/^\s*v/i, '')
+    .replace(/^[-+.\s]+/, '')
+    .trim()
+}
+
+// 拆成 { parts: number[], pre: string|null }；build metadata（+xxx）按 semver 忽略。
+// 非标准版本号（如纯字符串 "beta"）退化为 parts=[]、pre=原串，仍可参与比较。
+function parseVersion(v) {
+  const s = normalizeVersion(v)
+  const m = s.match(/^([0-9]+(?:\.[0-9]+)*)(?:-([0-9A-Za-z.-]+))?(?:\+[0-9A-Za-z.-]+)?$/)
+  if (!m) return { parts: [], pre: s || null }
+  return { parts: m[1].split('.').map((n) => parseInt(n, 10)), pre: m[2] || null }
 }
 
 function compareVersion(a, b) {
-  const pa = normalizeVersion(a).split(/[.\-+]/)
-  const pb = normalizeVersion(b).split(/[.\-+]/)
-  const len = Math.max(pa.length, pb.length)
+  const va = parseVersion(a)
+  const vb = parseVersion(b)
+
+  const len = Math.max(va.parts.length, vb.parts.length)
   for (let i = 0; i < len; i++) {
-    const na = parseInt(pa[i] || '0', 10)
-    const nb = parseInt(pb[i] || '0', 10)
-    if (Number.isNaN(na) || Number.isNaN(nb)) {
-      const cmp = (pa[i] || '').localeCompare(pb[i] || '')
+    const na = va.parts[i] ?? 0
+    const nb = vb.parts[i] ?? 0
+    if (na !== nb) return na - nb
+  }
+
+  // 主版本相同：正式版 > 预发布版
+  if (va.pre === vb.pre) return 0
+  if (!va.pre) return 1
+  if (!vb.pre) return -1
+
+  // 两边都是预发布：按点分段比较，数字段按数值、字母段按字典序，且数字段优先级低于字母段
+  const sa = va.pre.split('.')
+  const sb = vb.pre.split('.')
+  for (let i = 0; i < Math.max(sa.length, sb.length); i++) {
+    if (sa[i] === undefined) return -1 // 段数少者更低（beta < beta.1）
+    if (sb[i] === undefined) return 1
+    const na = parseInt(sa[i], 10)
+    const nb = parseInt(sb[i], 10)
+    const naNum = !Number.isNaN(na)
+    const nbNum = !Number.isNaN(nb)
+    if (naNum && nbNum) {
+      if (na !== nb) return na - nb
+    } else if (naNum !== nbNum) {
+      return naNum ? -1 : 1 // 数字段低于字母段
+    } else {
+      const cmp = sa[i].localeCompare(sb[i])
       if (cmp !== 0) return cmp
-    } else if (na !== nb) {
-      return na - nb
     }
   }
   return 0
@@ -261,6 +302,43 @@ function parseRepoHost(...urls) {
   return null
 }
 
+// 仓库归属判定：从插件所有可用 URL 解析候选仓库，按「出现次数」投票，票数高者胜。
+//
+// 为什么不能简单让 homepage 优先：不少插件（尤其官方插件）把 homepage 填成组织/宿主主页，
+// 如「智能音箱」的 homepage 是 songloft-org/songloft，而 downloadUrl / updateUrl /
+// pluginJsonUrl 三项一致指向 songloft-plugin-miot。若取 homepage，stars、开源探测、
+// 头像会全部落在宿主主仓库上（把宿主的 1600+ star 当成插件 star）。
+//
+// 为什么不能简单让 downloadUrl 优先：部分插件的 plugin.json 托管在「registry 仓库」，
+// 而下载包在插件源码仓库（如 lxbridge：update/pj 指向 songloft-plugin-registry，
+// download 指向 lxbridge）；也有把发布包放 Gitee 的（如 multisource-music）。
+//
+// 投票制能同时覆盖上述两种情形：
+//   智能音箱       -> miot 3 票 胜 songloft 1 票
+//   LX音乐桥       -> lxbridge 2 票 vs registry 2 票（平票，按 rank 取 download 的 lxbridge）
+//   多源音乐桥     -> github 3 票 胜 gitee 1 票
+// 平票时的可信度顺序：download > homepage > update > pluginJson。
+// release 直链最可能指向插件自身仓库；registry 仓库通常只出现在 update / pluginJson 两项。
+function resolveRepo(entry, pluginJsonUrl) {
+  const candidates = [
+    { url: entry.downloadUrl, rank: 0 },
+    { url: entry.homepage, rank: 1 },
+    { url: entry.updateUrl, rank: 2 },
+    { url: pluginJsonUrl, rank: 3 },
+  ]
+  const tally = new Map()
+  for (const c of candidates) {
+    const repo = parseRepoHost(c.url)
+    if (!repo) continue
+    const id = `${repo.platform}:${repo.owner}/${repo.repo}`.toLowerCase()
+    const prev = tally.get(id)
+    if (prev) prev.count += 1
+    else tally.set(id, { count: 1, rank: c.rank, repo })
+  }
+  if (!tally.size) return null
+  return [...tally.values()].sort((a, b) => b.count - a.count || a.rank - b.rank)[0].repo
+}
+
 // 两平台 raw 文件直链格式不同，统一从这里生成：
 //   GitHub: raw.githubusercontent.com/{owner}/{repo}/{branch}/{path}
 //   Gitee:  raw.giteeusercontent.com/{owner}/{repo}/raw/{branch}/{path}
@@ -303,10 +381,11 @@ function subDirFromPluginUrl(url) {
 // 用平台 raw 直链 HEAD 探测标志性源码文件，不占任何 API 额度。
 // 命中任一即视为开源：package.json / tsconfig.json / go.mod / src/index.ts
 // 探测范围：仓库根目录 + plugin.json 所在子目录（源码常放子目录）
-async function repoHasSource(owner, repo, subDir = '', platform = 'github') {
+// branches 默认只试 main/master；调用方拿到 API 的 default_branch 后可传具体分支补探。
+async function repoHasSource(owner, repo, subDir = '', platform = 'github', branches = ['main', 'master']) {
   const files = ['package.json', 'tsconfig.json', 'go.mod', 'src/index.ts']
   const dirs = ['', subDir].filter((d, i, a) => a.indexOf(d) === i)
-  for (const branch of ['main', 'master']) {
+  for (const branch of branches) {
     for (const dir of dirs) {
       for (const f of files) {
         if (await headOk(rawFileUrl(platform, owner, repo, branch, dir + f))) {
@@ -552,9 +631,10 @@ async function processPlugin(pluginJsonUrl, prevMap) {
     entry.updatedAt = await fetchReleaseUpdatedAt(entry.downloadUrl)
   }
 
-  // 仓库探测：homepage 优先（它指向作者/仓库主页，且多为公开仓库，能正确判定平台与拿头像），
-  // 其余下载/更新/plugin.json 仅作兜底（发布仓库可能托管在 Gitee 私仓，会误判平台）。
-  const gh = parseRepoHost(entry.homepage, entry.downloadUrl, entry.updateUrl, pluginJsonUrl)
+  // 仓库探测：四个地址投票决定归属（详见 resolveRepo 注释）。
+  // downloadUrl / updateUrl / pluginJsonUrl 三项通常一致指向插件自身仓库；
+  // homepage 常填组织主页（官方插件多为 songloft-org/songloft），只能算其中一票。
+  const gh = resolveRepo(entry, pluginJsonUrl)
   if (gh) {
     const isGitee = gh.platform === 'gitee'
     entry.repo = isGitee ? `https://gitee.com/${gh.owner}/${gh.repo}` : `https://github.com/${gh.owner}/${gh.repo}`
@@ -569,6 +649,19 @@ async function processPlugin(pluginJsonUrl, prevMap) {
         : await githubApi(`/repos/${gh.owner}/${gh.repo}`)
       // API 能访问时，用主编程语言作二次校正（补探测未命中的源码布局）
       if (info.language) entry.source = 'open'
+      // 补探默认分支：上面的探测只试了 main/master，而部分仓库的默认分支叫别的名字
+      // （release / dev / 插件名等），此时固定分支探测必然落空会把有源码的仓库误判成闭源。
+      // 拿到 API 的 default_branch 后再探一次即可，同样不额外消耗 API 额度。
+      else if (info.default_branch && !['main', 'master'].includes(String(info.default_branch).toLowerCase())) {
+        const found = await repoHasSource(
+          gh.owner,
+          gh.repo,
+          subDirFromPluginUrl(pluginJsonUrl),
+          gh.platform,
+          [info.default_branch],
+        )
+        if (found) entry.source = 'open'
+      }
       entry.stars = info.stargazers_count ?? null
       entry.updatedAt = info.pushed_at || info.updated_at || entry.updatedAt || null
       // license：GitHub 返回 { spdx_id }；Gitee v5 可能是字符串或对象，兼容处理
@@ -639,6 +732,34 @@ function loadPrevCache() {
     }
   }
   return map
+}
+
+/**
+ * 清理孤儿图标。
+ *
+ * 图标按 `icons/{entryPath}.{ext}` 命名，插件改名、换 entryPath 或更换图标格式
+ * （png -> svg）都会留下不再被引用的旧文件。这些文件会随每次 CI 提交永久堆积在
+ * data/icons 里。以本次输出的 logo 引用为准，删除两处目录中用不到的文件。
+ * 拉取失败的插件会沿用上一次缓存的 entry（含 logo 引用），因此不会被误删。
+ */
+function pruneIcons(plugins) {
+  const prefix = 'icons/'
+  const used = new Set(
+    plugins
+      .map((p) => p.logo)
+      .filter((l) => typeof l === 'string' && l.startsWith(prefix))
+      .map((l) => l.slice(prefix.length)),
+  )
+  let removed = 0
+  for (const dir of [ICONS_DATA_DIR, ICONS_PUBLIC_DIR]) {
+    if (!existsSync(dir)) continue
+    for (const file of readdirSync(dir)) {
+      if (used.has(file)) continue
+      rmSync(resolve(dir, file))
+      removed += 1
+    }
+  }
+  if (removed) info(`清理孤儿图标 ${removed} 个文件`)
 }
 
 async function main() {
@@ -760,6 +881,7 @@ async function main() {
   mkdirSync(publicDir, { recursive: true })
   writeFileSync(OUTPUT_FILE, JSON.stringify(output, null, 2) + '\n', 'utf-8')
   copyFileSync(OUTPUT_FILE, PUBLIC_OUTPUT)
+  pruneIcons(plugins)
 
   info(`✅ 完成：${plugins.length} 个插件（开源 ${openCount} / 闭源 ${plugins.length - openCount}），警告 ${warnings.length} 条`)
   info(`输出：${OUTPUT_FILE}`)

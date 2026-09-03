@@ -203,6 +203,16 @@ function onAvatarError(owner: string) {
   avatarFailed.value = new Set(avatarFailed.value).add(owner)
 }
 
+// 加载失败的插件 logo 集合。同样只影响展示：
+// 早先直接 @error 里把 p.logo 置空，会永久改掉内存数据，重新搜索也不会重试加载。
+const logoFailed = ref<Set<string>>(new Set())
+function onLogoError(entryPath: string) {
+  logoFailed.value = new Set(logoFailed.value).add(entryPath)
+}
+function showLogo(p: Plugin): boolean {
+  return Boolean(p.logo) && !logoFailed.value.has(p.entryPath)
+}
+
 // logo 可能是绝对 URL（作者自托），也可能是相对路径 icons/xxx.svg
 // （构建时从插件包提取），后者需按部署子路径拼上 BASE_URL
 function logoSrc(logo: string): string {
@@ -368,7 +378,7 @@ onBeforeUnmount(() => window.removeEventListener('resize', updateIndicator))
           <TransitionGroup name="flip" tag="div" class="featured-grid" appear>
             <article v-for="(p, i) in featuredList" :key="p.entryPath" class="fcard" :style="{ '--i': i }">
               <div class="fcard__logo">
-                <img v-if="p.logo" :src="logoSrc(p.logo)" :alt="p.name" loading="lazy" @error="p.logo = null" />
+                <img v-if="showLogo(p)" :src="logoSrc(p.logo!)" :alt="p.name" loading="lazy" @error="onLogoError(p.entryPath)" />
                 <span v-else>{{ initials(p.name) }}</span>
               </div>
               <h4 class="fcard__name" :title="p.name">{{ p.name }}</h4>
@@ -393,7 +403,7 @@ onBeforeUnmount(() => window.removeEventListener('resize', updateIndicator))
             <article v-for="(p, i) in regularList" :key="p.entryPath" class="card" :style="{ '--i': i }">
               <div class="card__top">
                 <div class="card__logo">
-                  <img v-if="p.logo" :src="logoSrc(p.logo)" :alt="p.name" loading="lazy" @error="p.logo = null" />
+                  <img v-if="showLogo(p)" :src="logoSrc(p.logo!)" :alt="p.name" loading="lazy" @error="onLogoError(p.entryPath)" />
                   <span v-else>{{ initials(p.name) }}</span>
                 </div>
                 <h3 class="card__name" :title="p.name">{{ p.name }}</h3>
