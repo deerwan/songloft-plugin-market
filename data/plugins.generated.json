@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-09-03T02:14:37.877Z",
-  "count": 36,
-  "openCount": 32,
+  "generatedAt": "2026-09-03T03:33:40.025Z",
+  "count": 37,
+  "openCount": 33,
   "closedCount": 4,
   "sources": [
     {
@@ -94,6 +94,13 @@
       "official": false,
       "url": "https://raw.githubusercontent.com/NeoHeee/songloft-plugin-registry/main/registry.json",
       "count": 2
+    },
+    {
+      "id": "0klaus0-songloft-plugin-playlist-importer-main",
+      "name": "0klaus0",
+      "official": false,
+      "url": "https://raw.githubusercontent.com/0klaus0/songloft-plugin-playlist-importer/main/registry.json",
+      "count": 1
     }
   ],
   "warnings": [],
@@ -122,7 +129,7 @@
       "source": "open",
       "origin": "official",
       "repo": "https://github.com/songloft-org/songloft",
-      "stars": 1628,
+      "stars": 1630,
       "updatedAt": "2026-09-03T01:20:55Z",
       "license": "Apache-2.0",
       "avatarUrl": "https://avatars.githubusercontent.com/u/288701258?v=4",
@@ -133,7 +140,7 @@
     {
       "entryPath": "lxmusic",
       "name": "洛雪音源",
-      "version": "3.7.6",
+      "version": "3.7.8",
       "description": "洛雪音源 - 多平台音乐搜索、歌单管理、音源管理",
       "author": "LX Team",
       "permissions": [
@@ -148,13 +155,13 @@
       "minHostVersion": "2.6.0",
       "homepage": null,
       "pluginJsonUrl": "https://raw.githubusercontent.com/fly818/lxmusic-plugin-release/main/plugin.json",
-      "downloadUrl": "https://github.com/fly818/lxmusic-plugin-release/releases/download/3.7.6/lxmusic.jsplugin.zip",
+      "downloadUrl": "https://github.com/fly818/lxmusic-plugin-release/releases/download/3.7.8/lxmusic.jsplugin.zip",
       "updateUrl": "https://raw.githubusercontent.com/fly818/lxmusic-plugin-release/main/plugin.json",
       "source": "closed",
       "origin": "fly818-lxmusic-plugin-release-refs",
       "repo": "https://github.com/fly818/lxmusic-plugin-release",
       "stars": 27,
-      "updatedAt": "2026-08-18T05:27:51Z",
+      "updatedAt": "2026-09-03T02:52:06Z",
       "license": null,
       "avatarUrl": "https://avatars.githubusercontent.com/u/34331927?v=4",
       "logo": "https://raw.githubusercontent.com/fly818/lxmusic-plugin-release/main/static/icon.svg",
@@ -630,6 +637,39 @@
       "license": null,
       "avatarUrl": "https://avatars.githubusercontent.com/u/288701258?v=4",
       "logo": "icons/mpd-player.svg",
+      "tags": [],
+      "featured": false
+    },
+    {
+      "entryPath": "playlist-importer",
+      "name": "歌单导入器",
+      "version": "1.20.5",
+      "description": "识别市面音乐软件分享歌单，导入至 Songloft 或通过洛雪音源下载",
+      "author": "0klaus0",
+      "permissions": [
+        "storage",
+        "persistent-storage",
+        "songs.read",
+        "songs.write",
+        "playlists.read",
+        "playlists.write",
+        "fs:music",
+        "fs",
+        "jsenv"
+      ],
+      "minHostVersion": null,
+      "homepage": "https://github.com/0klaus0/songloft-plugin-playlist-importer",
+      "pluginJsonUrl": "https://raw.githubusercontent.com/0klaus0/songloft-plugin-playlist-importer/main/plugin.json",
+      "downloadUrl": "https://github.com/0klaus0/songloft-plugin-playlist-importer/releases/download/v1.20.5/playlist-importer.jsplugin.zip",
+      "updateUrl": "https://github.com/0klaus0/songloft-plugin-playlist-importer/raw/main/plugin.json",
+      "source": "open",
+      "origin": "0klaus0-songloft-plugin-playlist-importer-main",
+      "repo": "https://github.com/0klaus0/songloft-plugin-playlist-importer",
+      "stars": 2,
+      "updatedAt": "2026-08-31T13:32:08Z",
+      "license": null,
+      "avatarUrl": "https://avatars.githubusercontent.com/u/51389777?v=4",
+      "logo": "icons/playlist-importer.jpg",
       "tags": [],
       "featured": false
     },

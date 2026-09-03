@@ -14,7 +14,8 @@
     "https://raw.githubusercontent.com/fly818/lxmusic-plugin-release/main/registry.json",
     "https://raw.githubusercontent.com/songloft-org/songloft-plugin-karaoke-lyric/main/registry.json",
     "https://raw.githubusercontent.com/youxikexue/songloft-plugin-registry/main/registry.json",
-    "https://raw.githubusercontent.com/NeoHeee/songloft-plugin-registry/main/registry.json"
+    "https://raw.githubusercontent.com/NeoHeee/songloft-plugin-registry/main/registry.json",
+    "https://raw.githubusercontent.com/0klaus0/songloft-plugin-playlist-importer/main/registry.json"
   ],
   "plugins": [
     "https://raw.githubusercontent.com/moonbai/songloft-plugin-news/main/news-plugin/plugin.json"
