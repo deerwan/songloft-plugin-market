@@ -154,6 +154,50 @@ const filtered = computed(() => {
 const featuredList = computed(() => filtered.value.filter((p) => p.featured))
 const regularList = computed(() => filtered.value.filter((p) => !p.featured))
 
+// —— 分页：主列表可能触达 500 上限，分块渲染避免一次性渲染卡顿 ——
+const pageSize = 24
+const currentPage = ref(1)
+
+// 任意筛选 / 搜索 / 排序变化都回到第一页
+watch([query, activeTag, sourceFilter, activeOrigin, sortKey], () => {
+  currentPage.value = 1
+})
+
+const totalPages = computed(() => Math.max(1, Math.ceil(regularList.value.length / pageSize)))
+const pagedRegular = computed(() => {
+  const start = (currentPage.value - 1) * pageSize
+  return regularList.value.slice(start, start + pageSize)
+})
+
+// 页码窗口：首尾页固定，当前页 ±2，过长折叠为省略号
+type PageItem = { type: 'num'; v: number } | { type: 'gap'; v: 0 }
+const pageWindow = computed<PageItem[]>(() => {
+  const total = totalPages.value
+  const cur = currentPage.value
+  if (total <= 7) {
+    return Array.from({ length: total }, (_, i) => ({ type: 'num', v: i + 1 }))
+  }
+  const out: PageItem[] = [{ type: 'num', v: 1 }]
+  const from = Math.max(2, cur - 2)
+  const to = Math.min(total - 1, cur + 2)
+  if (from > 2) out.push({ type: 'gap', v: 0 })
+  for (let i = from; i <= to; i++) out.push({ type: 'num', v: i })
+  if (to < total - 1) out.push({ type: 'gap', v: 0 })
+  out.push({ type: 'num', v: total })
+  return out
+})
+
+function goPage(p: number) {
+  const next = Math.min(Math.max(1, p), totalPages.value)
+  if (next === currentPage.value) return
+  currentPage.value = next
+  nextTick(() => {
+    const el = document.querySelector('.market .section:last-of-type') as HTMLElement | null
+    const top = el ? el.getBoundingClientRect().top + window.scrollY - 80 : 0
+    window.scrollTo({ top, behavior: 'smooth' })
+  })
+}
+
 // 推荐徽章：全场 Star 数第一的插件（精选区已有「推荐」语义，徽章只出现在常规卡片）
 const topStarKey = computed(() => {
   let best: Plugin | null = null
@@ -400,7 +444,7 @@ onBeforeUnmount(() => window.removeEventListener('resize', updateIndicator))
             <h3 class="section__title">全部插件</h3>
           </div>
           <TransitionGroup name="flip" tag="div" class="grid" appear>
-            <article v-for="(p, i) in regularList" :key="p.entryPath" class="card" :style="{ '--i': i }">
+            <article v-for="(p, i) in pagedRegular" :key="p.entryPath" class="card" :style="{ '--i': i }">
               <div class="card__top">
                 <div class="card__logo">
                   <img v-if="showLogo(p)" :src="logoSrc(p.logo!)" :alt="p.name" loading="lazy" @error="onLogoError(p.entryPath)" />
@@ -465,6 +509,15 @@ onBeforeUnmount(() => window.removeEventListener('resize', updateIndicator))
             </article>
           </TransitionGroup>
         </section>
+
+        <nav v-if="regularList.length > pageSize" class="pager" aria-label="分页导航">
+          <button class="pager__btn" :disabled="currentPage === 1" @click="goPage(currentPage - 1)">‹ 上一页</button>
+          <template v-for="(item, idx) in pageWindow" :key="idx">
+            <span v-if="item.type === 'gap'" class="pager__gap">…</span>
+            <button v-else class="pager__num" :class="{ active: item.v === currentPage }" @click="goPage(item.v)">{{ item.v }}</button>
+          </template>
+          <button class="pager__btn" :disabled="currentPage === totalPages" @click="goPage(currentPage + 1)">下一页 ›</button>
+        </nav>
       </template>
     </template>
   </div>
@@ -652,6 +705,55 @@ onBeforeUnmount(() => window.removeEventListener('resize', updateIndicator))
 
 .summary__meta {
   color: var(--slm-text-2);
+}
+
+/* —— 分页导航 —— */
+.pager {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.pager__btn,
+.pager__num {
+  min-width: 38px;
+  padding: 7px 12px;
+  border: 1px solid var(--glass-border);
+  border-radius: 10px;
+  background: var(--glass-card);
+  color: var(--slm-text-2);
+  font-size: 13px;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s, background 0.2s, transform 0.2s var(--ease-spring);
+}
+
+.pager__btn:hover:not(:disabled),
+.pager__num:hover {
+  color: var(--slm-text);
+  border-color: rgba(255, 255, 255, 0.22);
+  transform: translateY(-1px);
+}
+
+.pager__num.active {
+  background: radial-gradient(120% 170% at 50% 0%, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.03) 62%),
+    rgba(255, 255, 255, 0.05);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.16);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 2px 10px rgba(0, 0, 0, 0.35);
+  font-weight: 600;
+}
+
+.pager__btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.pager__gap {
+  color: var(--slm-text-2);
+  padding: 0 4px;
 }
 
 .state {

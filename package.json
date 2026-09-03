@@ -10,8 +10,8 @@
     "test:source": "node scripts/build.mjs --dry-run",
     "validate:source": "node scripts/build.mjs --check-packages",
     "dev": "vite",
-    "build": "npm run build:data && vue-tsc --noEmit && vite build",
-    "build:web": "vue-tsc --noEmit && vite build",
+    "build": "npm run build:data && vue-tsc --noEmit && vite build && node scripts/inject-seo.mjs",
+    "build:web": "vue-tsc --noEmit && vite build && node scripts/inject-seo.mjs",
     "preview": "npm run build && wrangler dev",
     "deploy": "npm run build && wrangler deploy"
   },
