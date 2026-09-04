@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-03T13:42:14.451Z",
+  "generatedAt": "2026-09-04T03:37:19.836Z",
   "count": 37,
   "openCount": 33,
   "closedCount": 4,
@@ -130,7 +130,7 @@
       "origin": "official",
       "repo": "https://github.com/songloft-org/songloft-plugin-miot",
       "stars": 47,
-      "updatedAt": "2026-09-03T04:37:20Z",
+      "updatedAt": "2026-09-04T02:24:27Z",
       "license": null,
       "avatarUrl": "https://avatars.githubusercontent.com/u/288701258?v=4",
       "logo": "icons/miot.svg",
