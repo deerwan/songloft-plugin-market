@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-07T03:35:12.454Z",
+  "generatedAt": "2026-09-08T03:39:54.766Z",
   "count": 37,
   "openCount": 33,
   "closedCount": 4,
@@ -103,12 +103,14 @@
       "count": 1
     }
   ],
-  "warnings": [],
+  "warnings": [
+    "拉取 plugin.json 失败：https://raw.githubusercontent.com/fanliu-yi/go-music-js/main/plugin.json（HTTP 404 Not Found）"
+  ],
   "plugins": [
     {
       "entryPath": "miot",
       "name": "智能音箱",
-      "version": "2026.9.5",
+      "version": "2026.9.8",
       "description": "通过 MIoT 协议把歌曲投放到智能音箱设备",
       "author": "Songloft Team",
       "permissions": [
@@ -124,13 +126,13 @@
       "minHostVersion": "2.9.5",
       "homepage": "https://github.com/songloft-org/songloft",
       "pluginJsonUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-miot/main/plugin.json",
-      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-miot/releases/download/v2026.9.5/miot.jsplugin.zip",
+      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-miot/releases/download/v2026.9.8/miot.jsplugin.zip",
       "updateUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-miot/main/plugin.json",
       "source": "open",
       "origin": "official",
       "repo": "https://github.com/songloft-org/songloft-plugin-miot",
-      "stars": 50,
-      "updatedAt": "2026-09-05T04:34:42Z",
+      "stars": 51,
+      "updatedAt": "2026-09-08T02:43:21Z",
       "license": null,
       "avatarUrl": "https://avatars.githubusercontent.com/u/288701258?v=4",
       "logo": "icons/miot.svg",
@@ -246,7 +248,7 @@
       "source": "open",
       "origin": "official",
       "repo": "https://github.com/songloft-org/songloft-plugin-tag",
-      "stars": 8,
+      "stars": 9,
       "updatedAt": "2026-07-21T18:21:57Z",
       "license": "Apache-2.0",
       "avatarUrl": "https://avatars.githubusercontent.com/u/288701258?v=4",
@@ -553,7 +555,7 @@
     {
       "entryPath": "audiobookshelf",
       "name": "ABS书库",
-      "version": "0.9.2-beta.2",
+      "version": "0.9.2-beta.3",
       "description": "Audiobookshelf 有声书外部搜索源，支持 M4B 章节、系列册数、语音点播、续播定位、MIoT 不入库直播放及兼容导入模式",
       "author": "NeoHeee",
       "permissions": [
@@ -567,13 +569,13 @@
       "minHostVersion": "2.11.0",
       "homepage": "https://github.com/NeoHeee/songloft-plugin-audiobookshelf",
       "pluginJsonUrl": "https://raw.githubusercontent.com/NeoHeee/songloft-plugin-audiobookshelf/main/plugin.json",
-      "downloadUrl": "https://github.com/NeoHeee/songloft-plugin-audiobookshelf/releases/download/v0.9.2-beta.2/audiobookshelf.jsplugin.zip",
+      "downloadUrl": "https://github.com/NeoHeee/songloft-plugin-audiobookshelf/releases/download/v0.9.2-beta.3/audiobookshelf.jsplugin.zip",
       "updateUrl": null,
       "source": "closed",
       "origin": "neoheee-songloft-plugin-registry-main",
       "repo": "https://github.com/NeoHeee/songloft-plugin-audiobookshelf",
       "stars": 3,
-      "updatedAt": "2026-09-03T06:40:08Z",
+      "updatedAt": "2026-09-07T09:11:52Z",
       "license": null,
       "avatarUrl": "https://avatars.githubusercontent.com/u/40708633?v=4",
       "logo": "icons/audiobookshelf.svg",
