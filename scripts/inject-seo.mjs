@@ -94,7 +94,9 @@ ${routes.map((loc) => `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${lastmod}</
 writeFileSync(resolve(root, 'dist/sitemap.xml'), sitemap)
 
 // —— robots.txt ——
-const robots = `User-agent: *\nAllow: /\nSitemap: ${SITE_URL}/sitemap.xml\n`
+// 显式放行 Mediapartners-Google（AdSense 抓取页面内容、决定广告填充的爬虫），
+// 避免被通用 `*` 规则或未来收紧时误挡，保障子域广告填充。
+const robots = `User-agent: *\nAllow: /\n\nUser-agent: Mediapartners-Google\nAllow: /\n\nSitemap: ${SITE_URL}/sitemap.xml\n`
 writeFileSync(resolve(root, 'dist/robots.txt'), robots)
 
 console.log(`[inject-seo] 已生成 sitemap.xml 与 robots.txt（SITE_URL=${SITE_URL}）`)
