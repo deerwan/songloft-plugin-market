@@ -1,15 +1,16 @@
 // 构建后注入 SEO 资源（在 `vite build` 之后执行）：
 //   1. 向 dist/index.html 注入 JSON-LD 结构化数据
 //      （CollectionPage + ItemList，含全部插件元数据，使爬虫可索引列表内容）
-//   2. 生成 dist/sitemap.xml（站点已知路由）
-//   3. 生成 dist/robots.txt
+//   2. 预生成路由子目录（dist/issues/index.html 等）与 dist/404.html：
+//      GitHub Pages 无 SPA 回退，预生成的真实文件使已知路由直达/刷新返回 200；
+//      未知路径由 404.html 兜底回市场页（Cloudflare 侧 wrangler 已配置 SPA
+//      回退，这些真实文件同样存在，行为一致）。新增路由时需同步更新
+//      PRERENDER_ROUTES 清单。
+//   3. 生成 dist/sitemap.xml（站点已知路由）
+//   4. 生成 dist/robots.txt
 //
 // 站点域名可由环境变量 SITE_URL 覆盖，默认使用已部署的 GitHub Pages 备用地址。
-// 说明：当前为 hash 路由（#/market），搜索引擎不会把 fragment 当作独立页面，
-// 因此 sitemap 仅列出站点级路由；插件级内容通过 JSON-LD 的 ItemList 提供元数据，
-// 由 Google 等支持结构化数据的爬虫收录。后续若要逐插件独立收录，需改造为
-// History 路由 + 预渲染（SSG）。
-import { readFileSync, writeFileSync, existsSync } from 'node:fs'
+import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, resolve } from 'node:path'
 
@@ -17,6 +18,10 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 const root = resolve(__dirname, '..')
 
 const SITE_URL = (process.env.SITE_URL || 'https://songloft-store.lllh.de').replace(/\/$/, '')
+
+// 预生成子目录的路由清单（与 src/router.ts 保持同步，首页 "/" 除外）。
+// 新增路由时必须在此同步添加，否则 GitHub Pages 上直达/刷新只能靠 404.html 兜底。
+const PRERENDER_ROUTES = ['issues', 'discussions']
 
 const distHtml = resolve(root, 'dist/index.html')
 if (!existsSync(distHtml)) {
@@ -69,8 +74,18 @@ if (!html.includes('application/ld+json')) {
   console.log('[inject-seo] JSON-LD 已存在，跳过')
 }
 
+// —— 预生成路由子目录与 404.html ——
+// 复制注入后的最终 HTML，保证每个入口都带 JSON-LD 等资源。
+for (const route of PRERENDER_ROUTES) {
+  const dir = resolve(root, 'dist', route)
+  mkdirSync(dir, { recursive: true })
+  writeFileSync(resolve(dir, 'index.html'), html)
+}
+writeFileSync(resolve(root, 'dist/404.html'), html)
+console.log(`[inject-seo] 已预生成 ${PRERENDER_ROUTES.map((r) => `/${r}`).join('、')} 入口与 404.html 兜底`)
+
 // —— sitemap.xml ——
-const routes = [`${SITE_URL}/`, `${SITE_URL}/#/issues`, `${SITE_URL}/#/discussions`]
+const routes = [`${SITE_URL}/`, ...PRERENDER_ROUTES.map((r) => `${SITE_URL}/${r}`)]
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${routes.map((loc) => `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${lastmod}</lastmod>\n  </url>`).join('\n')}
