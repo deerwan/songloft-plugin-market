@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-09-21T03:59:45.558Z",
-  "count": 37,
-  "openCount": 33,
+  "generatedAt": "2026-09-22T03:56:44.712Z",
+  "count": 38,
+  "openCount": 34,
   "closedCount": 4,
   "sources": [
     {
@@ -9,7 +9,7 @@
       "name": "官方",
       "official": true,
       "url": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-registry/main/registry.json",
-      "count": 20
+      "count": 21
     },
     {
       "id": "deerwan",
@@ -110,7 +110,7 @@
     {
       "entryPath": "miot",
       "name": "智能音箱",
-      "version": "2026.9.20",
+      "version": "2026.9.21",
       "description": "通过 MIoT 协议把歌曲投放到智能音箱设备",
       "author": "Songloft Team",
       "permissions": [
@@ -126,13 +126,13 @@
       "minHostVersion": "2.9.5",
       "homepage": "https://github.com/songloft-org/songloft",
       "pluginJsonUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-miot/main/plugin.json",
-      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-miot/releases/download/v2026.9.20/miot.jsplugin.zip",
+      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-miot/releases/download/v2026.9.21/miot.jsplugin.zip",
       "updateUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-miot/main/plugin.json",
       "source": "open",
       "origin": "official",
       "repo": "https://github.com/songloft-org/songloft-plugin-miot",
       "stars": 56,
-      "updatedAt": "2026-09-20T06:49:08Z",
+      "updatedAt": "2026-09-21T11:10:19Z",
       "license": null,
       "avatarUrl": "https://avatars.githubusercontent.com/u/288701258?v=4",
       "logo": "icons/miot.svg",
@@ -980,6 +980,32 @@
       "license": "Apache-2.0",
       "avatarUrl": "https://avatars.githubusercontent.com/u/288701258?v=4",
       "logo": "icons/radio.svg",
+      "tags": [],
+      "featured": false
+    },
+    {
+      "entryPath": "ipod",
+      "name": "iPod",
+      "version": "0.1.0",
+      "description": "iPod Classic UI for Songloft — pixel-perfect click wheel experience for your music library",
+      "author": "songloft-org",
+      "permissions": [
+        "songs.read",
+        "playlists.read"
+      ],
+      "minHostVersion": "1.3.0",
+      "homepage": "https://github.com/songloft-org/songloft-plugin-ipod",
+      "pluginJsonUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-ipod/refs/heads/master/plugin.json",
+      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-ipod/releases/download/v0.1.0/ipod.jsplugin.zip",
+      "updateUrl": null,
+      "source": "open",
+      "origin": "official",
+      "repo": "https://github.com/songloft-org/songloft-plugin-ipod",
+      "stars": 1,
+      "updatedAt": "2026-09-21T08:57:04Z",
+      "license": null,
+      "avatarUrl": "https://avatars.githubusercontent.com/u/288701258?v=4",
+      "logo": null,
       "tags": [],
       "featured": false
     },
