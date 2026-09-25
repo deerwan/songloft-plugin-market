@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-09-24T03:46:56.484Z",
+  "generatedAt": "2026-09-25T04:02:48.305Z",
   "count": 38,
-  "openCount": 34,
-  "closedCount": 4,
+  "openCount": 33,
+  "closedCount": 5,
   "sources": [
     {
       "id": "official",
@@ -103,14 +103,12 @@
       "count": 1
     }
   ],
-  "warnings": [
-    "拉取 plugin.json 失败：https://raw.githubusercontent.com/fanliu-yi/go-music-js/main/plugin.json（HTTP 404 Not Found）"
-  ],
+  "warnings": [],
   "plugins": [
     {
       "entryPath": "miot",
       "name": "智能音箱",
-      "version": "2026.9.23",
+      "version": "2026.9.24",
       "description": "通过 MIoT 协议把歌曲投放到智能音箱设备",
       "author": "Songloft Team",
       "permissions": [
@@ -126,13 +124,13 @@
       "minHostVersion": "2.9.5",
       "homepage": "https://github.com/songloft-org/songloft",
       "pluginJsonUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-miot/main/plugin.json",
-      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-miot/releases/download/v2026.9.23/miot.jsplugin.zip",
+      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-miot/releases/download/v2026.9.24/miot.jsplugin.zip",
       "updateUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-miot/main/plugin.json",
       "source": "open",
       "origin": "official",
       "repo": "https://github.com/songloft-org/songloft-plugin-miot",
       "stars": 56,
-      "updatedAt": "2026-09-23T08:43:44Z",
+      "updatedAt": "2026-09-24T04:57:01Z",
       "license": null,
       "avatarUrl": "https://avatars.githubusercontent.com/u/288701258?v=4",
       "logo": "icons/miot.svg",
@@ -524,35 +522,6 @@
       "featured": false
     },
     {
-      "entryPath": "go-music-js",
-      "name": "Go Music JS",
-      "version": "0.1.5",
-      "description": "Go Music JS 是 go-music-dl 项目的 JS 插件版，面向 Songloft 插件系统使用。",
-      "author": "fanliu-yi",
-      "permissions": [
-        "storage",
-        "songs.read",
-        "songs.write",
-        "playlists.read",
-        "playlists.write"
-      ],
-      "minHostVersion": "2.6.0",
-      "homepage": "https://github.com/fanliu-yi/go-music-js",
-      "pluginJsonUrl": "https://raw.githubusercontent.com/fanliu-yi/go-music-js/main/plugin.json",
-      "downloadUrl": "https://github.com/fanliu-yi/go-music-js/releases/download/v0.1.5/go-music-js-v0.1.5.jsplugin.zip",
-      "updateUrl": "https://raw.githubusercontent.com/fanliu-yi/go-music-js/main/plugin.json",
-      "source": "open",
-      "origin": "fanliu-yi",
-      "repo": "https://github.com/fanliu-yi/go-music-js",
-      "stars": 5,
-      "updatedAt": "2026-07-27T07:53:28Z",
-      "license": null,
-      "avatarUrl": "https://avatars.githubusercontent.com/u/226945675?v=4",
-      "logo": "icons/go-music-js.svg",
-      "tags": [],
-      "featured": false
-    },
-    {
       "entryPath": "audiobookshelf",
       "name": "ABS书库",
       "version": "0.9.2-beta.3",
@@ -637,36 +606,6 @@
       "featured": false
     },
     {
-      "entryPath": "openlist",
-      "name": "OpenList",
-      "version": "2026.9.8",
-      "description": "通过 OpenList/AList API 接入外部网盘音乐库",
-      "author": "deerwan",
-      "permissions": [
-        "storage",
-        "songs.read",
-        "songs.write",
-        "playlists.read",
-        "playlists.write",
-        "inter-plugin"
-      ],
-      "minHostVersion": "2.9.5",
-      "homepage": "https://github.com/deerwan/songloft-plugin-openlist",
-      "pluginJsonUrl": "https://raw.githubusercontent.com/deerwan/songloft-plugin-openlist/main/plugin.json",
-      "downloadUrl": "https://github.com/deerwan/songloft-plugin-openlist/releases/download/v2026.9.8/openlist.jsplugin.zip",
-      "updateUrl": "https://raw.githubusercontent.com/deerwan/songloft-plugin-openlist/main/plugin.json",
-      "source": "open",
-      "origin": "deerwan",
-      "repo": "https://github.com/deerwan/songloft-plugin-openlist",
-      "stars": 3,
-      "updatedAt": "2026-09-08T08:26:23Z",
-      "license": null,
-      "avatarUrl": "https://avatars.githubusercontent.com/u/70961031?v=4",
-      "logo": "icons/openlist.svg",
-      "tags": [],
-      "featured": false
-    },
-    {
       "entryPath": "mpd-player",
       "name": "MPD音箱",
       "version": "2.1.5",
@@ -694,6 +633,35 @@
       "license": null,
       "avatarUrl": "https://avatars.githubusercontent.com/u/288701258?v=4",
       "logo": "icons/mpd-player.svg",
+      "tags": [],
+      "featured": false
+    },
+    {
+      "entryPath": "go-music-js",
+      "name": "Go Music JS",
+      "version": "0.17.0",
+      "description": "Go Music JS 是 go-music-dl 项目的 JS 插件版，面向 Songloft 插件系统使用。",
+      "author": "fanliu-yi",
+      "permissions": [
+        "storage",
+        "songs.read",
+        "songs.write",
+        "playlists.read",
+        "playlists.write"
+      ],
+      "minHostVersion": "2.6.0",
+      "homepage": "https://github.com/fanliu-yi/go-music-js",
+      "pluginJsonUrl": "https://raw.githubusercontent.com/fanliu-yi/go-music-js/main/plugin.json",
+      "downloadUrl": "https://github.com/fanliu-yi/go-music-js/releases/download/v0.17/go-music-js-v0.17.jsplugin.zip",
+      "updateUrl": "https://raw.githubusercontent.com/fanliu-yi/go-music-js/main/plugin.json",
+      "source": "closed",
+      "origin": "fanliu-yi",
+      "repo": "https://github.com/fanliu-yi/go-music-js",
+      "stars": 2,
+      "updatedAt": "2026-09-24T08:02:15Z",
+      "license": null,
+      "avatarUrl": "https://avatars.githubusercontent.com/u/226945675?v=4",
+      "logo": "icons/go-music-js.svg",
       "tags": [],
       "featured": false
     },
@@ -783,6 +751,36 @@
       "license": null,
       "avatarUrl": "https://avatars.githubusercontent.com/u/288701258?v=4",
       "logo": "icons/stats.svg",
+      "tags": [],
+      "featured": false
+    },
+    {
+      "entryPath": "openlist",
+      "name": "OpenList",
+      "version": "2026.9.8",
+      "description": "通过 OpenList/AList API 接入外部网盘音乐库",
+      "author": "deerwan",
+      "permissions": [
+        "storage",
+        "songs.read",
+        "songs.write",
+        "playlists.read",
+        "playlists.write",
+        "inter-plugin"
+      ],
+      "minHostVersion": "2.9.5",
+      "homepage": "https://github.com/deerwan/songloft-plugin-openlist",
+      "pluginJsonUrl": "https://raw.githubusercontent.com/deerwan/songloft-plugin-openlist/main/plugin.json",
+      "downloadUrl": "https://github.com/deerwan/songloft-plugin-openlist/releases/download/v2026.9.8/openlist.jsplugin.zip",
+      "updateUrl": "https://raw.githubusercontent.com/deerwan/songloft-plugin-openlist/main/plugin.json",
+      "source": "open",
+      "origin": "deerwan",
+      "repo": "https://github.com/deerwan/songloft-plugin-openlist",
+      "stars": 2,
+      "updatedAt": "2026-09-08T08:26:23Z",
+      "license": null,
+      "avatarUrl": "https://avatars.githubusercontent.com/u/70961031?v=4",
+      "logo": "icons/openlist.svg",
       "tags": [],
       "featured": false
     },
