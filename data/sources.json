@@ -80,6 +80,12 @@
       "url": "https://raw.githubusercontent.com/0klaus0/songloft-plugin-playlist-importer/main/registry.json",
       "name": "0klaus0",
       "issue": 39
+    },
+    {
+      "id": "zlyon-lx-hunter-main",
+      "url": "https://raw.githubusercontent.com/zlyon/lx-hunter/main/registry.json",
+      "name": "zlyon",
+      "issue": 43
     }
   ]
 }
