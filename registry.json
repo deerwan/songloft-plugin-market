@@ -18,6 +18,7 @@
     "https://raw.githubusercontent.com/0klaus0/songloft-plugin-playlist-importer/main/registry.json"
   ],
   "plugins": [
-    "https://raw.githubusercontent.com/moonbai/songloft-plugin-news/main/news-plugin/plugin.json"
+    "https://raw.githubusercontent.com/moonbai/songloft-plugin-news/main/news-plugin/plugin.json",
+    "https://raw.githubusercontent.com/514475844/songloft-plugin-watch-mv/main/plugin.json"
   ]
 }
