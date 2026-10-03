@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-02T04:42:13.718Z",
+  "generatedAt": "2026-10-03T04:24:52.369Z",
   "count": 39,
   "openCount": 34,
   "closedCount": 5,
@@ -108,7 +108,7 @@
     {
       "entryPath": "miot",
       "name": "智能音箱",
-      "version": "2026.10.1",
+      "version": "2026.10.2",
       "description": "通过 MIoT 协议把歌曲投放到智能音箱设备",
       "author": "Songloft Team",
       "permissions": [
@@ -124,13 +124,13 @@
       "minHostVersion": "2.9.5",
       "homepage": "https://github.com/songloft-org/songloft",
       "pluginJsonUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-miot/main/plugin.json",
-      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-miot/releases/download/v2026.10.1/miot.jsplugin.zip",
+      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-miot/releases/download/v2026.10.2/miot.jsplugin.zip",
       "updateUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-miot/main/plugin.json",
       "source": "open",
       "origin": "official",
       "repo": "https://github.com/songloft-org/songloft-plugin-miot",
       "stars": 57,
-      "updatedAt": "2026-10-01T12:04:04Z",
+      "updatedAt": "2026-10-03T00:36:45Z",
       "license": null,
       "avatarUrl": "https://avatars.githubusercontent.com/u/288701258?v=4",
       "logo": "icons/miot.svg",
