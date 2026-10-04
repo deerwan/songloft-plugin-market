@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-10-03T04:24:52.369Z",
-  "count": 39,
-  "openCount": 34,
+  "generatedAt": "2026-10-04T04:55:28.345Z",
+  "count": 40,
+  "openCount": 35,
   "closedCount": 5,
   "sources": [
     {
@@ -101,6 +101,13 @@
       "official": false,
       "url": "https://raw.githubusercontent.com/0klaus0/songloft-plugin-playlist-importer/main/registry.json",
       "count": 1
+    },
+    {
+      "id": "zlyon-lx-hunter-main",
+      "name": "zlyon",
+      "official": false,
+      "url": "https://raw.githubusercontent.com/zlyon/lx-hunter/main/registry.json",
+      "count": 1
     }
   ],
   "warnings": [],
@@ -108,7 +115,7 @@
     {
       "entryPath": "miot",
       "name": "智能音箱",
-      "version": "2026.10.2",
+      "version": "2026.10.3",
       "description": "通过 MIoT 协议把歌曲投放到智能音箱设备",
       "author": "Songloft Team",
       "permissions": [
@@ -124,13 +131,13 @@
       "minHostVersion": "2.9.5",
       "homepage": "https://github.com/songloft-org/songloft",
       "pluginJsonUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-miot/main/plugin.json",
-      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-miot/releases/download/v2026.10.2/miot.jsplugin.zip",
+      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-miot/releases/download/v2026.10.3/miot.jsplugin.zip",
       "updateUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-miot/main/plugin.json",
       "source": "open",
       "origin": "official",
       "repo": "https://github.com/songloft-org/songloft-plugin-miot",
-      "stars": 57,
-      "updatedAt": "2026-10-03T00:36:45Z",
+      "stars": 58,
+      "updatedAt": "2026-10-03T05:22:58Z",
       "license": null,
       "avatarUrl": "https://avatars.githubusercontent.com/u/288701258?v=4",
       "logo": "icons/miot.svg",
@@ -436,6 +443,32 @@
       "featured": false
     },
     {
+      "entryPath": "lx-hunter",
+      "name": "音源猎手",
+      "version": "1.4.20",
+      "description": "GitHub 音源爬取、去重、沙箱可用性检测、多选灌入洛雪音源插件并支持一键撤回；灌入返回洛雪 id、@name 同名去重、日志兜底确认、一键同步洛雪状态；onInit 同步返回防热重载死锁；镜像/直连/代理智能切换互斥；左侧导航 + 圆角卡片界面，配色跟随主程序深浅色主题",
+      "author": "zlyon",
+      "permissions": [
+        "storage",
+        "jsenv"
+      ],
+      "minHostVersion": "2.6.0",
+      "homepage": "https://github.com/zlyon/lx-hunter",
+      "pluginJsonUrl": "https://raw.githubusercontent.com/zlyon/lx-hunter/main/plugin.json",
+      "downloadUrl": "https://github.com/zlyon/lx-hunter/releases/download/v1.4.20/lx-hunter-v1.4.20.jsplugin.zip",
+      "updateUrl": "https://raw.githubusercontent.com/zlyon/lx-hunter/main/plugin.json",
+      "source": "open",
+      "origin": "zlyon-lx-hunter-main",
+      "repo": "https://github.com/zlyon/lx-hunter",
+      "stars": 5,
+      "updatedAt": "2026-10-04T03:37:19Z",
+      "license": "GPL-3.0",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/31056923?v=4",
+      "logo": "icons/lx-hunter.svg",
+      "tags": [],
+      "featured": false
+    },
+    {
       "entryPath": "tv-helper",
       "name": "电视助手",
       "version": "0.4.0",
@@ -666,6 +699,35 @@
       "featured": false
     },
     {
+      "entryPath": "neo-lxbridge",
+      "name": "音桥",
+      "version": "2.0.0",
+      "description": "本地洛雪备份解析、歌曲匹配、歌单创建与运行诊断",
+      "author": "Neo",
+      "permissions": [
+        "storage",
+        "persistent-storage",
+        "songs.read",
+        "playlists.read",
+        "playlists.write"
+      ],
+      "minHostVersion": "2.9.6",
+      "homepage": "https://github.com/NeoHeee/songloft-plugin-lxbridge",
+      "pluginJsonUrl": "https://raw.githubusercontent.com/NeoHeee/songloft-plugin-lxbridge/main/plugin.json",
+      "downloadUrl": "https://github.com/NeoHeee/songloft-plugin-lxbridge/releases/download/v2.0.0/neo-lxbridge-v2.0.0.jsplugin.zip",
+      "updateUrl": null,
+      "source": "open",
+      "origin": "neoheee-songloft-plugin-registry-main",
+      "repo": "https://github.com/NeoHeee/songloft-plugin-lxbridge",
+      "stars": 3,
+      "updatedAt": "2026-08-27T16:36:14Z",
+      "license": "Apache-2.0",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/40708633?v=4",
+      "logo": "icons/neo-lxbridge.svg",
+      "tags": [],
+      "featured": false
+    },
+    {
       "entryPath": "downloader",
       "name": "歌曲下载",
       "version": "2026.8.7",
@@ -781,35 +843,6 @@
       "license": null,
       "avatarUrl": "https://avatars.githubusercontent.com/u/70961031?v=4",
       "logo": "icons/openlist.svg",
-      "tags": [],
-      "featured": false
-    },
-    {
-      "entryPath": "neo-lxbridge",
-      "name": "音桥",
-      "version": "2.0.0",
-      "description": "本地洛雪备份解析、歌曲匹配、歌单创建与运行诊断",
-      "author": "Neo",
-      "permissions": [
-        "storage",
-        "persistent-storage",
-        "songs.read",
-        "playlists.read",
-        "playlists.write"
-      ],
-      "minHostVersion": "2.9.6",
-      "homepage": "https://github.com/NeoHeee/songloft-plugin-lxbridge",
-      "pluginJsonUrl": "https://raw.githubusercontent.com/NeoHeee/songloft-plugin-lxbridge/main/plugin.json",
-      "downloadUrl": "https://github.com/NeoHeee/songloft-plugin-lxbridge/releases/download/v2.0.0/neo-lxbridge-v2.0.0.jsplugin.zip",
-      "updateUrl": null,
-      "source": "open",
-      "origin": "neoheee-songloft-plugin-registry-main",
-      "repo": "https://github.com/NeoHeee/songloft-plugin-lxbridge",
-      "stars": 2,
-      "updatedAt": "2026-08-27T16:36:14Z",
-      "license": "Apache-2.0",
-      "avatarUrl": "https://avatars.githubusercontent.com/u/40708633?v=4",
-      "logo": "icons/neo-lxbridge.svg",
       "tags": [],
       "featured": false
     },
