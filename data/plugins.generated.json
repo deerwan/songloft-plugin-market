@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-22T03:49:25.458Z",
+  "generatedAt": "2026-10-23T03:53:52.059Z",
   "count": 40,
   "openCount": 35,
   "closedCount": 5,
@@ -168,7 +168,7 @@
       "source": "closed",
       "origin": "fly818-lxmusic-plugin-release-refs",
       "repo": "https://github.com/fly818/lxmusic-plugin-release",
-      "stars": 38,
+      "stars": 39,
       "updatedAt": "2026-10-17T15:51:31Z",
       "license": null,
       "avatarUrl": "https://avatars.githubusercontent.com/u/34331927?v=4",
