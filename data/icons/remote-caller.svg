@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+    <!-- 边缘收缩后，将 scale 极限拉大至 6.2！精准重算 translate 保证四周间隙趋近于 0 -->
+    <g transform="translate(-110, -60) scale(6.2)">
+
+        <!-- 改良天线：天线柱缩短了一半，信号波纹整体下移，更加紧凑 -->
+        <rect x="30" y="24" width="6" height="10" rx="3" fill="#0284c7" stroke="#0f172a" stroke-width="2.5" />
+        <circle cx="33" cy="22" r="3.5" fill="#f43f5e" stroke="#0f172a" stroke-width="1.5" />
+        <path d="M24,18 Q33,12 42,18" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" fill="none" />
+
+        <!-- 炸裂漫画闪电声浪：横向压缩变窄，腾出空间让整体被放大 -->
+        <polygon points="68,54 97,28 82,52 98,60 82,68 96,88 75,72" fill="#fbbf24" stroke="#0f172a" stroke-width="2.5" stroke-linejoin="round" />
+        <polygon points="68,54 92,34 80,52 93,60 80,66 91,80 74,70" fill="#f43f5e" />
+        <circle cx="96" cy="46" r="3" fill="#38bdf8" />
+        <circle cx="94" cy="74" r="2.5" fill="#facc15" />
+
+        <!-- 胖墩小爱身体 (因为 scale 的提升，现在在画面中占据了绝对的主导面积) -->
+        <g transform="translate(26, 30)">
+            <rect x="2" y="8" width="38" height="52" rx="12" fill="#ffffff" stroke="#0f172a" stroke-width="3.5" />
+            <ellipse cx="21" cy="10" rx="18" ry="4.5" fill="#00f2fe" stroke="#0284c7" stroke-width="2" />
+
+            <!-- 眨眼放电萌表情 -->
+            <path d="M12,24 Q16,18 20,24" stroke="#0f172a" stroke-width="3" stroke-linecap="round" fill="none" />
+            <circle cx="28" cy="24" r="4.2" fill="#0f172a" /><circle cx="30" cy="22" r="1.5" fill="#fff" />
+            <ellipse cx="20" cy="35" rx="5" ry="7" fill="#be123c" stroke="#0f172a" stroke-width="2.5" />
+
+            <!-- 挥舞的双手 -->
+            <ellipse cx="-2" cy="37" rx="4.5" ry="3.5" fill="#fff" stroke="#0f172a" stroke-width="2.5" />
+            <ellipse cx="42" cy="35" rx="4.5" ry="3.5" fill="#fff" stroke="#0f172a" stroke-width="2.5" />
+
+            <!-- 扬声器网孔 -->
+            <circle cx="13" cy="51" r="1.5" fill="#94a3b8" />
+            <circle cx="21" cy="51" r="1.5" fill="#94a3b8" />
+            <circle cx="29" cy="51" r="1.5" fill="#94a3b8" />
+        </g>
+    </g>
+</svg>

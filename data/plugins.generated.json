@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-11-03T05:50:06.943Z",
-  "count": 40,
-  "openCount": 35,
+  "generatedAt": "2026-11-04T05:25:09.007Z",
+  "count": 41,
+  "openCount": 36,
   "closedCount": 5,
   "sources": [
     {
@@ -30,7 +30,7 @@
       "name": "birdstudy-nj",
       "official": false,
       "url": "https://raw.githubusercontent.com/birdstudy-nj/songloft-miot-helper/refs/heads/main/registry.json",
-      "count": 2
+      "count": 3
     },
     {
       "id": "moonbai",
@@ -256,7 +256,7 @@
       "origin": "birdstudy-nj-songloft-miot-helper-refs",
       "repo": "https://github.com/birdstudy-nj/songloft-miot-helper",
       "stars": 15,
-      "updatedAt": "2026-10-14T02:22:28Z",
+      "updatedAt": "2026-11-03T07:36:56Z",
       "license": "Apache-2.0",
       "avatarUrl": "https://avatars.githubusercontent.com/u/252813171?v=4",
       "logo": "icons/miot-helper.svg",
@@ -1162,6 +1162,33 @@
       "license": "Apache-2.0",
       "avatarUrl": "https://avatars.githubusercontent.com/u/288701258?v=4",
       "logo": null,
+      "tags": [],
+      "featured": false
+    },
+    {
+      "entryPath": "remote-caller",
+      "name": "远程呼唤",
+      "version": "0.3.0",
+      "description": "小爱音箱趣味互动插件。让智能音箱秒变'家庭对讲机'和'整蛊神器'！",
+      "author": "birdstudy-nj",
+      "permissions": [
+        "storage",
+        "fs",
+        "command"
+      ],
+      "minHostVersion": "1.3.0",
+      "homepage": "https://github.com/birdstudy-nj/songloft-remote-caller",
+      "pluginJsonUrl": "https://raw.githubusercontent.com/birdstudy-nj/songloft-remote-caller/refs/heads/main/plugin.json",
+      "downloadUrl": "https://github.com/birdstudy-nj/songloft-remote-caller/releases/download/v0.3.0/remote-caller.jsplugin.zip",
+      "updateUrl": "https://raw.githubusercontent.com/birdstudy-nj/songloft-remote-caller/main/plugin.json",
+      "source": "open",
+      "origin": "birdstudy-nj-songloft-miot-helper-refs",
+      "repo": "https://github.com/birdstudy-nj/songloft-remote-caller",
+      "stars": 0,
+      "updatedAt": "2026-11-03T09:20:42Z",
+      "license": "Apache-2.0",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/252813171?v=4",
+      "logo": "icons/remote-caller.svg",
       "tags": [],
       "featured": false
     },
