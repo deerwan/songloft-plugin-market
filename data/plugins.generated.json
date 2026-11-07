@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-06T05:41:13.145Z",
+  "generatedAt": "2026-11-07T05:11:22.683Z",
   "count": 42,
   "openCount": 37,
   "closedCount": 5,
@@ -761,6 +761,35 @@
       "featured": false
     },
     {
+      "entryPath": "stats",
+      "name": "播放统计",
+      "version": "2026.9.8",
+      "description": "记录播放历史，统计听歌次数与艺术家排行，支持智能歌单推荐、定时推送听歌报告、WebDAV 备份和定时自动备份",
+      "author": "Songloft Team",
+      "permissions": [
+        "storage",
+        "songs.read",
+        "tags.write",
+        "playlists.read",
+        "playlists.write"
+      ],
+      "minHostVersion": "1.1.0",
+      "homepage": "https://github.com/songloft-org/songloft-plugin-stats",
+      "pluginJsonUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-stats/main/plugin.json",
+      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-stats/releases/download/v2026.9.8/stats.jsplugin.zip",
+      "updateUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-stats/main/plugin.json",
+      "source": "open",
+      "origin": "official",
+      "repo": "https://github.com/songloft-org/songloft-plugin-stats",
+      "stars": 2,
+      "updatedAt": "2026-11-07T00:44:04Z",
+      "license": null,
+      "avatarUrl": "https://avatars.githubusercontent.com/u/288701258?v=4",
+      "logo": "icons/stats.svg",
+      "tags": [],
+      "featured": false
+    },
+    {
       "entryPath": "playlist-importer",
       "name": "歌单导入器",
       "version": "1.21.0",
@@ -790,34 +819,6 @@
       "license": null,
       "avatarUrl": "https://avatars.githubusercontent.com/u/51389777?v=4",
       "logo": "icons/playlist-importer.jpg",
-      "tags": [],
-      "featured": false
-    },
-    {
-      "entryPath": "stats",
-      "name": "播放统计",
-      "version": "2026.9.8",
-      "description": "记录播放历史，统计听歌次数与艺术家排行，支持智能歌单推荐、定时推送听歌报告、WebDAV 备份和定时自动备份",
-      "author": "Songloft Team",
-      "permissions": [
-        "storage",
-        "songs.read",
-        "playlists.read",
-        "playlists.write"
-      ],
-      "minHostVersion": "1.1.0",
-      "homepage": "https://github.com/songloft-org/songloft-plugin-stats",
-      "pluginJsonUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-stats/main/plugin.json",
-      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-stats/releases/download/v2026.9.8/stats.jsplugin.zip",
-      "updateUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-stats/main/plugin.json",
-      "source": "open",
-      "origin": "official",
-      "repo": "https://github.com/songloft-org/songloft-plugin-stats",
-      "stars": 2,
-      "updatedAt": "2026-09-08T11:17:13Z",
-      "license": null,
-      "avatarUrl": "https://avatars.githubusercontent.com/u/288701258?v=4",
-      "logo": "icons/stats.svg",
       "tags": [],
       "featured": false
     },
