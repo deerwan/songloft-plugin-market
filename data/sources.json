@@ -86,6 +86,12 @@
       "url": "https://raw.githubusercontent.com/zlyon/lx-hunter/main/registry.json",
       "name": "zlyon",
       "issue": 43
+    },
+    {
+      "id": "viazure-songloft-plugin-lastfm-main",
+      "url": "https://raw.githubusercontent.com/viazure/songloft-plugin-lastfm/main/registry.json",
+      "name": "viazure",
+      "issue": 45
     }
   ]
 }
