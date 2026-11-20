@@ -92,6 +92,12 @@
       "url": "https://raw.githubusercontent.com/viazure/songloft-plugin-lastfm/main/registry.json",
       "name": "viazure",
       "issue": 45
+    },
+    {
+      "id": "jerryrat-bbc-learning-main",
+      "url": "https://raw.githubusercontent.com/jerryrat/BBC-LEARNING/main/registry.json",
+      "name": "jerryrat",
+      "issue": 46
     }
   ]
 }
