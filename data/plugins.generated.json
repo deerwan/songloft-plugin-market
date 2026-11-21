@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-11-20T06:18:57.871Z",
-  "count": 45,
-  "openCount": 40,
+  "generatedAt": "2026-11-21T06:08:58.511Z",
+  "count": 46,
+  "openCount": 41,
   "closedCount": 5,
   "sources": [
     {
@@ -115,6 +115,13 @@
       "official": false,
       "url": "https://raw.githubusercontent.com/viazure/songloft-plugin-lastfm/main/registry.json",
       "count": 2
+    },
+    {
+      "id": "jerryrat-bbc-learning-main",
+      "name": "jerryrat",
+      "official": false,
+      "url": "https://raw.githubusercontent.com/jerryrat/BBC-LEARNING/main/registry.json",
+      "count": 1
     }
   ],
   "warnings": [],
@@ -201,7 +208,7 @@
       "source": "open",
       "origin": "zlyon-lx-hunter-main",
       "repo": "https://github.com/zlyon/lx-hunter",
-      "stars": 26,
+      "stars": 27,
       "updatedAt": "2026-10-19T11:42:39Z",
       "license": null,
       "avatarUrl": "https://avatars.githubusercontent.com/u/31056923?v=4",
@@ -789,10 +796,39 @@
       "origin": "official",
       "repo": "https://github.com/songloft-org/songloft-plugin-dav",
       "stars": 2,
-      "updatedAt": "2026-11-17T06:34:11Z",
+      "updatedAt": "2026-11-21T01:51:52Z",
       "license": "Apache-2.0",
       "avatarUrl": "https://avatars.githubusercontent.com/u/288701258?v=4",
       "logo": "icons/dav.svg",
+      "tags": [],
+      "featured": false
+    },
+    {
+      "entryPath": "bbc-learning-english",
+      "name": "BBC Learning English",
+      "version": "2026.11.20.6",
+      "description": "自动同步 BBC Learning English 9 个播客为歌单，定时拉取最新一期",
+      "author": "jerryrat",
+      "permissions": [
+        "storage",
+        "songs.read",
+        "songs.write",
+        "playlists.read",
+        "playlists.write"
+      ],
+      "minHostVersion": "2.13.10",
+      "homepage": "https://github.com/jerryrat/BBC-LEARNING",
+      "pluginJsonUrl": "https://raw.githubusercontent.com/jerryrat/BBC-LEARNING/main/plugin.json",
+      "downloadUrl": "https://github.com/jerryrat/BBC-LEARNING/releases/download/v2026.11.20.6/bbc-learning-english.jsplugin.zip",
+      "updateUrl": "https://raw.githubusercontent.com/jerryrat/BBC-LEARNING/main/plugin.json",
+      "source": "open",
+      "origin": "jerryrat-bbc-learning-main",
+      "repo": "https://github.com/jerryrat/BBC-LEARNING",
+      "stars": 2,
+      "updatedAt": "2026-11-20T10:21:54Z",
+      "license": null,
+      "avatarUrl": "https://avatars.githubusercontent.com/u/19183369?v=4",
+      "logo": "icons/bbc-learning-english.svg",
       "tags": [],
       "featured": false
     },
