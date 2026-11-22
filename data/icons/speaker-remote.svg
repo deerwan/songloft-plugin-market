@@ -1,9 +1,32 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect x="4" y="4" width="56" height="56" rx="14" fill="#ec4899"/>
-  <rect x="21" y="9" width="22" height="46" rx="7" fill="#ffffff" opacity="0.96"/>
-  <circle cx="32" cy="21" r="7.5" fill="#ec4899"/>
-  <path d="M29.8 17.5 L36 21 L29.8 24.5 Z" fill="#ffffff"/>
-  <circle cx="32" cy="36" r="2.4" fill="#ec4899"/>
-  <circle cx="32" cy="45" r="2.4" fill="#ec4899"/>
-  <rect x="26" y="51" width="12" height="2.2" rx="1.1" fill="#ec4899" opacity="0.5"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffb36b"/>
+      <stop offset="0.5" stop-color="#ff7e94"/>
+      <stop offset="1" stop-color="#8f7bff"/>
+    </linearGradient>
+    <linearGradient id="halo" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ffd27a"/>
+      <stop offset="0.5" stop-color="#ff9d6b"/>
+      <stop offset="1" stop-color="#ff6f91"/>
+    </linearGradient>
+  </defs>
+  <rect width="48" height="48" rx="11" fill="url(#bg)"/>
+  <!-- 声波：从音箱向两侧扩散 -->
+  <g fill="none" stroke="#ffffff" stroke-linecap="round">
+    <path d="M13.8 21c-2.2 1.9-3.3 4.2-3.3 7.2s1.1 5.3 3.3 7.2" stroke-width="2.1" opacity="0.9"/>
+    <path d="M9.6 17.4c-3.3 2.8-5 6.4-5 10.8s1.7 8 5 10.8" stroke-width="2.1" opacity="0.6"/>
+    <path d="M34.2 21c2.2 1.9 3.3 4.2 3.3 7.2s-1.1 5.3-3.3 7.2" stroke-width="2.1" opacity="0.9"/>
+    <path d="M38.4 17.4c3.3 2.8 5 6.4 5 10.8s-1.7 8-5 10.8" stroke-width="2.1" opacity="0.6"/>
+  </g>
+  <!-- 音箱机身：白色圆角柱体 -->
+  <path d="M17 18c0-2.6 3.1-4.3 7-4.3s7 1.7 7 4.3v12.6c0 2.9-3 4.9-7 4.9s-7-2-7-4.9z" fill="#ffffff" opacity="0.97"/>
+  <!-- 顶部氛围光环（小爱标志的橙粉渐变环） -->
+  <ellipse cx="24" cy="14.6" rx="5.9" ry="2.3" fill="none" stroke="url(#halo)" stroke-width="2.3"/>
+  <!-- 下部扬声器网孔 -->
+  <g fill="#c9cdd6">
+    <circle cx="21" cy="24.5" r="1"/><circle cx="24" cy="24.5" r="1"/><circle cx="27" cy="24.5" r="1"/>
+    <circle cx="21" cy="27.8" r="1"/><circle cx="24" cy="27.8" r="1"/><circle cx="27" cy="27.8" r="1"/>
+    <circle cx="21" cy="31.1" r="1"/><circle cx="24" cy="31.1" r="1"/><circle cx="27" cy="31.1" r="1"/>
+  </g>
 </svg>
