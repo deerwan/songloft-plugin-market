@@ -98,6 +98,12 @@
       "url": "https://raw.githubusercontent.com/jerryrat/BBC-LEARNING/main/registry.json",
       "name": "jerryrat",
       "issue": 46
+    },
+    {
+      "id": "yaoxipenga-xiaoai-cmd-main",
+      "url": "https://raw.githubusercontent.com/yaoxipenga/xiaoai-cmd/main/registry.json",
+      "name": "yaoxipenga",
+      "issue": 47
     }
   ]
 }
