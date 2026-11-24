@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-11-24T08:59:39.754Z",
-  "count": 49,
-  "openCount": 44,
+  "generatedAt": "2026-11-24T16:14:08.762Z",
+  "count": 48,
+  "openCount": 43,
   "closedCount": 5,
   "sources": [
     {
@@ -9,7 +9,7 @@
       "name": "官方",
       "official": true,
       "url": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-registry/main/registry.json",
-      "count": 26
+      "count": 25
     },
     {
       "id": "deerwan",
@@ -134,39 +134,6 @@
   "warnings": [],
   "plugins": [
     {
-      "entryPath": "miot",
-      "name": "智能音箱",
-      "version": "2026.11.23.2",
-      "description": "通过 MIoT 协议把歌曲投放到智能音箱设备",
-      "author": "Songloft Team",
-      "permissions": [
-        "storage",
-        "songs.read",
-        "songs.write",
-        "playlists.read",
-        "playlists.write",
-        "inter-plugin",
-        "command",
-        "net",
-        "websocket"
-      ],
-      "minHostVersion": "2.9.5",
-      "homepage": "https://github.com/songloft-org/songloft-plugin-miot",
-      "pluginJsonUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-miot/main/plugin.json",
-      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-miot/releases/download/v2026.11.23.2/miot.jsplugin.zip",
-      "updateUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-miot/main/plugin.json",
-      "source": "open",
-      "origin": "official",
-      "repo": "https://github.com/songloft-org/songloft-plugin-miot",
-      "stars": 83,
-      "updatedAt": "2026-11-23T15:24:57Z",
-      "license": "Apache-2.0",
-      "avatarUrl": "https://avatars.githubusercontent.com/u/288701258?v=4",
-      "logo": "icons/miot.svg",
-      "tags": [],
-      "featured": false
-    },
-    {
       "entryPath": "lxmusic",
       "name": "洛雪音源",
       "version": "3.8.0",
@@ -215,7 +182,7 @@
       "source": "open",
       "origin": "zlyon-lx-hunter-main",
       "repo": "https://github.com/zlyon/lx-hunter",
-      "stars": 28,
+      "stars": 29,
       "updatedAt": "2026-10-19T11:42:39Z",
       "license": null,
       "avatarUrl": "https://avatars.githubusercontent.com/u/31056923?v=4",
@@ -247,7 +214,7 @@
       "source": "open",
       "origin": "birdstudy-nj-songloft-miot-helper-refs",
       "repo": "https://github.com/birdstudy-nj/songloft-miot-helper",
-      "stars": 19,
+      "stars": 20,
       "updatedAt": "2026-11-03T07:36:56Z",
       "license": "Apache-2.0",
       "avatarUrl": "https://avatars.githubusercontent.com/u/252813171?v=4",
@@ -782,6 +749,35 @@
       "featured": false
     },
     {
+      "entryPath": "bbc-learning-english",
+      "name": "BBC Learning English",
+      "version": "2026.11.20.6",
+      "description": "自动同步 BBC Learning English 9 个播客为歌单，定时拉取最新一期",
+      "author": "jerryrat",
+      "permissions": [
+        "storage",
+        "songs.read",
+        "songs.write",
+        "playlists.read",
+        "playlists.write"
+      ],
+      "minHostVersion": "2.13.10",
+      "homepage": "https://github.com/jerryrat/BBC-LEARNING",
+      "pluginJsonUrl": "https://raw.githubusercontent.com/jerryrat/BBC-LEARNING/main/plugin.json",
+      "downloadUrl": "https://github.com/jerryrat/BBC-LEARNING/releases/download/v2026.11.20.6/bbc-learning-english.jsplugin.zip",
+      "updateUrl": "https://raw.githubusercontent.com/jerryrat/BBC-LEARNING/main/plugin.json",
+      "source": "open",
+      "origin": "jerryrat-bbc-learning-main",
+      "repo": "https://github.com/jerryrat/BBC-LEARNING",
+      "stars": 2,
+      "updatedAt": "2026-11-24T10:21:48Z",
+      "license": null,
+      "avatarUrl": "https://avatars.githubusercontent.com/u/19183369?v=4",
+      "logo": "icons/bbc-learning-english.svg",
+      "tags": [],
+      "featured": false
+    },
+    {
       "entryPath": "xiaoai-text-command",
       "name": "小爱文字指令",
       "version": "2.0.2",
@@ -805,35 +801,6 @@
       "license": null,
       "avatarUrl": "https://avatars.githubusercontent.com/u/61485464?v=4",
       "logo": "icons/xiaoai-text-command.svg",
-      "tags": [],
-      "featured": false
-    },
-    {
-      "entryPath": "bbc-learning-english",
-      "name": "BBC Learning English",
-      "version": "2026.11.20.6",
-      "description": "自动同步 BBC Learning English 9 个播客为歌单，定时拉取最新一期",
-      "author": "jerryrat",
-      "permissions": [
-        "storage",
-        "songs.read",
-        "songs.write",
-        "playlists.read",
-        "playlists.write"
-      ],
-      "minHostVersion": "2.13.10",
-      "homepage": "https://github.com/jerryrat/BBC-LEARNING",
-      "pluginJsonUrl": "https://raw.githubusercontent.com/jerryrat/BBC-LEARNING/main/plugin.json",
-      "downloadUrl": "https://github.com/jerryrat/BBC-LEARNING/releases/download/v2026.11.20.6/bbc-learning-english.jsplugin.zip",
-      "updateUrl": "https://raw.githubusercontent.com/jerryrat/BBC-LEARNING/main/plugin.json",
-      "source": "open",
-      "origin": "jerryrat-bbc-learning-main",
-      "repo": "https://github.com/jerryrat/BBC-LEARNING",
-      "stars": 2,
-      "updatedAt": "2026-11-23T09:27:14Z",
-      "license": null,
-      "avatarUrl": "https://avatars.githubusercontent.com/u/19183369?v=4",
-      "logo": "icons/bbc-learning-english.svg",
       "tags": [],
       "featured": false
     },
