@@ -66,7 +66,7 @@ function onKey(e: KeyboardEvent) {
       <label class="field field--row">
         <input v-model="confirmed" type="checkbox" />
         <span>
-          我已制作个人插件源仓库（含 plugins 数组的 registry.json），并确认该源可公开访问、其中插件不含恶意代码。
+          我已制作个人插件源仓库（含 plugins 数组的 registry.json），并确认该源可公开访问、其中插件不含恶意代码、已核对各插件的许可状态（已填 license，或接受标注为「未知许可」）。
         </span>
       </label>
       <footer class="modal__foot">
