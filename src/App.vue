@@ -7,6 +7,21 @@ const showSubmit = ref(false)
 const menuOpen = ref(false)
 const route = useRoute()
 
+// Knocket 客服 SDK 按需加载：首屏不加载 trtc.io 第三方脚本，用户主动点击
+// 页脚“联系客服”时才注入一次。脚本地址与此前 index.html 内联版一致。
+const knocketState = ref<'idle' | 'loading' | 'loaded' | 'failed'>('idle')
+function openSupport() {
+  if (knocketState.value === 'loaded') return
+  if (knocketState.value === 'loading') return
+  knocketState.value = 'loading'
+  const s = document.createElement('script')
+  s.src = 'https://trtc.io/knocket-sdk/sdk.js?identifier=acaa72a7087e9f871f&v=1792126591087'
+  s.async = true
+  s.onload = () => { knocketState.value = 'loaded' }
+  s.onerror = () => { knocketState.value = 'failed' }
+  document.body.appendChild(s)
+}
+
 // 顶部导航项；品牌 logo 指向首页（市场），「市场」单独作为入口排在首位
 const navItems = [
   { to: '/', label: '市场' },
@@ -108,6 +123,13 @@ const year = new Date().getFullYear()
             target="_blank"
             rel="noopener"
           >如何发布插件</a>
+          <button
+            class="app-footer__link app-footer__btn"
+            type="button"
+            :disabled="knocketState === 'loading' || knocketState === 'loaded'"
+            :title="knocketState === 'loaded' ? '客服窗口已开启' : '点击后才加载第三方客服脚本（trtc.io），首屏不加载'"
+            @click="openSupport"
+          >{{ knocketState === 'loading' ? '客服加载中…' : knocketState === 'loaded' ? '客服已开启' : knocketState === 'failed' ? '客服加载失败，重试' : '联系客服' }}</button>
         </div>
         <p class="app-footer__copy">© {{ year }} Songloft · 由 GitHub Actions 每日自动构建</p>
       </div>
@@ -435,6 +457,20 @@ const year = new Date().getFullYear()
 
 .app-footer__link:hover {
   color: var(--slm-text);
+}
+
+/* 页脚“联系客服”是按钮，外观与链接一致；禁用态（加载中/已开启）不变灰过度 */
+.app-footer__btn {
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+}
+
+.app-footer__btn:disabled {
+  cursor: default;
+  opacity: 0.7;
 }
 
 .app-footer__copy {
