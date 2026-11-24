@@ -6,7 +6,7 @@
 //   2. 递归展开每个 registry（includes + plugins），套用去重/深度/循环检测规则
 //   3. 逐个拉取 plugin.json，解析核心元数据（name/version/desc/author/permissions...）
 //   4. 探测开源/闭源：能定位到公开 GitHub 仓库则走增强，否则标记 closed
-//   5. 开源插件补 stars / updated_at / logo / license（GitHub API）
+//   5. 开源插件补 stars / updated_at / logo / 头像（GitHub/Gitee API；license 不从这里取，见 normalizeLicense）
 //   6. 解析版本与下载地址（plugin.json 或其 updateUrl 指向的 manifest.json）
 //   7. 合并 data/overlay.json 人工策展层（优先级最高）
 //   8. 任何一步失败回退到上一次 data/plugins.generated.json 缓存，保证数据不丢
@@ -127,7 +127,8 @@ async function githubApi(path) {
   return resp.json()
 }
 
-// Gitee v5 API：匿名可调（限频宽松），一次请求拿 stars/pushed_at/头像/license
+// Gitee v5 API：匿名可调（限频宽松），一次请求拿 stars/pushed_at/头像
+//（license 不从 API 取，见 normalizeLicense）
 async function giteeApi(path) {
   const url = `https://gitee.com/api/v5${path}`
   const resp = await fetchWithTimeout(url, { headers: { 'User-Agent': 'songloft-plugin-market' } })
@@ -150,6 +151,14 @@ function normalizeVersion(v) {
     .replace(/^\s*v/i, '')
     .replace(/^[-+.\s]+/, '')
     .trim()
+}
+
+// license：只认 plugin.json 里作者声明的 license；未声明保持 null（前端标“未知许可”）。
+// 不再用仓库 API 的 license 兜底——仓库许可不等于插件许可；README 与提交须知
+// 承诺的就是以 plugin.json 声明为准。
+function normalizeLicense(v) {
+  const s = typeof v === 'string' ? v.trim() : ''
+  return s && s.toUpperCase() !== 'NOASSERTION' ? s : null
 }
 
 // 拆成 { parts: number[], pre: string|null }；build metadata（+xxx）按 semver 忽略。
@@ -599,7 +608,7 @@ async function processPlugin(pluginJsonUrl, prevMap) {
     repo: null,
     stars: null,
     updatedAt: null,
-    license: null,
+    license: normalizeLicense(pj.license),
     // 作者头像直链：Gitee 头像无固定约定 URL，构建时从 Gitee API 的
     // owner.avatar_url 取；GitHub 留空，前端按 github.com/{owner}.png 约定自拼
     avatarUrl: null,
@@ -664,9 +673,9 @@ async function processPlugin(pluginJsonUrl, prevMap) {
       }
       entry.stars = info.stargazers_count ?? null
       entry.updatedAt = info.pushed_at || info.updated_at || entry.updatedAt || null
-      // license：GitHub 返回 { spdx_id }；Gitee v5 可能是字符串或对象，兼容处理
-      const spdx = typeof info.license === 'string' ? info.license : info.license?.spdx_id
-      entry.license = spdx && spdx !== 'NOASSERTION' ? spdx : null
+      // 注意：这里刻意不用仓库 API 的 license。仓库许可不等于插件许可；
+      // 站内展示的 license 只认 plugin.json 里作者声明的（见 normalizeLicense），
+      // 未声明就是 null（前端标“未知许可”）。
       // 头像：GitHub / Gitee 都从 API 的 owner.avatar_url 取，前端经 wsrv.nl 代理展示。
       // Gitee 的 no_portrait 是默认占位图，视为无头像；GitHub 无此类占位，直接取。
       const avatar = info.owner?.avatar_url || null
@@ -684,12 +693,12 @@ async function processPlugin(pluginJsonUrl, prevMap) {
       }
     } catch (e) {
       // 平台 API 失败（限额/网络）：开源判定已由 raw 探测完成，
-      // 仅 stars/license/头像等增强字段回退到上次缓存。
+      // 仅 stars/头像等增强字段回退到上次缓存（license 不回退，
+      // 它只认 plugin.json 声明，见 normalizeLicense）。
       warn(`${isGitee ? 'Gitee' : 'GitHub'} 增强失败，回退缓存：${entry.repo}（${e.message}）`)
       if (prev) {
         entry.stars = prev.stars ?? null
         entry.updatedAt = entry.updatedAt || prev.updatedAt || null
-        entry.license = prev.license ?? null
         entry.logo = entry.logo || prev.logo || null
         entry.avatarUrl = prev.avatarUrl ?? null
       }
