@@ -35,9 +35,15 @@ https://raw.githubusercontent.com/deerwan/songloft-plugin-market/main/registry.j
 
 2. **每位开发者只提交一次**：同平台（GitHub / Gitee）同一账号下只需提交一个源地址。新增插件时，直接把新插件的 `plugin.json` URL 加进你已有源的 `plugins` 数组即可，下次构建会自动收录，无需重复提交。
 
-3. 提交时请勾选确认项：已制作个人插件源仓库、源可公开访问且能正常解析、插件不含恶意代码。
+3. 提交时请勾选确认项：已制作个人插件源仓库、源可公开访问且能正常解析、插件不含恶意代码、已核对各插件的许可状态（已在 `plugin.json` 中填写 `license`，或接受在站内标注为「未知许可」）。
 
-提交入口：点击站内「提交插件源」按钮，或在仓库 [Issues](https://github.com/deerwan/songloft-plugin-market/issues) 中选择「提交插件源」模板。维护者审核通过（打 `approved` 标签）后，CI 会自动收录你的源并合并。
+提交入口：点击站内「提交插件源」按钮，或在仓库 [Issues](https://github.com/deerwan/songloft-plugin-market/issues) 中选择「提交插件源」模板。维护者审核通过（打 `approved` 标签）后，CI 会自动收录你的源并合并，收录成功后 Issue 会自动关闭。
+
+## 许可
+
+本站代码采用 [MIT License](LICENSE) 开源。
+
+注意：本站代码的许可只覆盖市场站本身，不覆盖各插件。各插件的许可由作者在各自 `plugin.json` 的 `license` 字段中声明；未声明的插件在站内会标注为「未知许可」，商用或二次分发前请先联系作者确认。提交插件源时，请确认你已核对过各插件的许可状态。
 
 ## 鸣谢
 
