@@ -2,15 +2,36 @@ name: Submit Source
 
 # 维护者在提交 Issue 上打 `approved` 标签后触发：
 #   1. 解析 Issue 正文里的源地址
-#   2. 用 `npm run validate:source` 校验（复用现有构建管线的 dry-run）
+#   2. 用 `npm run validate:source` 校验（复用现有构建管线的 dry-run +
+#      --check-packages 包静态校验：包可解、清单合法、入口存在、JS 语法可编译；
+#      校验失败直接阻断，不追加、不推送）
 #   3. 校验通过 → 追加进 data/sources.json 并直接提交到 main（不带 [skip ci]，
 #      触发 build.yml 自动构建 + 部署，前端自动收录该源下的全部插件）；
-#      失败 → 在 Issue 留言报错。
+#      失败 → 在 Issue 留言报错并移除 approved 标签。
+#   4. 收录成功 → 在 Issue 留言后自动关闭 Issue（state_reason: completed），
+#      避免已收录的提交长期挂在开放列表里。
 #
 # 触发条件：`approved` 标签（无论 Issue 是否带 source-submit，
 # 这样手动建的 Issue 也能走通流程；用模板提交的会自动带 source-submit，无害）；
 # 另支持 workflow_dispatch 手动触发（填 source_url 可绕过 Issue 解析）。
-# 需要仓库 Secrets: PAT_TOKEN（含 contents:write，用于直接向 main 推送）
+#
+# 需要仓库 Secrets: PAT_TOKEN（用于直接向 main 推送；GITHUB_TOKEN 的推送
+# 不会触发 build.yml，所以这里必须用 PAT 才能触发后续构建）。
+# PAT 安全要求（P0，建 Secret 前必读）：
+#   - 必须是 Fine-grained PAT，不是 Classic PAT（Classic 的 repo 权限过大）；
+#   - Repository access 只选 deerwan/songloft-plugin-market 这一个仓库；
+#   - Repository permissions 只给 Contents: Read and write，其余一律不给；
+#   - 有效期最长 90 天，到期前轮换，轮换后旧 token 在 GitHub 上立即 Revoke；
+#   - 不要把 PAT 写进代码、日志或 Issue 评论里。
+# 更彻底的做法是改走“建分支 + 开 PR + 必需 review 再合 main”，
+# 那时可删掉 PAT_TOKEN、改用 GITHUB_TOKEN 开 PR；当前先保留直推 main，
+# 靠上面的细粒度 PAT + 包校验 + 自动关 Issue 收窄风险。
+
+# 串行化：两个 approved 打标同时触发时，若并行跑会基于同一 base 各自
+# 改 sources.json、后 push 的一方冲突失败丢源；串行跑可避免丢收录。
+concurrency:
+  group: submit-source
+  cancel-in-progress: false
 
 on:
   issues:
@@ -198,4 +219,21 @@ jobs:
               repo: context.repo.repo,
               issue_number: context.issue.number,
               body: `✅ 源校验通过，已自动收录并提交到 main。\n\n构建流水线会自动展开该源下的全部插件并重新部署前端，稍后在站点即可看到。无需再手动合 PR。`,
+            })
+
+      # 收录成功：自动关闭 Issue，避免已收录的提交长期挂在开放列表里
+      #（此前 #46、#47 已收录仍为 OPEN）。手动触发无 Issue 上下文，跳过。
+      # 注意：若后续构建失败，插件不会上站，但 Issue 已关闭；发现未上站时
+      # 请重新打开 Issue 或重新打 approved 标签重试，不要直接改 sources.json。
+      - name: Close issue
+        if: steps.validate.outputs.valid == 'true' && github.event_name != 'workflow_dispatch'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              state: 'closed',
+              state_reason: 'completed',
             })
