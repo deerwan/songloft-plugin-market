@@ -506,7 +506,8 @@ async function extractIconFromZip(entry, prevMap) {
 const REQUIRED_PJ_FIELDS = ['name', 'version', 'description', 'author']
 
 // 这些报错属于 ESM 模块特征，script 模式无法编译，不应判为语法错误
-const ESM_NOISE = /import statement|export .* outside|Cannot use import|Unexpected token 'export'|Unexpected token 'import'/i
+//（import.meta 只存在于模块中，Vite 打包产物常用它，同样跳过）
+const ESM_NOISE = /import statement|export .* outside|Cannot use import|Unexpected token 'export'|Unexpected token 'import'|import\.meta/i
 
 async function validatePackage(entry) {
   // 无 downloadUrl：没有包可校验，跳过（不判失败）
