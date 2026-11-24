@@ -1,0 +1,10 @@
+# Cloudflare Pages / Workers 部署时的响应头（GitHub Pages 会忽略此文件，无害）。
+# 与 index.html 里的 meta CSP 保持一致，此处可额外设置 meta CSP 做不到的头
+#（X-Content-Type-Options、Referrer-Policy、Permissions-Policy 等）。
+# 注意：若改回纯 GitHub Pages 部署，安全头以 index.html 的 meta CSP 为准。
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://giscus.app https://trtc.io; style-src 'self' 'unsafe-inline' https://giscus.app; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://api.github.com https://wsrv.nl https://giscus.app https://trtc.io; frame-src https://giscus.app; object-src 'none'; base-uri 'self'; form-action 'self' https://github.com
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  X-Frame-Options: SAMEORIGIN
