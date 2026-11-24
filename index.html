@@ -17,12 +17,25 @@
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="Songloft 插件市场" />
     <meta name="twitter:description" content="浏览、搜索、筛选 Songloft 社区 JS 插件，一键订阅全部官方与社区插件源。" />
+    <!--
+      内容安全策略（meta 版，GitHub Pages 可用；Cloudflare 部署另见 public/_headers）。
+      允许的第三方：giscus（评论 iframe + 脚本）、wsrv.nl（头像图片代理）、
+      api.github.com（提交列表）、trtc.io（客服 SDK，仅用户主动点击“联系客服”后按需加载，
+      见 src/App.vue openSupport，首屏不加载）。
+      注意：style-src 保留 'unsafe-inline'，因首屏内联 <style> 与 giscus 注入样式需要；
+      script-src 不含 'unsafe-inline'，构建产物均为外部 JS 文件。
+    -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://giscus.app https://trtc.io; style-src 'self' 'unsafe-inline' https://giscus.app; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://api.github.com https://wsrv.nl https://giscus.app https://trtc.io; frame-src https://giscus.app; object-src 'none'; base-uri 'self'; form-action 'self' https://github.com" />
     <style>html{background:#0a0a0b}</style>
   </head>
   <body>
     <div id="app"></div>
     <script type="module" src="/src/main.ts"></script>
-    <!-- Knocket 智能 IM 接待组件（腾讯云）：聊天窗口 / AI 客服，async 不阻塞渲染 -->
-    <script src="https://trtc.io/knocket-sdk/sdk.js?identifier=acaa72a7087e9f871f&v=1792126591087" async></script>
+    <!--
+      Knocket 客服 SDK 已从首屏移除：此前全站自动加载 trtc.io 第三方脚本，
+      无 SRI、无 CSP，可注入任意内容且拖慢首屏。现改为按需加载，
+      仅当用户在页脚点击“联系客服”时才注入（src/App.vue openSupport），
+      不点击则全站不请求 trtc.io。
+    -->
   </body>
 </html>
