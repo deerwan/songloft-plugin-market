@@ -32,3 +32,5 @@ body:
           required: true
         - label: 该源中的插件不含恶意代码。
           required: true
+        - label: 我已核对各插件的许可状态：已在 plugin.json 中填写 license 字段（如 MIT / Apache-2.0），或接受在市场中标注为「未知许可」。
+          required: true
