@@ -240,11 +240,25 @@ function hasHighRisk(p: Plugin): boolean {
   return (p.permissions || []).some((x) => permRisk(x) === 'high')
 }
 
-// 展示排序：高危在前，其次中危，最后常规；同级内保持原顺序，
-// 避免高危权限被卡片只显示前 4 个时藏进“+N”。
+// 展示排序：高危在前，其次中危，最后常规；同级内保持原顺序。
+// 是否截断由 displayedPermissions 决定（高危全显示，不藏进“+N”）。
 function sortedPermissions(p: Plugin): string[] {
   const rank = (x: string) => (permRisk(x) === 'high' ? 0 : permRisk(x) === 'medium' ? 1 : 2)
   return [...(p.permissions || [])].sort((a, b) => rank(a) - rank(b))
+}
+
+// 展示权限：高危全部显示（不被 4 个上限截断），其余按排序补足到 4 个。
+// 例：5 个高危权限全显示；2 高危 + 5 常规 → 显示 2 高危 + 2 常规 + “+3”。
+function displayedPermissions(p: Plugin): string[] {
+  const sorted = sortedPermissions(p)
+  const high = sorted.filter((x) => permRisk(x) === 'high')
+  const rest = sorted.filter((x) => permRisk(x) !== 'high')
+  return [...high, ...rest.slice(0, Math.max(0, 4 - high.length))]
+}
+
+// “+N”只统计未显示的权限个数。
+function permOverflow(p: Plugin): number {
+  return (p.permissions || []).length - displayedPermissions(p).length
 }
 
 // 从仓库 URL 解析托管平台与用户名（repo owner）：作者位展示/跳转以此为准，保证名字与落地页自洽
@@ -466,6 +480,11 @@ onBeforeUnmount(() => window.removeEventListener('resize', updateIndicator))
               </div>
               <h4 class="fcard__name" :title="p.name">{{ p.name }}</h4>
               <p class="fcard__desc">{{ p.description || '暂无描述' }}</p>
+              <div class="card__chips">
+                <span v-if="hasHighRisk(p)" class="badge badge--risk" title="该插件申请了高危权限（可执行命令、执行任意 JS、读写外部文件或联网），安装前请核对来源与仓库">高危权限</span>
+                <span v-if="p.license" class="badge">{{ p.license }}</span>
+                <span v-else class="badge badge--nolicense" title="该插件未在 plugin.json 中声明开源许可（license 为空），商用或二次分发前请先联系作者确认">未知许可</span>
+              </div>
               <button
                 class="btn fcard__btn"
                 :class="{ 'is-copied': copiedKey === p.entryPath }"
@@ -515,12 +534,12 @@ onBeforeUnmount(() => window.removeEventListener('resize', updateIndicator))
                 <span v-if="p.license" class="badge">{{ p.license }}</span>
                 <span v-else class="badge badge--nolicense" title="该插件未在 plugin.json 中声明开源许可（license 为空），商用或二次分发前请先联系作者确认">未知许可</span>
                 <span
-                  v-for="perm in sortedPermissions(p).slice(0, 4)"
+                  v-for="perm in displayedPermissions(p)"
                   :key="perm"
                   :class="['perm', permRisk(perm) === 'high' ? 'perm--high' : permRisk(perm) === 'medium' ? 'perm--medium' : '']"
                   :title="permDesc(perm)"
                 >{{ perm }}</span>
-                <span v-if="p.permissions.length > 4" class="perm perm--more">+{{ p.permissions.length - 4 }}</span>
+                <span v-if="permOverflow(p) > 0" class="perm perm--more">+{{ permOverflow(p) }}</span>
               </div>
 
               <div class="card__meta">
