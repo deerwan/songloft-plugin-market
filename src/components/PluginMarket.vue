@@ -211,6 +211,42 @@ function initials(name: string): string {
   return (name || '?').trim().charAt(0).toUpperCase()
 }
 
+// 权限风险分级（P0）：此前所有权限只当普通 chip 平铺展示，用户看不出
+// command / jsenv / fs:external / net / websocket 这类高危权限和 storage
+// 是同一级别。分级说明来自插件权限的实际能力，悬停可见；卡片上高危权限
+// 优先展示，不会被 slice(0, 4) 截掉。
+type PermRisk = 'high' | 'medium'
+const PERMISSION_RISK: Record<string, { level: PermRisk; desc: string }> = {
+  command: { level: 'high', desc: '高危：可执行系统命令' },
+  jsenv: { level: 'high', desc: '高危：可执行任意 JS、访问宿主 JS 环境' },
+  'fs:external': { level: 'high', desc: '高危：可读写音乐目录外的文件' },
+  net: { level: 'high', desc: '高危：可发起任意网络请求' },
+  websocket: { level: 'high', desc: '高危：可建立 WebSocket 长连接' },
+  fs: { level: 'medium', desc: '中危：可读写文件系统' },
+  'fs:music': { level: 'medium', desc: '中危：可读写音乐目录' },
+  'inter-plugin': { level: 'medium', desc: '中危：可调用其他插件' },
+  'persistent-storage': { level: 'medium', desc: '中危：可持久化存储较大数据' },
+}
+
+function permRisk(perm: string): PermRisk | null {
+  return PERMISSION_RISK[perm]?.level ?? null
+}
+
+function permDesc(perm: string): string {
+  return PERMISSION_RISK[perm]?.desc ?? `权限：${perm}`
+}
+
+function hasHighRisk(p: Plugin): boolean {
+  return (p.permissions || []).some((x) => permRisk(x) === 'high')
+}
+
+// 展示排序：高危在前，其次中危，最后常规；同级内保持原顺序，
+// 避免高危权限被卡片只显示前 4 个时藏进“+N”。
+function sortedPermissions(p: Plugin): string[] {
+  const rank = (x: string) => (permRisk(x) === 'high' ? 0 : permRisk(x) === 'medium' ? 1 : 2)
+  return [...(p.permissions || [])].sort((a, b) => rank(a) - rank(b))
+}
+
 // 从仓库 URL 解析托管平台与用户名（repo owner）：作者位展示/跳转以此为准，保证名字与落地页自洽
 function repoHost(p: Plugin): { platform: 'github' | 'gitee'; owner: string } | null {
   const m = (p.repo || '').match(/^https?:\/\/(?:www\.)?(github\.com|gitee\.com)\/([^/]+)\//)
@@ -408,6 +444,9 @@ onBeforeUnmount(() => window.removeEventListener('resize', updateIndicator))
           （开源 {{ data.openCount }} · 闭源 {{ data.closedCount }} · 更新于
           {{ new Date(data.generatedAt).toLocaleString('zh-CN') }}）
         </span>
+        <span class="summary__legend" title="红色 = 高危权限（可执行命令、执行任意 JS、读写外部文件、联网），黄色 = 中危权限（读写文件、调用其他插件），灰色 = 常规读写；市场不对插件代码做安全审计，安装前请自行核对来源与权限">
+          权限：<i class="legend-dot legend-dot--high"></i>高危 <i class="legend-dot legend-dot--medium"></i>中危 · 市场不审计插件代码，安装前请核对来源
+        </span>
       </div>
 
       <div v-if="!filtered.length" class="state">没有匹配的插件</div>
@@ -472,8 +511,15 @@ onBeforeUnmount(() => window.removeEventListener('resize', updateIndicator))
                 <span :class="['badge', p.source === 'open' ? 'badge--open' : 'badge--closed']">
                   {{ p.source === 'open' ? '开源' : '闭源' }}
                 </span>
+                <span v-if="hasHighRisk(p)" class="badge badge--risk" title="该插件申请了高危权限（可执行命令、执行任意 JS、读写外部文件或联网），安装前请核对来源与仓库">高危权限</span>
                 <span v-if="p.license" class="badge">{{ p.license }}</span>
-                <span v-for="perm in p.permissions.slice(0, 4)" :key="perm" class="perm">{{ perm }}</span>
+                <span v-else class="badge badge--nolicense" title="该插件未在 plugin.json 中声明开源许可（license 为空），商用或二次分发前请先联系作者确认">未知许可</span>
+                <span
+                  v-for="perm in sortedPermissions(p).slice(0, 4)"
+                  :key="perm"
+                  :class="['perm', permRisk(perm) === 'high' ? 'perm--high' : permRisk(perm) === 'medium' ? 'perm--medium' : '']"
+                  :title="permDesc(perm)"
+                >{{ perm }}</span>
                 <span v-if="p.permissions.length > 4" class="perm perm--more">+{{ p.permissions.length - 4 }}</span>
               </div>
 
@@ -705,6 +751,30 @@ onBeforeUnmount(() => window.removeEventListener('resize', updateIndicator))
 
 .summary__meta {
   color: var(--slm-text-2);
+}
+
+.summary__legend {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--slm-text-2);
+}
+
+.legend-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin: 0 2px 0 6px;
+  vertical-align: baseline;
+}
+
+.legend-dot--high {
+  background: #ff8585;
+}
+
+.legend-dot--medium {
+  background: #ffc46b;
 }
 
 /* —— 分页导航 —— */
@@ -1027,6 +1097,18 @@ onBeforeUnmount(() => window.removeEventListener('resize', updateIndicator))
   color: #fbbf24;
 }
 
+/* P0：高危权限徽章（红）与未知许可（虚线灰），与常规 badge 区分 */
+.badge--risk {
+  background: rgba(255, 70, 70, 0.18);
+  color: #ff8585;
+  border: 1px solid rgba(255, 70, 70, 0.45);
+}
+
+.badge--nolicense {
+  border: 1px dashed rgba(255, 255, 255, 0.25);
+  background: transparent;
+}
+
 .perm {
   font-size: 11px;
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -1034,6 +1116,19 @@ onBeforeUnmount(() => window.removeEventListener('resize', updateIndicator))
   border: 1px solid var(--slm-border);
   border-radius: 999px;
   color: var(--slm-text-2);
+}
+
+/* P0：权限分级配色，高危红 / 中危黄，与灰色常规权限区分 */
+.perm--high {
+  background: rgba(255, 70, 70, 0.18);
+  border-color: rgba(255, 70, 70, 0.45);
+  color: #ff8585;
+}
+
+.perm--medium {
+  background: rgba(255, 176, 64, 0.14);
+  border-color: rgba(255, 176, 64, 0.4);
+  color: #ffc46b;
 }
 
 .perm--more {
