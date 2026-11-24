@@ -29,9 +29,19 @@ name: Submit Source
 
 # 串行化：两个 approved 打标同时触发时，若并行跑会基于同一 base 各自
 # 改 sources.json、后 push 的一方冲突失败丢源；串行跑可避免丢收录。
+# 注意 GitHub 的队列语义（不要以为 cancel-in-progress: false 就万事大吉）：
+#   - 同一 group 同时只能跑一个；cancel-in-progress: false 只保护正在跑的那次，
+#     等待中的 run 仍会被更新的 run 顶掉（默认 queue: single 只保留最新一个等待者）；
+#   - queue: max（最多保留 100 个等待者，按到达顺序跑）可避免中间的提交被顶掉丢收录，
+#     不能与 cancel-in-progress: true 合用；
+#   - 队列满（100 个）时再来的 run 仍会被取消，那时 Issue 会保留 approved 标签，
+#     维护者去掉标签再重新打一次即可重试。
+# 另见下面 checkout 的 ref: main 与 push 重试：等到串行槽位后必须基于最新 main
+# 工作，否则 push 会因 non-fast-forward 失败。
 concurrency:
   group: submit-source
   cancel-in-progress: false
+  queue: max
 
 on:
   issues:
@@ -55,7 +65,12 @@ jobs:
       contents: write
       issues: write
     steps:
+      # 用当前 main 而非触发事件的 SHA：等到串行槽位时触发时的 SHA 可能已落后，
+      # 沿用它提交会因 non-fast-forward 失败；checkout 在拿到槽位后才执行，
+      # ref: main 能取到等待结束后的最新 main。
       - uses: actions/checkout@v4
+        with:
+          ref: main
 
       - uses: actions/setup-node@v4
         with:
@@ -202,8 +217,23 @@ jobs:
           git add data/sources.json
           if [ -n "$(git status --porcelain data/sources.json)" ]; then
             git commit -m "feat(source): 收录新插件源 $URL" -m "由 #$ISSUE_NUMBER 提交，审核通过（approved）后自动收录。"
-            git push "https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}.git" HEAD:main
-            echo "已提交到 main，触发构建自动收录。"
+            # 推送重试：校验期间 main 可能被其他写入者推进（每日构建提交、人工推送），
+            # 直接 push 会因 non-fast-forward 失败；fetch + rebase 到最新 main 再重试，
+            # 最多 3 次。rebase 冲突说明有人同时改了 sources.json，放弃重试、让 job
+            # 失败（Issue 保持 open 且保留 approved 标签，维护者可重新打标重试），
+            # 避免静默丢收录或把旧内容强推上去。
+            PUSH_URL="https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}.git"
+            for i in 1 2 3; do
+              if git push "$PUSH_URL" HEAD:main; then
+                echo "已提交到 main，触发构建自动收录。"
+                exit 0
+              fi
+              echo "第 $i 次 push 失败，同步最新 main 后重试…"
+              git fetch origin main || exit 1
+              git rebase origin/main || { git rebase --abort; echo "rebase 冲突，放弃重试" >&2; exit 1; }
+            done
+            echo "push 多次失败，放弃" >&2
+            exit 1
           else
             echo "sources.json 无变化（可能已存在，url 去重），跳过提交。"
           fi
@@ -223,8 +253,11 @@ jobs:
 
       # 收录成功：自动关闭 Issue，避免已收录的提交长期挂在开放列表里
       #（此前 #46、#47 已收录仍为 OPEN）。手动触发无 Issue 上下文，跳过。
-      # 注意：若后续构建失败，插件不会上站，但 Issue 已关闭；发现未上站时
-      # 请重新打开 Issue 或重新打 approved 标签重试，不要直接改 sources.json。
+      # 注意：若后续构建失败，插件不会上站，但 Issue 已关闭；此时不要重新打开
+      # Issue 或重新打 approved 标签——源已在 sources.json 里，重新打标不会产生
+      # 新提交，也就不会重触发构建。正确做法是去 Actions 里找到失败的那次
+      # “Build and Deploy”运行点 Re-run，重新跑构建；若构建持续失败再排查原因。
+      # 平时也不要直接改 sources.json（绕过校验）。
       - name: Close issue
         if: steps.validate.outputs.valid == 'true' && github.event_name != 'workflow_dispatch'
         uses: actions/github-script@v7
