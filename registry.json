@@ -22,6 +22,7 @@
     "https://raw.githubusercontent.com/yaoxipenga/xiaoai-cmd/main/registry.json"
   ],
   "plugins": [
-    "https://raw.githubusercontent.com/moonbai/songloft-plugin-news/main/news-plugin/plugin.json"
+    "https://raw.githubusercontent.com/moonbai/songloft-plugin-news/main/news-plugin/plugin.json",
+    "https://raw.githubusercontent.com/514475844/songloft-plugin-watch-mv/main/plugin.json"
   ]
 }
