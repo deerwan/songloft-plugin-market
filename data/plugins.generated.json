@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-27T07:22:20.211Z",
+  "generatedAt": "2026-11-28T06:54:19.435Z",
   "count": 48,
   "openCount": 43,
   "closedCount": 5,
@@ -193,7 +193,7 @@
     {
       "entryPath": "miot-helper",
       "name": "小爱语音助手",
-      "version": "0.9.8",
+      "version": "0.9.9",
       "description": "小爱音箱语音口令扩展，自定义语音搜索，播放LXMusic、WebDAV、MusicFree中歌单和歌曲",
       "author": "birdstudy-nj",
       "permissions": [
@@ -215,7 +215,7 @@
       "origin": "birdstudy-nj-songloft-miot-helper-refs",
       "repo": "https://github.com/birdstudy-nj/songloft-miot-helper",
       "stars": 20,
-      "updatedAt": "2026-11-03T07:36:56Z",
+      "updatedAt": "2026-11-27T10:21:36Z",
       "license": "Apache-2.0",
       "avatarUrl": "https://avatars.githubusercontent.com/u/252813171?v=4",
       "logo": "icons/miot-helper.svg",
@@ -370,6 +370,34 @@
       "featured": false
     },
     {
+      "entryPath": "iwebplayer",
+      "name": "iWebPlayer",
+      "version": "1.5.2",
+      "description": "适配iPhone的Web播放器，PWA模式下媲美原生APP。自带歌词刮削，倍速播放，记忆续播，自建歌单，多重排序，调用LXMusic插件、WebDAV插件，推送小爱音箱……",
+      "author": "birdstudy-nj",
+      "permissions": [
+        "songs.read",
+        "playlists.*",
+        "storage",
+        "inter-plugin"
+      ],
+      "minHostVersion": "2.6.3",
+      "homepage": "https://github.com/songloft-org/songloft-plugin-iwebplayer",
+      "pluginJsonUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-iwebplayer/main/plugin.json",
+      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-iwebplayer/releases/download/v1.5.2/iwebplayer.jsplugin.zip",
+      "updateUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-iwebplayer/main/plugin.json",
+      "source": "open",
+      "origin": "official",
+      "repo": "https://github.com/songloft-org/songloft-plugin-iwebplayer",
+      "stars": 7,
+      "updatedAt": "2026-11-27T09:13:14Z",
+      "license": "Apache-2.0",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/288701258?v=4",
+      "logo": "icons/iwebplayer.svg",
+      "tags": [],
+      "featured": false
+    },
+    {
       "entryPath": "ytdlp",
       "name": "yt-dlp",
       "version": "2026.11.23.0",
@@ -397,34 +425,6 @@
       "license": "Apache-2.0",
       "avatarUrl": "https://avatars.githubusercontent.com/u/1185757?v=4",
       "logo": "icons/ytdlp.svg",
-      "tags": [],
-      "featured": false
-    },
-    {
-      "entryPath": "iwebplayer",
-      "name": "iWebPlayer",
-      "version": "1.5.1",
-      "description": "适配iPhone的Web播放器，PWA模式下媲美原生APP。自带歌词刮削，倍速播放，记忆续播，自建歌单，多重排序，调用LXMusic插件、WebDAV插件，推送小爱音箱……",
-      "author": "birdstudy-nj",
-      "permissions": [
-        "songs.read",
-        "playlists.*",
-        "storage",
-        "inter-plugin"
-      ],
-      "minHostVersion": "2.6.3",
-      "homepage": "https://github.com/songloft-org/songloft-plugin-iwebplayer",
-      "pluginJsonUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-iwebplayer/main/plugin.json",
-      "downloadUrl": "https://github.com/songloft-org/songloft-plugin-iwebplayer/releases/download/v1.5.1/iwebplayer.jsplugin.zip",
-      "updateUrl": "https://raw.githubusercontent.com/songloft-org/songloft-plugin-iwebplayer/main/plugin.json",
-      "source": "open",
-      "origin": "official",
-      "repo": "https://github.com/songloft-org/songloft-plugin-iwebplayer",
-      "stars": 7,
-      "updatedAt": "2026-11-19T10:20:17Z",
-      "license": "Apache-2.0",
-      "avatarUrl": "https://avatars.githubusercontent.com/u/288701258?v=4",
-      "logo": "icons/iwebplayer.svg",
       "tags": [],
       "featured": false
     },
@@ -797,7 +797,7 @@
       "origin": "jerryrat-bbc-learning-main",
       "repo": "https://github.com/jerryrat/BBC-LEARNING",
       "stars": 2,
-      "updatedAt": "2026-11-26T10:22:28Z",
+      "updatedAt": "2026-11-27T10:22:13Z",
       "license": null,
       "avatarUrl": "https://avatars.githubusercontent.com/u/19183369?v=4",
       "logo": "icons/bbc-learning-english.svg",
